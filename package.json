@@ -1,6 +1,6 @@
 {
 
-  "name": "utiva",
+  "name": "TrueSeaMoss",
 
   "version": "1.0.0",
 
@@ -161,7 +161,7 @@
   },
 
   "scripts": {
-    "dev": "shopify theme dev --store=utiva-usa.myshopify.com",
+    "dev": "shopify theme dev --store=thetrueseamoss.myshopify.com",
     "watch": "npx tailwindcss -i ./style.css -o ./assets/custom-styles.css --watch"
   },
 
