@@ -1,0 +1,354 @@
+{%- liquid
+  assign video_id = section.settings.video.id | default: section.settings.video_url.id
+  assign video_alt = section.settings.video.alt | default: section.settings.description
+  assign alt = 'sections.video.load_video' | t: description: video_alt | escape
+  assign poster = section.settings.video.preview_image | default: section.settings.cover_image
+
+  if section.settings.video != null
+    assign ratio_diff = section.settings.video.aspect_ratio | minus: poster.aspect_ratio | abs
+    if ratio_diff < 0.01 and ratio_diff > 0
+      assign fix_ratio = true
+    endif
+  endif
+-%}
+{%- style -%}
+.background_icon{
+    position:absolute;
+    z-index: 1;
+  }
+.custom_iframe_video{
+    width: 100%;
+    min-height: 470px;
+    border: none;
+}
+.video_container{
+    z-index: 2;
+    position: relative;
+    max-width: 1096px;
+    margin: 0 auto;
+}
+.video_container video {
+  width: 100%;
+}
+.title_video_section{
+    font-family: var(--FONT-STACK-HEADING);
+    color: #285234;
+    text-align: center;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    margin: 0 auto 60px auto;
+    z-index: 2;
+    position: relative;
+    max-width: 1040px;
+}
+.title_video_section p {
+  font-family: var(--FONT-STACK-HEADING);
+  margin: 0;
+}
+.custom_video_section{
+    position: relative;
+    background-color: {{ section.settings.video_background_color }};
+    padding-top:{{section.settings.padding_top}}px;
+    padding-bottom:{{section.settings.padding_bottom}}px;
+}
+
+.video-link {
+  display: block;
+  padding: 20px 30px;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+  border: 1px solid #285234;
+  background-color: #285234;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  overflow: hidden;
+  font-weight: 700;
+  text-transform: uppercase;
+  max-width: 536px;
+  margin: 40px auto 0 auto;
+  line-height: 14px;
+}
+
+.video-link span {
+  position: relative;
+  z-index: 2
+}
+
+.video-link:before {
+  border-radius: 10px;
+  content: "";
+  position: absolute;
+  display: flex;
+  left: -1px;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  background: #fff;
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+  z-index: -1;
+  transition: transform .3s
+}
+
+.video-link:hover {
+  color: #000;
+  background-color: #fff;
+  border-color: #000;
+  transition: color .3s, border .3s, background 0s linear .3s;
+  box-shadow: 0 0 10px 0 #00000026
+}
+
+.video-link:hover::before {
+  transform-origin: bottom center;
+  transform: none;
+  border: 1px solid #000;
+  color: #000;
+  z-index: 1;
+  transition: transform .3s
+}
+
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when 'background_icon' -%}
+    .background_icon--{{forloop.index}} {
+      {{block.settings.icon_position}}
+    }
+  {%- endcase -%}
+{%- endfor -%}
+@media(max-width:786px){
+  .background_icon img{
+  }
+  .custom_iframe_video{
+      min-height: 240px;
+  }
+  .title_video_section{
+    font-size: 34px;
+    margin-bottom: 50px;
+  }
+.custom_video_section{
+  padding-top:{{section.settings.padding_top_mb}}px;
+  padding-bottom:{{section.settings.padding_bottom_mb}}px;
+}
+{%- for block in section.blocks -%}
+  {%- case block.type -%}
+    {%- when 'background_icon' -%}
+    .background_icon--{{forloop.index}} {
+      {{block.settings.icon_position_mobile}}
+    }
+  {%- endcase -%}
+{%- endfor -%}
+}
+{%- endstyle -%}
+
+{% if section.settings.video_url %}
+  <div class="custom_video_section">
+    <div class="products_effects-wrapper wrapper">
+      <div class="title_video_section">
+        {{ section.settings.video_title }}
+      </div>
+      <div class="video_container">
+          {%- if section.settings.video == null and section.settings.video_url != null -%}
+          {%- liquid
+            assign loop = ''
+            if section.settings.enable_video_looping
+            assign loop = '&loop=1&playlist=' | append: video_id
+            endif
+
+            if section.settings.enable_video_autoplay
+              assign num_autoplay = 1
+            else
+              assign num_autoplay = 0 
+            endif 
+
+            if section.settings.enable_video_controls
+              assign num_controls = 1
+            else
+              assign num_controls = 0 
+            endif 
+            
+            assign autoplay = 0
+          -%}
+
+          {%- if section.settings.video_url.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}?autoplay={{num_autoplay}}&mute={{num_autoplay}}&controls={{num_controls}}"
+              class="js-youtube custom_iframe_video"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1{{ loop }}"
+              class="js-vimeo custom_iframe_video"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- endif -%}
+        {%- else -%}
+          {{
+            section.settings.video
+            | video_tag:
+              image_size: '600x',
+              autoplay: true,
+              loop: section.settings.enable_video_looping,
+              controls: true,
+              muted: true
+          }}
+        {%- endif -%}
+      </div>
+      {% if section.settings.text != blank %}
+        <a class="video-link" href="{{section.settings.url}}" title="{{section.settings.text}}"><span>{{section.settings.text}}</span> </a>
+      {% endif %}
+    </div>
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'background_icon' -%}
+        {% if block.settings.background_icon != blank %}
+          <div class="background_icon background_icon--{{forloop.index}}">
+            <img src="{{block.settings.background_icon | img_url: "master" }}" alt="background icon" loading='lazy'>
+          </div>
+        {% endif %}
+    {%- endcase -%}
+    {%- endfor -%}
+  </div>
+{% endif %}
+{% schema %}
+{
+"name": "Custom video section",
+"blocks":[
+  {
+  "name":"Background Icon",
+  "type":"background_icon",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id":"background_icon",
+      "label":"background icon"
+    },
+    {
+     "type": "html",
+     "id":"icon_position",
+     "label": "icon position for desktop"
+    },
+    {
+     "type": "html",
+     "id":"icon_position_mobile",
+     "label": "icon position for mobile"
+    }
+  ]
+  }
+],
+"settings": [
+  {
+    "type": "richtext",
+    "id": "video_title",
+    "label": "Title"
+  },
+  {
+    "type": "color",
+    "id": "video_background_color",
+    "label": "Background color"
+  },
+  {
+    "type": "video",
+    "id": "video",
+    "label": "Video"
+  },
+  {
+    "type": "video_url",
+    "id": "video_url",
+    "accept": ["youtube", "vimeo"],
+    "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+    "label": "Video"
+  },
+  {
+    "type":"checkbox",
+    "id":"enable_video_looping",
+    "label":"Loop video"
+  },
+  {
+    "type": "checkbox",
+    "id": "enable_video_autoplay",
+    "label": "Enable autoplay for the video",
+    "default": false
+  },
+  {
+    "type": "checkbox",
+    "id": "enable_video_controls",
+    "label": "Enable controls for the video",
+    "default": false
+  },
+  {
+    "type": "text",
+    "id": "text",
+    "label": "Text for the button"
+  },
+  {
+    "type": "url",
+    "id": "url",
+    "label": "Link for the button"
+  },
+  {
+    "type": "range",
+    "id": "padding_top",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Padding top",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Padding bottom",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_top_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space top for mobile",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space bottom for mobile",
+    "default": 1
+  }
+], 
+"presets": [
+  {
+    "name": "Custom video section",
+    "blocks": [
+      {
+        "type": "background_icon"
+      }
+    ]
+  }
+]
+}
+{% endschema %}

@@ -1,0 +1,361 @@
+{%- liquid
+  assign current_product = product 
+  assign block = block 
+  assign list_variant = current_product.metafields.custom.product_list_for_tastes.value 
+  assign list_variant_extra = current_product.metafields.custom.product_list_for_tastes_extra.value 
+  assign enable_toggle_btn = block.enable_toggle_btn
+  assign text_more = block.more_btn 
+  assign text_less = block.less_btn 
+  assign text_delivery = block.text_delivery 
+  assign remove_spacing_text = block.remove_spacing_text | downcase | remove: ','
+  assign extra_index = 0
+
+  assign productSellingObj = current_product.selected_or_first_available_variant.selling_plan_allocations
+
+  for item_prop in productSellingObj
+    assign productPriceSelling = item_prop.price
+  endfor
+  
+
+  assign cart_quantity = 0
+  assign cart_quantity_sub = 0
+  assign id_variant = ""
+  for product in settings.product_list_gel
+    for variant in product.variants
+      assign id_variant = id_variant | append: variant.id
+    endfor
+  endfor
+
+  for line_item in cart.items
+    if id_variant contains line_item.id
+      if line_item.selling_plan_allocation != blank
+        assign cart_quantity_sub = cart_quantity_sub | plus: line_item.quantity 
+      else
+        assign cart_quantity = cart_quantity | plus: line_item.quantity  
+      endif
+    endif
+  endfor
+
+-%}
+
+{{ "product-list-gel.css" | asset_url | stylesheet_tag }}
+
+{% if block.special_class == true %}
+  {%- assign className = "list_variants-grid-soap" -%}
+{%- else -%}
+  {%- assign className = "list_variants-grid-gel" -%}
+{% endif %}
+
+<div class="list_variants-wrapper" id="list-variants-wrapper-scroll">
+  {% if block.heading != empty %}
+  <h2 class="list_variants-title">
+    <span>{{block.heading}}</span>
+    {% if block.little_badge != empty %}
+    <span class="small-badge">{{block.little_badge}}</span>
+    {% endif %}
+  </h2>
+  {% endif %}  
+  {% if block.heading_badge != empty %}
+  <span class="list_variants-badge" style="--color-text: {{block.color_text}}; --bg-badge: {{block.background_badge}}">
+    {{block.heading_badge}}
+  </span>
+  {% endif %}
+
+  {% if text_delivery != blank %}
+  <div class="taste-delivery-badge">
+      <span>{{- text_delivery -}}</span>
+    </div>
+  {% endif %}
+
+   {% if text_under_delivery != blank %}
+  <div class="taste-delivery-badge">
+      <span>{{- text_under_delivery -}}</span>
+    </div>
+  {% endif %}
+
+  <div class="list_variants-grid {{className}}">
+    <input 
+      type="hidden" 
+      data-full-price  
+      data-main-product="0"
+      data-general-quantity="0" 
+
+      data-cart-quantity="{{cart_quantity}}" 
+      data-cart-quantity-sub="{{cart_quantity_sub}}"
+
+      data-value-sub="{{productPriceSelling}}" 
+      data-value="{{current_product.price}}" 
+      data-price-sub="{{productPriceSelling}}" 
+
+      value="{{current_product.price}}"  
+      data-subscribe="true" 
+      data-select-variant="false" 
+    >
+    {% for item in list_variant %}
+    
+
+    {%- capture key_img -%}image_{{forloop.index}}{%- endcapture -%}
+
+      {%- liquid
+        if forloop.index >= 5 and enable_toggle_btn == true
+          assign classToggleMode = "option-taste_item-toggle option-taste_item-hide"
+        endif
+        assign index = forloop.index
+        assign extra_index = extra_index | plus: 1
+        assign current_variant = item 
+        assign product_title = current_variant.product.title 
+        assign product_info = current_variant.product.metafields.custom.product_info 
+        assign product_badge = current_variant.product.metafields.custom.badge_bestseller 
+        assign priceSellingObj = current_variant.selling_plan_allocations
+        for item in priceSellingObj
+        assign priceSelling = item.price | divided_by: 100.0
+        endfor
+        if block[key_img] != blank
+          assign product_img = block[key_img]
+        else
+          assign product_img = current_variant.product.featured_image 
+        endif
+        assign variant_available = current_variant.available 
+        assign variant_price = current_variant.price | divided_by: 100.0
+        assign variant_id = current_variant.id 
+        for tag in current_variant.product.tags
+          assign tag_lower_case = tag | downcase
+          if tag_lower_case == "new"
+            assign new_variant = true  
+            break
+          else
+            assign new_variant = false  
+          endif
+        endfor
+        assign isSelling_plan = current_variant.selling_plan_allocations 
+
+      -%}
+      {% if variant_available and isSelling_plan != blank %}
+        <variant-item class="variant_item {{classToggleMode}}">
+          <script data-json type="application/json">{{current_variant | json }}</script>
+          <script data-json-product type="application/json">{{current_variant.product | json }}</script>
+          <input type="hidden" data-quantity name="items[{{index}}][quantity]" value="0">
+          <input type="hidden" data-variant-id  name="items[{{index}}][id]" value="{{variant_id}}">
+          <input type="hidden" data-selling name="items[{{index}}][selling_plan]" value="">
+          <input type="hidden" data-price name="price" data-value="{{variant_price}}" value="0">
+          <input type="hidden" data-price-selling name="price-selling" data-value="{{priceSelling}}" value="0">
+          <input 
+            data-ver-id
+            type="hidden" 
+            data-cart-el="{{current_variant.product.id}}" 
+            data-key-cart=""
+            value="0" 
+            data-change="false" 
+            data-old-variant=""
+            data-new-variant=""
+          >
+          <input 
+            data-ver-id-sub
+            type="hidden" 
+            data-cart-el-sub="{{current_variant.product.id}}"
+            data-key-cart=""
+            data-selling-plan-id="" 
+            value="0" 
+            data-change="false" 
+            data-old-variant=""
+            data-new-variant=""
+          >
+          <div class="variant_item-img-wrap">
+            <img class="variant_item-img" 
+              src="{{product_img | img_url: 'master'}}" 
+              alt="{{product_title}}" 
+              loading="lazy"
+            >
+
+          </div>
+          <h3 class="variant_item-title">
+            {%- assign title_down = product_title | downcase -%}
+            {% if  remove_spacing_text contains title_down %}
+            {{- product_title | capitalize | replace: ' ', '' -}}
+            {%- else -%}
+            {{- product_title | capitalize -}}
+            {% endif %}
+            {% if product_info != blank %}
+              <span class="variant_item-info">{{product_info }}</span>
+            {% endif %}
+          </h3>
+          {% if product_badge %}
+            <span class="variant_item-badge">{{- product_badge -}}</span>
+          {% endif %}
+            <button class="variant_item-button" name="button">
+              <span>add</span>
+              <span class="variant_item-button-plus"> +</span>
+            </button>
+            <div class="variant_item-quantity" name="selector">
+              <button name="minus">-</button>
+              <input type="number" value="0" min="0" step="">
+              <button name="plus">+</button>
+            </div>
+        </variant-item>
+      {% endif %}
+    {% endfor %}
+    {% if enable_toggle_btn == true %}
+    <button class="option-taste_button" data-open="false">
+        <span class="option-taste_button-more">{{text_more}}</span>
+        <span class="option-taste_button-less">{{text_less}}</span>
+        <svg width="16" height="10" viewBox="0 0 8 5" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.87635 0.829378C8.05823 0.621394 8.03695 0.30555 7.8291 0.123722C7.62112 -0.0579181 7.30527 -0.0366833 7.12345 0.17116L4.00003 3.74097L0.87642 0.170973C0.694592 -0.0370582 0.378747 -0.0581055 0.170951 0.123535C-0.0370808 0.305363 -0.0583143 0.621207 0.123514 0.829238L3.62357 4.82917C3.67052 4.88285 3.7284 4.92586 3.79333 4.95533C3.85826 4.98481 3.92874 5.00005 4.00005 5.00005C4.07136 5.00005 4.14184 4.98481 4.20677 4.95533C4.2717 4.92586 4.32958 4.88285 4.37653 4.82917L7.87635 0.829378Z" fill="#222222" fill-opacity="0.8"/>
+        </svg>    
+    </button>
+    {% endif %}
+  {% if list_variant_extra != blank %}
+    <div class="extra-items-container">
+      <h3 class="extra-items-title">{{- block.heading_extra -}}</h3>
+      {% for item_extra in list_variant_extra %}
+        {%- liquid
+          assign index = forloop.index | plus: extra_index
+          assign current_variant = item_extra 
+          if current_variant.product.metafields.custom.fake_title != blank
+          assign product_title = current_variant.product.metafields.custom.fake_title 
+          else
+          assign product_title = current_variant.product.title  
+          endif
+          assign product_img = current_variant.product.featured_image 
+          assign variant_available = current_variant.available 
+          assign benefit_product = current_variant.product.metafields.custom.list_benefits.value
+          assign variant_price = current_variant.price | divided_by: 100.0
+          assign priceOne = current_variant.price | money
+          assign priceSellingObj = current_variant.selling_plan_allocations
+          for item in priceSellingObj
+          assign priceSelling = item.price
+          endfor
+          assign variant_id = current_variant.id 
+          assign isSelling_plan = current_variant.selling_plan_allocations 
+
+        -%}
+        {% if variant_available and isSelling_plan != blank %}
+          <variant-item class="variant_item variant_item-extra">
+
+            <script data-json type="application/json">{{current_variant | json }}</script>
+            <input type="hidden" data-quantity name="items[{{index}}][quantity]" value="0">
+            <input type="hidden" data-id name="items[{{index}}][id]" value="{{variant_id}}">
+            <input type="hidden" data-selling name="items[{{index}}][selling_plan]" value="">
+            <input type="hidden" data-price name="price" data-value="{{variant_price}}" value="0">
+            <input type="hidden" data-price-selling name="price-selling" data-value="{{priceSelling | divided_by: 100.0}}" value="0">
+
+            <div class="variant_item-img-wrap">
+              <img class="variant_item-img" 
+                src="{{product_img | img_url: 'master'}}" 
+                alt="{{product_title}}" 
+                loading="lazy"
+              >
+    
+            </div>
+
+            <div class="variant_extra-body">
+              <div class="variant_extra-header"> 
+                <h4 class="variant_extra-title">{{- product_title | capitalize -}}</h4>
+                <span class="variant_extra-price variant_extra-price-one hide-price">{{- priceOne -}}</span>
+                <span  class="variant_extra-price variant_extra-price-subscribe">{{- priceSelling | money -}}</span>
+              </div>
+              {% if benefit_product != blank %}
+              <div class="variant_extra-main">
+                <ul class="variant_extra-list">
+                  {% for benefit in benefit_product %}
+                    <li class="variant_extra-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 3 3" fill="none">
+                          <circle cx="1.5" cy="1.5" r="1.5" fill="#222222"/>
+                        </svg>            
+                      <span class="variant_extra-elem">{{- benefit -}}</span>
+                    </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              {% endif %}
+
+            </div>
+            <button class="variant_item-button" name="button">
+                <span>add</span>
+                <span class="variant_item-button-plus"> +</span>
+            </button>
+            <div class="variant_item-quantity" name="selector">
+                <button name="minus">-</button>
+                <input type="number" value="0" min="0" step="">
+                <button name="plus">+</button>
+            </div>
+          </variant-item>  
+        {% endif %}   
+      {% endfor %}
+
+    </div>
+{% endif %}
+</div>
+  {% if block.little_badge != empty %}
+    <span class="small-badge small-badge_mobile">{{block.little_badge}}</span>
+  {% endif %}
+</div>
+
+{%- comment -%}
+{{ "variant-item-gel.js" | asset_url | script_tag }}
+{{ "change-price-gel.js" | asset_url | script_tag }}
+{%- endcomment -%}
+{{ "variant-item.js" | asset_url | script_tag }}
+{{ "change-price.js" | asset_url | script_tag }}
+
+{% if enable_toggle_btn == true %}
+<script>
+  const optionTasteToggle = document.querySelectorAll(".option-taste_item-toggle");
+  const toggleBtn = document.querySelector(".option-taste_button");
+
+  toggleBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        const flag = event.target.dataset.open === "false" ? false : true;
+        toggleModeTaste(flag)
+        event.target.setAttribute("data-open", !flag)
+    })
+  function toggleModeTaste(flag) {
+        if (optionTasteToggle.length == 0) return;
+        optionTasteToggle.forEach( el => el.classList.toggle("option-taste_item-hide", flag))
+    }
+</script>  
+{% endif %}
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttonAddToCart = document.querySelector(".product__block-button_price .product__submit__add");
+    const stickyBtnAdd = document.querySelector(".product-button-sticky-add");
+    const stickyBtnScroll = document.querySelector(".product-button-sticky-scroll");
+    const contentRecharge = document.querySelector(".recharge-content");
+    const productWrapper = document.querySelector(".product-single__wrapper");
+      
+    const handleAddToCartClick = () => {
+      if (buttonAddToCart.disabled === false) {
+        buttonAddToCart.click();
+      }
+    };
+      
+    const handleScrollButtonClick = () => {
+      const scrollToElement = document.querySelector(`#${stickyBtnScroll.dataset.scroll}`);
+      if (scrollToElement) {
+        const y = scrollToElement.offsetParent.offsetTop;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+      };
+      
+    const handleWindowScroll = () => {
+      const currentPos = window.pageYOffset;
+      const stopPoint = contentRecharge?.offsetTop - (contentRecharge?.scrollHeight * 2.5);
+      
+      stickyBtnAdd?.classList.toggle("is-show", currentPos < stopPoint && !buttonAddToCart.disabled);
+      stickyBtnScroll?.classList.toggle("is-show", currentPos > productWrapper.clientHeight);
+      };
+      
+    if (stickyBtnAdd) {
+      stickyBtnAdd.addEventListener("click", handleAddToCartClick);
+    }
+      
+    if (stickyBtnScroll) {
+      stickyBtnScroll.addEventListener("click", handleScrollButtonClick);
+    }
+      
+    if (window.innerWidth < 768) {
+        window.addEventListener("scroll", handleWindowScroll);
+    }
+  })
+</script>

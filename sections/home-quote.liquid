@@ -1,0 +1,135 @@
+{{"home-quote.css" | asset_url | stylesheet_tag }}
+{% liquid 
+  assign bg_img = section.settings.bg_img
+  if section.settings.bg_img_mobile != blank
+  assign bg_img_mobile = section.settings.bg_img_mobile
+  else
+  assign bg_img_mobile = section.settings.bg_img
+  endif
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign sbm = section.settings.sbm | append: 'px'
+%}
+
+{%- style -%}
+.home-quote__{{section.id}} {
+  margin-top: {{st}};
+  margin-bottom: {{sb}};
+}
+@media(max-width: 768px) {
+  .home-quote__{{section.id}} {
+    margin-top: {{stm}};
+    margin-bottom: {{sbm}};
+  }
+}
+{%- endstyle -%}
+
+
+
+<div class="home-quote wrapper home-quote__{{section.id}}">
+  {% if bg_img %}
+    <img class="quote-bg quote-bg__desktop" src="{{bg_img | img_url: 'master'}}" alt="{{bg_img.alt}}" loading="lazy">
+  {% endif %}
+  {% if bg_img_mobile %}
+    <img class="quote-bg quote-bg__mobile" src="{{bg_img_mobile | img_url: 'master'}}" alt="{{bg_img_mobile.alt}}" loading="lazy">
+  {% endif %}
+  <div class="home-quote__container">
+    {% for item in section.blocks %}
+      <p class="home-quote__item {% if item.settings.text_right %}quote__item-right{% endif %}">
+        {{item.settings.text}}
+      </p>
+    {% endfor %}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Home quote",
+  "presets": [
+    {
+      "name": "Home quote"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "text",
+      "name": "text",
+      "settings": [
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text",
+          "info": "To create a background, wrap the text with the <span> tag."
+        },
+        {
+          "type": "checkbox",
+          "id": "text_right",
+          "label": "Text right",
+          "default": false,
+          "info": "The text position will be right"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_img",
+      "label": "Background image"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_img_mobile",
+      "label": "Background image mobile"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,831 @@
+<style>
+  
+    #powered-by {
+    display: none !important;
+    }
+    
+    </style>
+    
+    {% if product.selling_plan_groups.size > 0 %}
+      <div id='sn-product-widget'>
+        <section id='sn-product-widget__purchase-options'>
+          <h4>Purchase Options</h4>
+    
+          <div>
+            <button type='button' class='selected'>
+              <svg
+                width='32'
+                height='32'
+                viewBox='0 0 32 32'
+                fill='none'
+                xmlns='http://www.w3.org/2000/svg'
+              >
+                <path
+                  d="M30.7499 25.7499C31.4403 25.7499 31.9999 25.1904 31.9999 24.5V23.1948C31.9999 20.227 29.5851 17.8125 26.6171 17.8125H25.8273C26.254 17.0764 26.4999 16.2229 26.4999 15.3125V6.62499C26.4999 5.93456 25.9403 5.37499 25.2499 5.37499H21.0624V4.87499C21.0624 2.18676 18.8754 0 16.1874 0C13.4994 0 11.3124 2.18676 11.3124 4.87499V5.37499H6.74992C6.05949 5.37499 5.49992 5.93456 5.49992 6.62499V15.0573C4.95598 14.7695 4.34611 14.6191 3.71477 14.6252C2.71306 14.6345 1.77507 15.0334 1.07341 15.7485C0.371999 16.4633 -0.00934741 17.4087 0.000174085 18.4104C0.00945143 19.4118 0.408376 20.3498 1.12346 21.0515C1.13201 21.06 1.1408 21.0683 1.14959 21.0766L7.51578 26.9706C9.17472 28.5744 11.1005 29.8266 13.2394 30.6923C15.383 31.56 17.6425 31.9999 19.9547 31.9999H30.7499C31.4403 31.9999 31.9999 31.4404 31.9999 30.7499C31.9999 30.0595 31.4403 29.4999 30.7499 29.4999H19.9547C15.9354 29.4999 12.1317 27.9604 9.2443 25.1647C9.23771 25.1582 9.23087 25.1518 9.22403 25.1455L2.86369 19.2563C2.632 19.0236 2.5031 18.7155 2.49992 18.3867C2.49675 18.0529 2.62395 17.7378 2.85783 17.4995C3.09172 17.2612 3.40422 17.1281 3.7382 17.125H3.75017C4.07951 17.125 4.38981 17.2517 4.62541 17.4829C4.63591 17.4931 4.64665 17.5034 4.65764 17.5134L11.873 24.1064C12.5583 24.8474 13.5382 25.3125 14.6249 25.3125H20.8749C21.5651 25.3125 22.1249 24.7529 22.1249 24.0625C22.1249 23.372 21.5651 22.8125 20.8749 22.8125H14.6249C14.3668 22.8125 14.1269 22.7338 13.9274 22.5993C13.9198 22.592 13.9132 22.5842 13.9054 22.5771L13.6518 22.3454C13.4789 22.1308 13.3749 21.8588 13.3749 21.5625C13.3749 20.8732 13.9357 20.3125 14.6249 20.3125H26.6171C28.2067 20.3125 29.4999 21.6054 29.4999 23.1948V24.5C29.4999 25.1904 30.0594 25.7499 30.7499 25.7499ZM13.8124 4.87499C13.8124 3.56542 14.8778 2.49999 16.1874 2.49999C17.497 2.49999 18.5624 3.56542 18.5624 4.87499V5.37499H13.8124V4.87499ZM7.99991 7.87498H11.3124V9.18748C11.3124 9.87791 11.872 10.4375 12.5624 10.4375C13.2528 10.4375 13.8124 9.87791 13.8124 9.18748V7.87498H18.5624V9.18748C18.5624 9.87791 19.122 10.4375 19.8124 10.4375C20.5028 10.4375 21.0624 9.87791 21.0624 9.18748V7.87498H23.9999V15.3125C23.9999 16.6909 22.8783 17.8125 21.4999 17.8125H10.4999C9.07462 17.8125 7.99991 16.8183 7.99991 15.5V7.87498Z"
+                  fill="#6D7175"
+                />
+              </svg>
+              <span class='group-name'>One-time Purchase</span>
+            </button>
+    
+            {% for selling_plan_group in product.selling_plan_groups %}
+              <button
+                type='button'
+                data-selling-plan-group-id='{{ selling_plan_group.id }}'
+              >
+                <span class='subscription_max_discount'>-</span>
+                <span class='subscription_max_discount2'>Save 4.33$</span>
+                <svg
+                  width='32'
+                  height='32'
+                  version='1.1'
+                  id='Capa_1'
+                  xmlns='http://www.w3.org/2000/svg'
+                  xmlns:xlink='http://www.w3.org/1999/xlink'
+                  x='0px'
+                  y='0px'
+                  viewBox='0 0 60 60'
+                  style='enable-background: new 0 0 60 60'
+                  xml:space='preserve'
+                >
+                  <g>
+                    <path
+                      d="M56.699,48.02c-0.55-0.104-1.069,0.24-1.18,0.781C54.403,54.303,50.074,58,44.749,58c-5.028,0-9.446-3.3-10.948-8H38.5v-2
+                        h-8v8h2v-3.848C34.669,56.833,39.415,60,44.749,60c6.304,0,11.42-4.341,12.731-10.801C57.59,48.657,57.24,48.13,56.699,48.02z"
+                    />
+                    <path
+                      d="M56.5,36v4.308C54.25,35.855,49.796,33,44.749,33c-6.109,0-11.541,3.997-13.209,9.721c-0.154,0.53,0.15,1.085,0.681,1.239
+                        c0.529,0.154,1.085-0.15,1.239-0.681C34.858,38.482,39.605,35,44.749,35c4.565,0,8.562,2.766,10.33,7H50.5v2h8v-8H56.5z"
+                    />
+                    <path
+                      d="M37.5,32h9V21h-9h-2h-7h-2h-7h-2h-9v9v2v7v2v9h9h2h9v-9v-2v-7h7H37.5z M37.5,23h7v7h-7V23z M19.5,23h7v7h-7V23z M10.5,23h7
+                        v7h-7V23z M10.5,32h7v7h-7V32z M17.5,48h-7v-7h7V48z M26.5,48h-7v-7h7V48z M26.5,39h-7v-7h7V39z M28.5,30v-7h7v7H28.5z"
+                    />
+                    <path
+                      d="M25.5,55h-22V16h48v13c0,0.553,0.447,1,1,1s1-0.447,1-1V15V5c0-0.553-0.447-1-1-1h-5V1c0-0.553-0.447-1-1-1h-7
+                        c-0.553,0-1,0.447-1,1v3h-22V1c0-0.553-0.447-1-1-1h-7c-0.553,0-1,0.447-1,1v3h-5c-0.553,0-1,0.447-1,1v10v41c0,0.553,0.447,1,1,1
+                        h23c0.553,0,1-0.447,1-1S26.053,55,25.5,55z M40.5,2h5v3v3h-5V5V2z M9.5,2h5v3v3h-5V5V2z M3.5,6h4v3c0,0.553,0.447,1,1,1h7
+                        c0.553,0,1-0.447,1-1V6h22v3c0,0.553,0.447,1,1,1h7c0.553,0,1-0.447,1-1V6h4v8h-48V6z"
+                    />
+                  </g>
+                </svg>
+    
+                <span class='group-name'>{{ selling_plan_group.name }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </section>
+    
+        {% for selling_plan_group in product.selling_plan_groups %}
+          <section
+            class='sn-product-widget__delivery-frequency'
+            data-selling-plan-group-id='{{ selling_plan_group.id }}'
+          >
+            <h4>Delivery Frequency</h4>
+    
+            {% for selling_plan in selling_plan_group.selling_plans %}
+              <div id='selling_plan_{{ selling_plan.id }}' class='selling_plan'>
+                <label class='radio'>
+                  <div class='radio__header'>
+                    <span class='radio__input'>
+                      {% if product_form_id %}
+                        <input
+                          type='radio'
+                          name='selling_plan'
+                          value='{{ selling_plan.id }}'
+                          form='{{ product_form_id }}'
+                        >
+                      {% else %}
+                        <input
+                          type='radio'
+                          name='selling_plan'
+                          value='{{ selling_plan.id }}'
+                        >
+                      {% endif %}
+                      <span class='radio__control'></span>
+                    </span>
+                    <span class='radio__label'>
+                      {% if false %}
+                        {{ selling_plan.name }}
+                      {% else %}
+                        {{ selling_plan.options[0].value }}
+                      {% endif %}
+                    </span>
+                  </div>
+    
+                  <div
+                    class='radio__price'
+                    data-discount-value='{{ selling_plan.price_adjustments[0].value }}'
+                    data-discount-type='{{ selling_plan.price_adjustments[0].value_type }}'
+                    data-after-cycle='{{ selling_plan.price_adjustments[0].order_count }}'
+                    data-next-discount-value='{{ selling_plan.price_adjustments[1].value }}'
+                    data-next-discount-type='{{ selling_plan.price_adjustments[1].value_type }}'
+                  >
+                    <span class='first-discount'>-</span>
+                    <span class='second-discount'>-</span>
+                  </div>
+                </label>
+              </div>
+            {% endfor %}
+    
+            <a
+              class='policy-link'
+              href='/policies/subscription-policy'
+              target='_blank'
+            >
+              View Subscription Policy
+            </a>
+            <!-- test -->
+          </section>
+        {% endfor %}
+    
+        <a id='powered-by' href='https://propelcommerce.io' target='_blank'>Powered by Propel Subscriptions</a>
+      </div>
+    
+      <style>
+        #sn-product-widget {
+          font-size: 14px;
+          margin-bottom: 16px;
+          flex-direction: column;
+        }
+    
+        #sn-product-widget section h4 {
+          color: #202223;
+          font-size: 14px;
+          font-weight: 500;
+          line-height: 20px;
+          text-align: left;
+          text-transform: none;
+        }
+    
+        #sn-product-widget__purchase-options div {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-between;
+    
+          margin-bottom: 15px;
+        }
+    
+        #sn-product-widget__purchase-options button {
+          height: 70px;
+          width: 48%;
+    
+          display: flex;
+          align-items: center;
+          margin-bottom: 16px;
+    
+          background: transparent;
+          color: #6d7175;
+          border: 1px solid #d2d2d2;
+          border-radius: 2px;
+          box-sizing: border-box;
+          font-size: 14px;
+    
+          position: relative;
+        }
+        .policy-link {
+          font-size: 0.9em;
+          text-decoration: underline !important;
+          display: block;
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+    
+        @media only screen and (max-width: 480px) {
+          #sn-product-widget__purchase-options button {
+            width: 100%;
+          }
+        }
+    
+        #sn-product-widget__purchase-options button.selected {
+          border-color: #6d7175;
+          color: #000000;
+        }
+    
+        #sn-product-widget__purchase-options button svg {
+          margin-right: 5px;
+          width: 25%;
+        }
+    
+        #sn-product-widget__purchase-options button svg path {
+          fill: #6d7175;
+        }
+    
+        #sn-product-widget__purchase-options button.selected svg path {
+          fill: #000000;
+        }
+    
+        #sn-product-widget__purchase-options button span.group-name {
+          width: 75%;
+          text-align: left;
+        }
+    
+        #sn-product-widget__purchase-options .subscription_max_discount {
+          display: none;
+    
+          position: absolute;
+          top: -15px;
+          right: -5px;
+    
+          background: #000000;
+          border-radius: 2px;
+          color: white;
+          font-size: 12px;
+          padding: 2px 6px;
+        }
+    
+        #sn-product-widget__purchase-options .subscription_max_discount2 {
+          display: none;
+    
+          position: absolute;
+          top: -45px;
+          right: -5px;
+    
+          background: #000000;
+          border-radius: 2px;
+          color: white;
+          font-size: 12px;
+          padding: 2px 6px;
+        }
+    
+        .sn-product-widget__delivery-frequency {
+          display: none;
+          margin-bottom: 5px;
+        }
+    
+        .sn-product-widget__delivery-frequency .selling_plan {
+          color: #6d7175;
+          font-size: 14px;
+          margin: 0.15em 0;
+          padding: 1em 0.25em;
+          width: 100%;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: 1em;
+          height: 1em;
+          line-height: 1;
+          margin-bottom: 0;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__header {
+          display: flex;
+          align-items: center;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__input {
+          display: flex;
+          align-items: center;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__input input {
+          opacity: 0;
+          width: 0;
+          height: 0;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__label {
+          margin-left: 4px;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__input input:focus + .radio__control {
+          box-shadow: 0 0 0 0.05em #fff, 0 0 0.15em 0.1em currentColor;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__input input:checked + .radio__control {
+          background: radial-gradient(currentColor 50%, rgba(255, 0, 0, 0) 51%);
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__control {
+          display: block;
+          width: 1em;
+          height: 1em;
+          border-radius: 50%;
+          border: 0.1em solid currentColor;
+          transform: translateY(-0.05em);
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__price {
+          display: flex;
+          flex-direction: column;
+          text-align: right;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__price > span {
+          display: inline-block;
+        }
+    
+        .sn-product-widget__delivery-frequency .radio__price .second-discount {
+          margin-top: 4px;
+        }
+    
+        #sn-product-widget #powered-by {
+          color: #6d7175;
+          font-size: 12px;
+          margin-top: 4px;
+          text-align: center;
+        }
+      </style>
+    
+      <script type='text/javascript'>
+        
+      (function() {
+        if (typeof window.sn === 'undefined') window.sn = {}
+        var selectors = window.sn.datastore.shop.selectors || {}
+    
+        function Helper() {
+          var self = this;
+    
+          self.log = function(message) {
+            if (window.sn.settings.logInConsole) {
+              console.log(message);
+            } else {
+              window.sn.debug.push(message);
+            }
+          };
+    
+          self.formatMoney = function(amount, decimalDigits) {
+            if (!amount) return null;
+    
+            var moneyFormat = '{{shop.money_format}}';
+    
+            var firstCurly = moneyFormat.indexOf('{')
+            var lastCurly = moneyFormat.lastIndexOf('}')
+    
+            var prefix = moneyFormat.substring(0,firstCurly)
+            var suffix = moneyFormat.substring(lastCurly+1,moneyFormat.length)
+    
+            var moneyFormatSwitch = moneyFormat.substring(firstCurly,lastCurly+1)
+            moneyFormatSwitch = moneyFormatSwitch.replace(/ /g, ''); // Remove spaces
+    
+            var localeOptions = {
+              minimumFractionDigits: decimalDigits,
+              maximumFractionDigits: decimalDigits,
+            };
+    
+            switch(moneyFormatSwitch) {
+              case '{% raw %}{{amount}}{% endraw %}': {
+                return prefix + amount.toLocaleString('en-US', localeOptions) + suffix
+              }
+              case '{% raw %}{{amount_no_decimals}}{% endraw %}': {
+                return prefix + parseInt(amount).toLocaleString() + suffix
+              }
+              case '{% raw %}{{amount_with_comma_separator}}{% endraw %}': {
+                return prefix + amount.toLocaleString('en-US', localeOptions).replace(/[.,]/g, (punc) => { return punc === '.' ? ',' : '.' }) + suffix
+              }
+              case '{% raw %}{{amount_no_decimals_with_comma_separator}}{% endraw %}': {
+                return prefix + amount.toLocaleString('en-US', {maximumFractionDigits:0}) + suffix
+              }
+              case '{% raw %}{{amount_with_apostrophe_separator}}{% endraw %}': {
+                return prefix + amount.toLocaleString('en-US', localeOptions).replace(/,/g, '\'') + suffix
+              }
+              default: {
+                return prefix + moneyFormat.replace("{% raw %}{{amount}}{% endraw %}", amount.toFixed(decimalDigits)) + suffix
+              }
+            }
+    
+          };
+        }
+    
+        function ProductPage() {
+          var self = this;
+          self.variantElement = document.querySelector(selectors.variant_element || '[name=id]');
+    
+          self.variantPrices = {};
+          self.variantSellingPlanGroupIds = {};
+          {% for variant in product.variants %}
+            self.variantPrices[{{ variant.id }}] = {
+              price: {{ variant.price | divided_by: 100.0 }},
+              compareAtPrice:
+                {%- if variant.compare_at_price -%}
+                  {{ variant.compare_at_price | divided_by: 100.0 }},
+                {%- else -%}
+                  null
+                {% endif %}
+            };
+    
+            self.variantSellingPlanGroupIds[{{ variant.id }}] = {{
+              variant.selling_plan_allocations |
+              map: "selling_plan_group_id" |
+              json
+            }};
+          {% endfor %}
+    
+          self.getCurrentVariantId = function() {
+            {% if adminPreview %}
+              return Object.keys(self.variantPrices)[0];
+            {% else %}
+            var currentVariant = window.location.search.match(/variant=([0-9]+)/)
+              if (currentVariant != null) {
+                return currentVariant[1]
+              } else {
+                var curVariantId = null;
+                var elems = document.getElementsByClassName(selectors.variant_selector || "product-variant__input product-variant-value");
+                if (elems) {
+                  for (var i = 0; i < elems.length; i++) {
+                    if (elems[i].checked === true) {              
+                      {% for variant in product.variants %}
+                        if (`{{ variant.title }}` === elems[i].value) {
+                          curVariantId = {{ variant.id }}
+                        }
+                      {% endfor %}
+                    }
+                  }
+                }
+                if (curVariantId) return curVariantId;
+                if (self.variantElement) return parseInt(self.variantElement.value);
+                if (self.variantPrices && Object.keys(self.variantPrices)) return Object.keys(self.variantPrices)[0];
+              }
+              return null; // Should not be reached
+            {% endif %}
+          }
+    
+          self.updatePriceWithSellingPlanDiscount = function() {
+            // Not implementing this for now. See SN-454
+          }
+    
+          function setupVariantChangeListener() {
+            var previousVariantId = null;
+    
+            setInterval(function() {
+              if (self.getCurrentVariantId() !== previousVariantId) {
+                previousVariantId = self.getCurrentVariantId();
+    
+                var variantId;
+                if (typeof self.variantPrices[self.getCurrentVariantId()] === 'undefined') {
+                  variantId = Object.keys(self.variantPrices)[0];
+                } else {
+                  variantId = self.getCurrentVariantId();
+                }
+    
+                window.sn.productWidget.setPrices(self.variantPrices[variantId].price);
+                self.updatePriceWithSellingPlanDiscount();
+    
+                window.sn.productWidget.updateSellingPlanGroupsVisibility(self.variantSellingPlanGroupIds[variantId]);
+              }
+            }, 500);
+          }
+    
+          setupVariantChangeListener();
+        }
+    
+        function selectPurchaseOption(context) {
+          context.purchaseOptionButton.classList.add('selected');
+          context.deliveryFrequencySection.style.display = 'block';
+    
+          context.radioButtons[0].checked = true;
+          context.markRowAsSelected(context.radioButtons[0]);
+    
+          window.sn.productPage.updatePriceWithSellingPlanDiscount();
+    
+          // Colorize text and border
+          context.purchaseOptionButton.style.color = window.sn.color.product_widget_color
+          context.purchaseOptionButton.style.borderColor = window.sn.color.product_widget_color
+    
+          // Colorize icon
+          context.purchaseOptionButton.svgGroup = document.querySelectorAll('#sn-product-widget__purchase-options button.selected svg path')
+          context.purchaseOptionButton.svgGroup.forEach(path => {
+            path.style.fill = window.sn.color.product_widget_color
+          })
+        }
+    
+        function ProductWidget() {
+          var self = this;
+    
+          function initialize() {
+            self.widgetElement = document.querySelector("#sn-product-widget");
+    
+            self.purchaseOptionsSection = self.widgetElement.querySelector("#sn-product-widget__purchase-options");
+            self.oneTimePurchaseButton = self.purchaseOptionsSection.querySelector("button");
+            
+    
+            // Initial color of the One Time Purchase button and icon should already come from liquid settings
+            self.oneTimePurchaseButton.style.color = window.sn.color.product_widget_color
+            self.oneTimePurchaseButton.style.borderColor = window.sn.color.product_widget_color
+            self.oneTimePurchaseButton.svgGroup = self.oneTimePurchaseButton.querySelectorAll('button.selected svg path')
+            self.oneTimePurchaseButton.svgGroup.forEach(path => {
+              path.style.fill = window.sn.color.product_widget_color
+            })
+    
+            urlExists("{{ shop.url }}/policies/subscription-policy").then(function(exists) {
+              self.widgetElement.querySelectorAll(".policy-link").forEach(function(link) {
+                if (exists) {
+                  link.style.color = window.sn.color.product_widget_color;
+                } else {
+                  link.style.display = "none";
+                }
+              });
+            })
+    
+            self.subscribePurchaseButtons = self.purchaseOptionsSection.querySelectorAll("button[data-selling-plan-group-id]");
+    
+            self.deliveryFrequencySections = self.widgetElement.querySelectorAll(".sn-product-widget__delivery-frequency");
+    
+            self.sellingPlanGroups = Array.from(self.subscribePurchaseButtons)
+              .map(function(subscribePurchaseButton, index) {
+                return new ProductWidgetSellingPlanGroup(
+                  subscribePurchaseButton,
+                  self.deliveryFrequencySections[index],
+                );
+              });
+    
+            // For products that has "Only allow purchase of this product as a subscription" set to true
+            {% if product.requires_selling_plan %}
+    
+              // Deselect one time purchase button, then hide it
+              self.purchaseOptionsSection.querySelector("button").classList.remove('selected')
+              self.purchaseOptionsSection.querySelector("button").style.display = 'none'
+    
+              // Select the 1st selling plan group as the purchase option
+              selectPurchaseOption(self.sellingPlanGroups[0])
+    
+              if (self.sellingPlanGroups.length === 1) {
+                self.purchaseOptionsSection.style.display = 'none';
+              }
+            {% endif %}
+    
+            self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+              // we have to do this here as the selling plan group object does not have access
+              // to the other selling plans and the one-time button
+              sellingPlanGroup.purchaseOptionButton.addEventListener('click', function() {
+                self.hideAllSellingPlanGroups();
+                self.oneTimePurchaseButton.classList.remove('selected');
+    
+                // Decolorize text and border
+                self.oneTimePurchaseButton.style.color = ''
+                self.oneTimePurchaseButton.style.borderColor = ''
+    
+                // Decolorize icon isn't needed in here. The icon for oneTimePurchaseButton
+                // inherits the color from the parent container when set to blank.
+              });
+    
+              sellingPlanGroup.initializePurchaseButtonListener();
+            });
+             
+                 self.oneTimePurchaseButton.classList.remove('selected');  //Add Valery
+    
+                // Decolorize text and border
+                self.oneTimePurchaseButton.style.color = ''          //Add Valery
+                self.oneTimePurchaseButton.style.borderColor = ''   //Add Valery
+               
+               
+               selectPurchaseOption(self.sellingPlanGroups[0]); //Add Valery
+            
+      
+            self.oneTimePurchaseButton.addEventListener('click', function() {
+              self.hideAllSellingPlanGroups();
+              self.oneTimePurchaseButton.classList.add('selected');
+              window.sn.productPage.updatePriceWithSellingPlanDiscount();
+    
+              // Colorize text and border
+              self.oneTimePurchaseButton.style.color = window.sn.color.product_widget_color
+              self.oneTimePurchaseButton.style.borderColor = window.sn.color.product_widget_color
+    
+              // Colorize icon
+              self.oneTimePurchaseButton.svgGroup = self.oneTimePurchaseButton.querySelectorAll('button.selected svg path')
+              self.oneTimePurchaseButton.svgGroup.forEach(path => {
+                path.style.fill = window.sn.color.product_widget_color
+              })
+    
+            });
+    
+            self.widgetElement.querySelector('#powered-by').style.display = window.sn.datastore.shop.show_powered_by ? 'block' : 'none';
+             
+          }
+    
+          self.hideAllSellingPlanGroups = function() {
+            self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+              sellingPlanGroup.hideSellingPlan();
+            });
+          };
+    
+          self.updateSellingPlanGroupsVisibility = function(groupsToShow) {
+            // Hide subscriptions widget if there's no selling plan groups to show
+            if (groupsToShow.length === 0) {
+              self.widgetElement.style.display = 'none';
+              // Clear selections
+              self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+                sellingPlanGroup.hideSellingPlan();
+              })
+            } else {
+              self.widgetElement.style.display = 'inherit';
+              self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+                if (groupsToShow.includes(sellingPlanGroup.getId())) {
+                  sellingPlanGroup.purchaseOptionButton.style.display = 'flex';
+                } else {
+                  sellingPlanGroup.hideSellingPlan();
+                  sellingPlanGroup.purchaseOptionButton.style.display = 'none';
+                }
+              });
+            }
+          };
+    
+          self.setPrices = function(originalPrice) {
+            self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+              sellingPlanGroup.setPrices(originalPrice);
+            });
+          };
+         
+          initialize();
+        }
+    
+        function ProductWidgetSellingPlanGroup(
+          purchaseOptionButton,
+          deliveryFrequencySection,
+        ) {
+          var self = this;
+    
+          self.purchaseOptionButton = purchaseOptionButton;
+          self.purchaseOptionButtonDiscountBadge = purchaseOptionButton.querySelector(".subscription_max_discount");
+    
+          self.deliveryFrequencySection = deliveryFrequencySection;
+          self.radioButtons = deliveryFrequencySection.querySelectorAll("input[type='radio']");
+          self.priceCells = deliveryFrequencySection.querySelectorAll("[data-discount-value]");
+    
+          self.originalPrice = null;
+          self.maxDiscount = null;
+    
+          self.initializePurchaseButtonListener = function() {
+            self.purchaseOptionButton.addEventListener('click', function() {
+              selectPurchaseOption(self)
+            });
+          };
+    
+          self.initializeRadioButtons = function() {
+            self.radioButtons.forEach(function(radioButton) {
+              radioButton.addEventListener('change', function(e) {
+                self.markRowAsSelected(e.target);
+                window.sn.productPage.updatePriceWithSellingPlanDiscount();
+              });
+            });
+          };
+    
+          self.getId = function() {
+            return self.purchaseOptionButton.getAttribute('data-selling-plan-group-id');
+          };
+    
+          self.hideSellingPlan = function() {
+            purchaseOptionButton.classList.remove('selected');
+            deliveryFrequencySection.style.display = 'none';
+    
+            self.radioButtons.forEach(function(radioButton) {
+              radioButton.parentElement.parentElement.classList.remove('selected');
+              radioButton.checked = false;
+            })
+    
+            // Decolorize text and border
+            purchaseOptionButton.style.color = ''
+            purchaseOptionButton.style.borderColor = ''
+    
+            // Decolorize icon
+            purchaseOptionButton.svgHead = document.querySelectorAll('#sn-product-widget__purchase-options button svg path')
+            purchaseOptionButton.svgHead.forEach(path => {
+              path.style.fill = ''
+            })
+    
+          };
+    
+          self.markRowAsSelected = function(radioButton) {
+            self.radioButtons.forEach(function(otherRadioButton) {
+              var div = document.querySelector("#selling_plan_" + otherRadioButton.value)
+              div.classList.remove('selected')
+              div.style.backgroundColor = ''
+              div.style.color = ''
+            });
+    
+            var div = document.querySelector("#selling_plan_" + radioButton.value)
+            div.classList.add('selected');
+            div.style.backgroundColor = window.sn.color.product_widget_rgb
+            div.style.color = window.sn.color.product_widget_color
+          };
+    
+          self.setPrices = function(originalPrice) {
+            self.originalPrice = originalPrice;
+    
+            function computeDiscountedPrice(discountType, discountValue) {
+              var discountedPrice;
+    
+              switch(discountType)  {
+                case 'fixed_amount':
+                  discountedPrice = originalPrice - discountValue;
+                  break;
+                case 'percentage':
+                  discountedPrice = originalPrice * (1 - discountValue);
+                  break;
+                case 'price':
+                  discountedPrice = discountValue;
+                  break;
+                case '':
+                  discountedPrice = originalPrice;
+                  break;
+                default:
+                  discountedPrice = '-'; // This is an error state.
+              }
+    
+              if (discountType && discountValue > 0 && (!self.maxDiscount || self.maxDiscount.price > discountedPrice)) {
+                self.maxDiscount = {
+                  price: discountedPrice,
+                  value: discountValue,
+                  type: discountType
+                };
+              }
+    
+              return window.sn.helper.formatMoney(discountedPrice, 2);
+            }
+    
+            self.priceCells.forEach(function(priceCell) {
+              var discountedPriceText = computeDiscountedPrice(
+                priceCell.getAttribute('data-discount-type'),
+                priceCell.getAttribute('data-discount-value') / 100
+              );
+    
+              var nextDiscountedPriceText = computeDiscountedPrice(
+                priceCell.getAttribute('data-next-discount-type'),
+                priceCell.getAttribute('data-next-discount-value') / 100
+              );
+    
+              var firstDiscountSpan = priceCell.querySelector("span.first-discount");
+              var secondDiscountSpan = priceCell.querySelector("span.second-discount");
+    
+              if (priceCell.getAttribute('data-next-discount-type') === '') {
+                firstDiscountSpan.innerHTML =
+                  "{discounted_price} per delivery"
+                    .replace("{discounted_price}", discountedPriceText);
+                secondDiscountSpan.style.display = 'none';
+              } else {
+                firstDiscountSpan.innerHTML =
+                  "{discounted_price}/delivery initially"
+                    .replace("{discounted_price}", discountedPriceText);
+                secondDiscountSpan.innerHTML = 
+                  "{discounted_price_after_x_cycles} after {change_discounts_after_x_cycles} deliveries"
+                    .replace("{discounted_price_after_x_cycles}", nextDiscountedPriceText)
+                    .replace("{change_discounts_after_x_cycles}", priceCell.getAttribute('data-after-cycle'));
+              }
+            });
+    
+            if (self.maxDiscount && !isNaN(self.maxDiscount.value)) {
+              self.updateDiscountBadge();
+            }
+          };
+    
+          self.updateDiscountBadge = function() {
+            var maxDiscountToPrint;
+            var maxDiscountToPrintValue;  //ADD VALERA
+            var maxDiscountValue; //ADD VALERA
+    
+            switch (self.maxDiscount.type) {
+              case 'fixed_amount':
+                maxDiscountToPrint = window.sn.helper.formatMoney(Math.floor(self.maxDiscount.value), 0);
+                break;
+              case 'price':
+                maxDiscountToPrint = window.sn.helper.formatMoney(Math.floor(self.originalPrice - self.maxDiscount.value), 0);
+                break;
+              case 'percentage':
+                maxDiscountToPrint = Math.floor(self.maxDiscount.value * 100) + '%';
+                maxDiscountToPrintValue=window.sn.helper.formatMoney(Math.floor(self.originalPrice * self.maxDiscount.value), 0);
+                maxDiscountValue =maxDiscountToPrint+" - that's "+ maxDiscountToPrintValue +" in your pocket! ";
+                break;
+            }
+    
+            self.purchaseOptionButtonDiscountBadge.innerHTML = "Save {save_value}".replace("{save_value}", maxDiscountValue);
+            self.purchaseOptionButtonDiscountBadge.style.display = 'block';
+            self.purchaseOptionButtonDiscountBadge.style.background = window.sn.color.product_widget_color
+    
+          };
+    
+          self.initializeRadioButtons();
+        }
+    
+        // Asynchronous check if url exists
+        function urlExists (url) {
+          return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('HEAD', url);
+            xhr.onload = function () {
+              // No other checks needed since this just validates if url exists
+              if (xhr.status != 404) {
+                resolve(true);
+              } else {
+                resolve(false);
+              }
+            };
+            // Whatever errors encountered, just return false
+            xhr.onerror = function () {
+              resolve(false);
+            };
+            xhr.send();
+          });
+        }
+    
+        window.sn.helper = new Helper();
+        window.sn.productPage = new ProductPage();
+        window.sn.productWidget = new ProductWidget();
+      })()
+    
+    
+      </script>
+    {% endif %}
+    

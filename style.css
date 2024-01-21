@@ -1,0 +1,141 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.sub_div.active,
+.otp_div.active {
+    background-color: #F2F2F0 !important;
+}
+
+.otp_div.active .otp_data {
+    display: flex !important;
+}
+
+.sub_div.active .sub_data {
+    display: block !important;
+}
+
+.product_selling_plan.active {
+    background: #1c1c1c99 !important;
+    color: #FFF !important;
+    border: none !important;
+}
+
+.product_selling_plans_wrapper.active {
+    display: flex !important;
+}
+
+.product_data_tabs_wrapper::-webkit-scrollbar {
+    -webkit-appearance: none;
+}
+
+.product_data_tab.active {
+    color: #1c1c1c;
+    border-bottom: 1px solid #1c1c1c;
+}
+
+.how_to_use p,
+.ingredients_richtext p {
+    color: #1c1c1c;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 27px;
+    letter-spacing: 0.14px;
+}
+
+.how_to_use strong,
+.ingredients_richtext strong {
+    color: #1c1c1c;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 28px;
+    margin-bottom: 8px;
+}
+
+.custom_accordion_content p {
+    color: #1C1C1C;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 27px;
+}
+@media screen and (max-width: 770px) {
+
+    .how_to_use p,
+    .ingredients_richtext p {
+        font-size: 14px;
+        line-height: 19.6px;
+        letter-spacing: normal !important;
+    }
+
+    .how_to_use strong,
+    .ingredients_richtext strong {
+        font-size: 18px;
+        line-height: 25.2px;
+    }
+
+    .custom_accordion_content p {
+        color: #1C1C1C;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 22.4px;
+    }
+}
+
+.custom_accordion_rewards .close,
+.custom_accordion_faqs .close {
+    display: none;
+}
+
+.custom_accordion_rewards .custom_accordion_content,
+.custom_accordion_faqs .custom_accordion_content_wrapper {
+    display: none;
+}
+
+.custom_accordion_rewards.active .accordion_title_wrapper,
+.custom_accordion_faqs.active .accordion_title_wrapper {
+    margin-bottom: 32px !important;
+}
+
+.custom_accordion_rewards.active .custom_accordion_content,
+.custom_accordion_faqs.active .custom_accordion_content_wrapper {
+    display: block;
+}
+
+.custom_accordion_rewards.active .open,
+.custom_accordion_faqs.active .open {
+    display: none;
+}
+
+.custom_accordion_rewards.active .close,
+.custom_accordion_faqs.active .close {
+    display: block;
+}
+
+.accordion_content_wrapper_inner .close {
+    display: none !important;
+}
+
+.accordion_content_wrapper_inner .open {
+    display: block !important;
+}
+
+.accordion_content_wrapper_inner .custom_accordion_content {
+    display: none !important;
+}
+
+.accordion_content_wrapper_inner.active .close {
+    display: block !important;
+}
+
+.accordion_content_wrapper_inner.active .open {
+    display: none !important;
+}
+
+.accordion_content_wrapper_inner.active .custom_accordion_content {
+    display: block !important;
+}
+.accordion_content_wrapper_inner.active .accordion_title_wrapper_inner {
+    margin-bottom: 8px !important;
+}

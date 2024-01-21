@@ -1,0 +1,298 @@
+{%- liquid
+  assign video_id = section.settings.video.id | default: section.settings.video_url.id
+  assign video_alt = section.settings.video.alt | default: section.settings.description
+  assign alt = 'sections.video.load_video' | t: description: video_alt | escape
+  assign poster = section.settings.video.preview_image | default: section.settings.cover_image
+
+  if section.settings.video != null
+    assign ratio_diff = section.settings.video.aspect_ratio | minus: poster.aspect_ratio | abs
+    if ratio_diff < 0.01 and ratio_diff > 0
+      assign fix_ratio = true
+    endif
+  endif
+-%}
+{%- style -%}
+.background_icon{
+    position:absolute;
+    z-index: 1;
+  }
+.custom_iframe_video{
+    width: 100%;
+    min-height: 470px;
+}
+.video_container{
+    z-index: 2;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+.title_video_section{
+    color: #285234;
+    text-align: center;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-bottom: 60px;
+    z-index: 2;
+    position: relative;
+}
+.custom_video_section{
+    position: relative;
+    background-color: {{ section.settings.video_background_color }};
+    padding-top:{{section.settings.padding_top}}px;
+    padding-bottom:{{section.settings.padding_bottom}}px;
+}
+@media(max-width:786px){
+  .background_icon img{
+  }
+  .custom_iframe_video{
+      min-height: 240px;
+  }
+  .title_video_section{
+    font-size: 34px;
+  }
+.custom_video_section{
+  padding-top:{{section.settings.padding_top_mb}}px;
+  padding-bottom:{{section.settings.padding_bottom_mb}}px;
+}
+}
+{%- endstyle -%}
+
+{% if section.settings.video_url %}
+  <div class="custom_video_section">
+    <div class="products_effects-wrapper wrapper">
+      <div class="title_video_section">
+        {{ section.settings.video_title }}
+      </div>
+      <div class="video_container">
+          {%- if section.settings.video == null and section.settings.video_url != null -%}
+          {%- liquid
+            assign loop = ''
+            if section.settings.enable_video_looping
+              assign loop = '&loop=1&playlist=' | append: video_id
+            endif
+          -%}
+          {%- if section.settings.video_url.type == 'youtube' -%}
+            <iframe
+              src="https://www.youtube.com/embed/{{ video_id }}?enablejsapi=0&autoplay=0&controls=0&muted=1"
+              class="js-youtube custom_iframe_video"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- else -%}
+            <iframe
+              src="https://player.vimeo.com/video/{{ video_id }}?autoplay=1{{ loop }}"
+              class="js-vimeo custom_iframe_video"
+              allow="encrypted-media"
+              allowfullscreen
+              title="{{ section.settings.description | escape }}"
+            ></iframe>
+          {%- endif -%}
+        {%- else -%}
+          {{
+            section.settings.video
+            | video_tag:
+              image_size: '600x',
+              autoplay: true,
+              loop: section.settings.enable_video_looping,
+              controls: true,
+              muted: false
+          }}
+        {%- endif -%}
+      </div>
+    </div>
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'background_icon' -%}
+        {% if block.settings.background_icon != blank %}
+          <div style="{{block.settings.icon_position}}" class="background_icon">
+            <img src="{{block.settings.background_icon | img_url: "master" }}" alt="background icon" loading='lazy'>
+          </div>
+        {% endif %}
+    {%- endcase -%}
+    {%- endfor -%}
+  </div>
+{% elsif section.settings.direct_video_url %}
+  <div class="custom_video_section">
+    <div class="products_effects-wrapper wrapper">
+      <div class="title_video_section">
+        {{ section.settings.video_title }}
+      </div>
+      <div class="video_container">
+        <video controls class="custom_iframe_video">
+          <source src="{{ section.settings.direct_video_url }}" type="video/mp4">
+          Ваш браузер не поддерживает тег video.
+        </video>
+      </div>
+    </div>
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+      {%- when 'background_icon' -%}
+        {% if block.settings.background_icon != blank %}
+          <div style="{{block.settings.icon_position}}" class="background_icon">
+            <img src="{{block.settings.background_icon | img_url: "master" }}" alt="background icon" loading='lazy'>
+          </div>
+        {% endif %}
+    {%- endcase -%}
+    {%- endfor -%}
+  </div>
+{% endif %}
+
+
+{% schema %}
+{
+"name": "Custom video section2",
+"blocks":[
+  {
+  "name":"Background Icon",
+  "type":"background_icon",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id":"background_icon",
+      "label":"background icon"
+    },
+    {
+     "type": "html",
+     "id":"icon_position",
+     "label": "icon position"
+    }
+  ]
+  }
+],
+"settings": [
+  {
+    "type": "inline_richtext",
+    "id": "video_title",
+    "label": "Title"
+  },
+  {
+    "type": "color",
+    "id": "video_background_color",
+    "label": "Background color"
+  },
+  {
+    "type": "video_url",
+    "id": "video_url",
+    "accept": ["youtube", "vimeo"],
+    "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
+    "label": "Video"
+  },
+  {
+    "type": "checkbox",
+    "id": "enable_autoplay_on_view",
+    "label": "Автовоспроизведение при просмотре",
+    "default": true
+  },
+  {
+    "type": "text",
+    "id": "direct_video_url",
+     "label": "Прямая ссылка на видео (например, .mp4)"
+  },
+  {
+      "type":"checkbox",
+      "id":"enable_video_looping",
+      "label":"Loop video"
+  },
+  {
+    "type": "image_picker",
+    "id": "video_thumbnail",
+    "label": "Миниатюра видео"
+},
+  {
+    "type": "range",
+    "id": "padding_top",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Padding top",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Padding bottom",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_top_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space top for mobile",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space bottom for mobile",
+    "default": 1
+  }
+], 
+"presets": [
+  {
+    "name": "Custom video section2",
+    "blocks": [
+      {
+        "type": "background_icon"
+      }
+    ]
+  }
+]
+}
+{% endschema %}
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Если функция автовоспроизведения отключена в схеме, выходим из функции.
+    if (!{{ section.settings.enable_autoplay_on_view }}) return;
+
+    var videos = document.querySelectorAll('.custom_iframe_video');
+
+    var options = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5
+    };
+
+    function handleIntersect(entries, observer) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          var video = entry.target;
+          if (video.tagName === "VIDEO") {
+            video.play();
+          } else if (video.tagName === "IFRAME") {
+            var src = video.src;
+            video.src = src.replace('autoplay=0', 'autoplay=1');
+          }
+        } else {
+          var video = entry.target;
+          if (video.tagName === "VIDEO") {
+            video.pause();
+          } else if (video.tagName === "IFRAME") {
+            var src = video.src;
+            video.src = src.replace('autoplay=1', 'autoplay=0');
+          }
+        }
+      });
+    }
+
+    var observer = new IntersectionObserver(handleIntersect, options);
+    videos.forEach(function(video) {
+      observer.observe(video);
+    });
+  });
+</script>

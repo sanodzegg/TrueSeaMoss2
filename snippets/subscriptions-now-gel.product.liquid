@@ -1,0 +1,951 @@
+{%- liquid 
+    assign title_section = block.title_sec 
+    assign text_btn = block.btn_w_s 
+    assign text_benefit = block.text_benefit 
+    assign text_option = block.name_option
+    
+    assign benefit_img_1 = block.benefit_img_1
+    assign benefit_title_1 = block.benefit_title_1
+    assign benefit_info_1 = block.benefit_info_1
+ 
+    assign benefit_img_2 = block.benefit_img_2
+    assign benefit_title_2 = block.benefit_title_2
+    assign benefit_info_2 = block.benefit_info_2
+ 
+    assign benefit_img_3 = block.benefit_img_3
+    assign benefit_title_3 = block.benefit_title_3
+    assign benefit_info_3 = block.benefit_info_3
+
+    assign benefit_img_4 = block.benefit_img_4
+    assign benefit_title_4 = block.benefit_title_4
+    assign benefit_info_4 = block.benefit_info_4
+    
+    assign quote = block.quote
+    
+    assign product_free = product_free
+    assign is_free = is_free
+    assign product_id = product_free.selected_or_first_available_variant.id
+    assign product_title = product_free.title
+    assign product_img = product_free.featured_image | img_url: 'master'
+    assign product_img_alt = product_free.featured_image.alt
+    assign free_title = block.free_title
+    assign free_badge = block.free_badge
+    assign free_fake_price = block.fake_price
+ 
+    assign main_id = product_current.id
+ 
+    assign icon_one_time = block.icon_one_time
+    assign text_one_time = block.text_one_time
+
+
+    assign first_variant = product_current.selected_or_first_available_variant
+
+
+    assign price_first_regular = first_variant.price | minus: 3
+    assign price_first_compare = first_variant.compare_at_price
+    assign price_first_save = price_first_compare | minus: price_first_regular
+    assign price_first_discount =  price_first_regular | times: 0.15
+ 
+ -%}
+ {% capture price_variant %}
+[
+  {% for variant in product_current.variants %}
+    {
+      "id":"{{variant.id}}",
+      "priceRegular":"{{variant.price}}",
+      "priceCompare":"{{variant.compare_at_price}}"
+    }
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{% endcapture %}
+ {%- capture widget_quntity -%}
+ [{
+   {% for variant in product_current.variants %}
+   "{{variant.id}}":"{{variant.inventory_quantity}}"{% unless forloop.last %},{% endunless %}
+   {% endfor %}
+ }]
+ {%- endcapture -%}
+ 
+ <script type="application/json" id="widget_quntity" >
+   {{ widget_quntity | strip_newlines }}
+ </script>
+ <script type="application/json" id="widget_price" >
+  {{ price_variant | strip_newlines }}
+</script>
+ 
+ <style>
+  #cart-drawer.is_disabled,
+  #cart-drawer.is-loading,
+  .cart-drawer__foot.cart__foot.is-disabled {
+    pointer-events: none;
+  }
+</style>
+ <style>
+   #sn-product-widget__purchase-options button span.group-name::before {
+     content: "";
+     background-image: url("{{ 'icon-circle.svg' | asset_url }} ") !important;
+     background-size: cover;
+     background-repeat: no-repeat;
+   }
+   #sn-product-widget__purchase-options button.selected span.group-name::before {
+     background-image: url("{{ 'icon-circle-active.svg' | asset_url }} ") !important;
+   }
+ </style>
+ {% if product.selling_plan_groups.size > 0 %}
+
+ {{ "product-subscribe-gel.css" | asset_url | stylesheet_tag }}
+   <h4 class="selling_plan-title">{{title_section}}</h4>
+   <div id='sn-product-widget'>
+     {% if is_free %}
+     <input type="hidden" class="free-input" data-handle="{{product_current.title}}" value="{{product_id}}" data-quantity="0">
+     {% endif %}
+     <section id='sn-product-widget__purchase-options'>
+       <div class="sn-product-widget_wrapper">
+         <button type='button' class='selected'>
+           <span class='group-name group-name_one'>{{text_btn}}</span>
+         </button>
+         {% for selling_plan_group in product.selling_plan_groups %}
+           <button
+             type='button'
+             data-selling-plan-group-id='{{ selling_plan_group.id }}'
+           >
+             <span class='subscription_max_discount2'>Save 4.33$</span>
+             <span class='group-name'>{{ selling_plan_group.name }}</span>
+             <span class='subscription_max_discount'>-</span>
+ 
+           </button>
+         {% endfor %}
+ 
+       </div>
+     </section>
+ 
+     {% for selling_plan_group in product.selling_plan_groups %}
+       <section
+         class='sn-product-widget__delivery-frequency'
+         data-selling-plan-group-id='{{ selling_plan_group.id }}'
+       >
+        {% if text_option != blank %}
+            <h4>{{text_option}}</h4>
+        {% endif %}
+         {% for selling_plan in selling_plan_group.selling_plans limit: 1 %}
+           <div id='selling_plan_{{ selling_plan.id }}' class='selling_plan'>
+             {%- assign discount_value = selling_plan.price_adjustments[0].value -%}
+             {%- assign origin_price = product.price -%}
+             <div class="selling_plan-price">
+               <p class="selling_plan-price_origin">{{origin_price | money }}</p>
+               <label class='radio'>
+                 <div
+                 class='radio__price'
+                 data-discount-value='{{ selling_plan.price_adjustments[0].value }}'
+                 data-discount-type='{{ selling_plan.price_adjustments[0].value_type }}'
+                 data-after-cycle='{{ selling_plan.price_adjustments[0].order_count }}'
+                 data-next-discount-value='{{ selling_plan.price_adjustments[1].value }}'
+                 data-next-discount-type='{{ selling_plan.price_adjustments[1].value_type }}'
+               >
+                 <span class='first-discount'>-</span>
+                 <span class='second-discount'>-</span>
+               </div>
+                 <div class='radio__header'>
+                   <span class='radio__input'>
+                     {% if product_form_id %}
+                       <input
+                         type='radio'
+                         name='selling_plan'
+                         value='{{ selling_plan.id }}'
+                         form='{{ product_form_id }}'
+                       >
+                     {% else %}
+                       <input
+                         type='radio'
+                         name='selling_plan'
+                         value='{{ selling_plan.id }}'
+                       >
+                     {% endif %}
+                     <span class='radio__control'></span>
+                   </span>
+                   <span class='radio__label' style="display: none;" >
+                     {% if false %}
+                       {{ selling_plan.name }}
+                     {% else %}
+                       {{ selling_plan.options[0].value }}
+                     {% endif %}
+                   </span>
+                 </div>
+               </label>
+ 
+             </div>
+           </div>
+         {% endfor %}
+         <a
+           style="display: none;"
+           class='policy-link'
+           href='/policies/subscription-policy'
+           target='_blank'
+         >
+           View Subscription Policy
+         </a>
+         <!-- Quantity: -->
+ 
+         <!-- test -->
+         {% if is_free %}
+         <div class="sn-product-free" data-id="{{product_id}}">
+          <div class="sn-product-free_badge">
+              <span class="free-badge">FREE</span>
+              <span class="free-text">{{free_fake_price}}</span>
+          </div>
+           <div class="sn-product-free_text">
+             <h4 class="sn-product-free_title">{{free_title}}</h4>
+             <p class="sn-product-free_subtitle">{{product_title}}</p>
+           </div>
+           <div class="sn-product-free_img">
+            <img 
+              src="{{product_img}}" 
+              alt="{{product_img_alt}}"
+              loading="lazy"
+            >
+          </div>
+         </div>
+         {% endif %}
+         <div class="sn-product-benefit">
+           <div class="benefit-item">
+               <div class="benefit-item_icon">
+                 <img 
+                   src="{{benefit_img_1 | img_url: 'master'}}" 
+                   alt="{{benefit_img_1.alt}}"
+                   loading="lazy"
+                   >
+               </div>
+               <div class="benefit-item_text">
+                   <h5 class="benefit-item_title">{{benefit_title_1}}</h5>
+                   <div class="benefit-item_info">{{benefit_info_1}}</div>
+               </div>
+           </div>
+           <div class="benefit-item">
+               <div class="benefit-item_icon">
+                 <img 
+                   src="{{benefit_img_2 | img_url: 'master'}}" 
+                   alt="{{benefit_img_2.alt}}"
+                   loading="lazy"
+                   >
+               </div>
+               <div class="benefit-item_text">
+                   <h5 class="benefit-item_title">{{benefit_title_2}}</h5>
+                   <div class="benefit-item_info">{{benefit_info_2}}</div>
+               </div>
+           </div>
+         </div>
+       </section>
+     {% endfor %}
+     <section class="sn-product-widget__delivery-purchase" style="display: none;">
+          <div class="delivery-purchase-left">
+            <div class="delivery-purchase-benefit-hand">
+              <img 
+                src="{{icon_one_time | img_url: 'master'}}" 
+                alt="{{icon_one_time.alt}}"
+                width="50"
+                height="50"
+                >
+                <div class="delivery-purchase-benefit-price">
+                    <p class="benefit-price-text">{{text_one_time}}</p>
+                    <p class='benefit-price--discount'>
+                      <b id="discount_price">{{price_first_regular | minus: price_first_discount | money }} / month</b>
+                      <span id="save_price" >Save {{price_first_save | money}}</span>
+                    </p>
+                    <p id="regular_price"  class='benefit-price--regular'>{{price_first_compare | money}}</p>
+                </div>
+            </div>
+            <div class="delivery-purchase-benefit">
+              {% for i in (i..4) %}
+                {%- capture key_icon -%}benefit_img_{{i}}{%- endcapture -%}
+                {%- capture key_title -%}benefit_title_{{i}}{%- endcapture -%}
+                  {% if block[key_icon] != blank and block[key_title] != blank %}
+                    <div class="delivery-purchase-benefit_item">
+                      <img 
+                        width="20"
+                        height="20"
+                        class="benefit-item_icon" 
+                        src="{{block[key_icon] | img_url: 'master'}}" 
+                        alt="{{block[key_icon].alt}}" 
+                        loading="lazy"
+                      >
+                      <span class="delivery-benefit-item_text" >{{block[key_title]}}</span>
+                    </div>
+                  {% endif %}
+              {% endfor %}
+            </div>
+          </div>
+          <div class="delivery-purchase-right">
+ 
+            <span id="compare_price" class="delivery-purchase-right-main-price">{{price_first_compare | money}} </span>
+          </div>
+          {% if quote != blank %}
+            <div class="delivery-purchase-quote">
+              {%- capture quote_left -%}
+                <svg class="quote-left" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M13.125 15.75C14.219 15.75 15.2682 15.3154 16.0418 14.5418C16.8154 13.7682 17.25 12.719 17.25 11.625C17.25 9.942 16.374 8.3145 15.0668 8.00025C14.562 7.87875 14.1607 7.2315 14.247 6.49275C14.3625 5.50425 15.2565 4.50525 17.0272 3.71775C17.4217 3.54225 17.2568 2.949 16.8285 3.003C12.2137 3.5805 9.015 6.58875 9 10.845C9 13.7723 10.7295 15.75 13.125 15.75ZM4.125 15.75C5.21902 15.75 6.26823 15.3154 7.04182 14.5418C7.8154 13.7682 8.25 12.719 8.25 11.625C8.25 9.942 7.374 8.3145 6.06675 8.00025C5.562 7.87875 5.16075 7.2315 5.247 6.49275C5.3625 5.50425 6.2565 4.50525 8.02725 3.71775C8.42175 3.54225 8.25675 2.949 7.8285 3.003C3.21375 3.5805 0.015 6.58875 0 10.845C0 13.7723 1.7295 15.75 4.125 15.75Z" fill="#FF914F"/>
+                </svg>
+              {%- endcapture -%}
+              {%- capture quote_right -%}
+                <svg class="quote-right" width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M4.875 2.25C3.78098 2.25 2.73177 2.6846 1.95819 3.45818C1.1846 4.23177 0.75 5.28098 0.75 6.375C0.75 8.058 1.626 9.6855 2.93325 9.99975C3.438 10.1213 3.83925 10.7685 3.753 11.5072C3.6375 12.4958 2.7435 13.4947 0.972752 14.2822C0.578253 14.4577 0.74325 15.051 1.1715 14.997C5.78625 14.4195 8.985 11.4113 9 7.155C9 4.22775 7.2705 2.25 4.875 2.25ZM13.875 2.25C12.781 2.25 11.7318 2.6846 10.9582 3.45818C10.1846 4.23177 9.75 5.28098 9.75 6.375C9.75 8.058 10.626 9.6855 11.9333 9.99975C12.438 10.1213 12.8393 10.7685 12.753 11.5072C12.6375 12.4958 11.7435 13.4947 9.97275 14.2822C9.57825 14.4577 9.74325 15.051 10.1715 14.997C14.7863 14.4195 17.985 11.4113 18 7.155C18 4.22775 16.2705 2.25 13.875 2.25Z" fill="#DB4536"/>
+                </svg>
+              {%- endcapture -%}
+              <p>{{quote | prepend: quote_left | append: quote_right }}</p>
+            </div> 
+          {% endif %}
+     </section>
+     <a style="display: none;" id='powered-by' href='https://propelcommerce.io' target='_blank'>Powered by Propel Subscriptions</a>
+   </div>
+  
+ <script>
+ document.addEventListener("DOMContentLoaded", function() {
+   const fetchCartItem = async () => {
+       const res = await fetch("/cart.js");
+       const cartItems = await res.json();
+       return cartItems.items;
+   };
+ 
+   const getCartItems = async () => {
+       const freeInput = document.querySelector(".free-input");
+       if (!freeInput) return;
+       const mainId = "{{product_id}}";
+       const items = await fetchCartItem();
+       const handleMain = "Main " + String(freeInput.dataset.handle).toLocaleLowerCase();
+       const isCart = items.some(item => Number(item.variant_id) === Number(mainId));
+       freeInput.setAttribute("data-quantity", isCart ? 0 : 1);
+   };
+   document.addEventListener('cart:free', getCartItems);
+ })
+ </script>
+ <script>
+document.addEventListener("DOMContentLoaded", function() {
+  const jsonPrice = JSON.parse(document.querySelector("#widget_price").innerHTML);
+
+  const selectors = {
+    widgetCompare: ".selling_plan-price_origin",
+    onlyRegular: ".only_price [data-product-price]",
+    onlyCompare: ".only_price [data-compare-price]",
+    badgeRegular:".product__price-save [data-product-price]",
+    badgeCompare:".product__price-save [data-compare-price]",
+    badgeSave:".product__price-and-badge .product__price-save_badge",
+    compare: "#compare_price",
+    regular: "#regular_price",
+    discount: "#discount_price",
+    save: "#save_price"
+  }
+  if (!jsonPrice) return;
+
+  const buttonSellingPlan = document.querySelector(".sn-product-widget_wrapper [data-selling-plan-group-id]");
+  const valueDiscount = document.querySelector(".selling_plan-price .radio__price").getAttribute("data-discount-value");
+  const inputForm = document.querySelector("form.product__form [data-product-select]");
+  const widgetButton = document.querySelectorAll(".sn-product-widget_wrapper button");
+  widgetButton.forEach( el => el.addEventListener("click",changePrice ));
+  inputForm.addEventListener("change", changePrice);
+
+  function changePrice() {
+    if (!buttonSellingPlan) return;
+    setTimeout(() => {
+    let activeDiscount = buttonSellingPlan.classList.contains("selected");
+
+    const currentIdVariant = Number(inputForm.value);
+    const currentObjVariant = jsonPrice.filter(el => Number(el.id) === currentIdVariant )[0];
+    const {priceRegular, priceCompare} = currentObjVariant;
+    const priceDiscount = (priceRegular - (priceRegular * (Number(valueDiscount) / 100))).toFixed(0);
+    const priceDiscountCompare = (priceCompare - (priceCompare * (Number(valueDiscount) / 100))).toFixed(0);
+
+    // Price without discount
+    const correctPriceRegular = getCorrectPrice(priceRegular);
+    const correctPriceCompare = getCorrectPrice(priceCompare);
+    const correctPriceSave = (correctPriceCompare - correctPriceRegular).toFixed(2);
+    // Price with discount
+    const correctPriceDiscount = getCorrectPrice(priceDiscount);
+    const correctPriceDiscountCompare = getCorrectPrice(priceDiscountCompare);
+    const correctPriceDiscountSave = (correctPriceDiscountCompare - correctPriceDiscount).toFixed(2);
+    // Price save
+    const correctSavePice = (correctPriceCompare - correctPriceDiscount).toFixed(2);
+
+    if (activeDiscount) {
+        changePriceHtml(correctPriceCompare, selectors.widgetCompare);
+        changePriceHtml(correctPriceDiscountCompare, selectors.onlyCompare);
+        changePriceHtml(correctPriceDiscount, selectors.onlyRegular)
+
+        changePriceHtml(correctPriceCompare, selectors.badgeCompare);
+        changePriceHtml(correctPriceDiscount, selectors.badgeRegular);
+        changePriceHtml(correctSavePice, selectors.badgeSave);
+
+    } else {
+        changePriceHtml(correctPriceCompare, selectors.onlyCompare);
+        changePriceHtml(correctPriceRegular, selectors.onlyRegular)
+
+        changePriceHtml(correctPriceCompare, selectors.badgeCompare);
+        changePriceHtml(correctPriceRegular, selectors.badgeRegular);
+        changePriceHtml(correctPriceSave, selectors.badgeSave);
+
+        changePriceHtml(correctPriceCompare,selectors.compare);
+        changePriceHtml(correctPriceCompare,selectors.regular);
+        changePriceHtml(correctPriceDiscount,selectors.discount);
+        changePriceHtml(correctSavePice,selectors.save);
+    }
+  },0);
+
+  }
+
+  // changePrice();
+  function getCorrectPrice(str) {
+    return (Number(str) / 100).toFixed(2);
+  }
+  function changePriceHtml (newDigit, element) {
+      let container = document.querySelector(element);
+      if (!container) return;
+      let regex = /\d+(\.\d+)?/g;
+      container.innerHTML = container.innerHTML.replace(regex,newDigit);
+  }
+
+
+  changePrice()
+})
+ </script>
+   <script type='text/javascript'>
+   (function() {
+     if (typeof window.sn === 'undefined') window.sn = {}
+     var selectors = window.sn.datastore.shop.selectors || {}
+ 
+     function Helper() {
+       var self = this;
+ 
+       self.log = function(message) {
+         if (window.sn.settings.logInConsole) {
+           console.log(message);
+         } else {
+           window.sn.debug.push(message);
+         }
+       };
+ 
+       self.formatMoney = function(amount, decimalDigits) {
+         if (!amount) return null;
+ 
+         var moneyFormat = '{{shop.money_format}}';
+ 
+         var firstCurly = moneyFormat.indexOf('{')
+         var lastCurly = moneyFormat.lastIndexOf('}')
+ 
+         var prefix = moneyFormat.substring(0,firstCurly)
+         var suffix = moneyFormat.substring(lastCurly+1,moneyFormat.length)
+ 
+         var moneyFormatSwitch = moneyFormat.substring(firstCurly,lastCurly+1)
+         moneyFormatSwitch = moneyFormatSwitch.replace(/ /g, ''); // Remove spaces
+ 
+         var localeOptions = {
+           minimumFractionDigits: decimalDigits,
+           maximumFractionDigits: decimalDigits,
+         };
+ 
+         switch(moneyFormatSwitch) {
+           case '{% raw %}{{amount}}{% endraw %}': {
+             return prefix + amount.toLocaleString('en-US', localeOptions) + suffix
+           }
+           case '{% raw %}{{amount_no_decimals}}{% endraw %}': {
+             return prefix + parseInt(amount).toLocaleString() + suffix
+           }
+           case '{% raw %}{{amount_with_comma_separator}}{% endraw %}': {
+             return prefix + amount.toLocaleString('en-US', localeOptions).replace(/[.,]/g, (punc) => { return punc === '.' ? ',' : '.' }) + suffix
+           }
+           case '{% raw %}{{amount_no_decimals_with_comma_separator}}{% endraw %}': {
+             return prefix + amount.toLocaleString('en-US', {maximumFractionDigits:0}) + suffix
+           }
+           case '{% raw %}{{amount_with_apostrophe_separator}}{% endraw %}': {
+             return prefix + amount.toLocaleString('en-US', localeOptions).replace(/,/g, '\'') + suffix
+           }
+           default: {
+             return prefix + moneyFormat.replace("{% raw %}{{amount}}{% endraw %}", amount.toFixed(decimalDigits)) + suffix
+           }
+         }
+ 
+       };
+     }
+ 
+     function ProductPage() {
+       var self = this;
+       self.variantElement = document.querySelector(selectors.variant_element || '[name=id]');
+ 
+ 
+       self.variantPrices = {};
+       self.variantSellingPlanGroupIds = {};
+       {% for variant in product.variants %}
+         self.variantPrices[{{ variant.id }}] = {
+           price: {{ variant.price | divided_by: 100.0 }},
+           compareAtPrice:
+             {%- if variant.compare_at_price -%}
+               {{ variant.compare_at_price | divided_by: 100.0 }},
+             {%- else -%}
+               null
+             {% endif %}
+         };
+ 
+         self.variantSellingPlanGroupIds[{{ variant.id }}] = {{
+           variant.selling_plan_allocations |
+           map: "selling_plan_group_id" |
+           json
+         }};
+       {% endfor %}
+ 
+       self.getCurrentVariantId = function() {
+         {% if adminPreview %}
+           return Object.keys(self.variantPrices)[0];
+         {% else %}
+         var currentVariant = window.location.search.match(/variant=([0-9]+)/)
+           if (currentVariant != null) {
+             return currentVariant[1]
+           } else {
+             var curVariantId = null;
+             var elems = document.getElementsByClassName(selectors.variant_selector || "product-variant__input product-variant-value");
+             if (elems) {
+               for (var i = 0; i < elems.length; i++) {
+                 if (elems[i].checked === true) {              
+                   {% for variant in product.variants %}
+                     if (`{{ variant.title }}` === elems[i].value) {
+                       curVariantId = {{ variant.id }}
+                     }
+                   {% endfor %}
+                 }
+               }
+             }
+             if (curVariantId) return curVariantId;
+             if (self.variantElement) return parseInt(self.variantElement.value);
+             if (self.variantPrices && Object.keys(self.variantPrices)) return Object.keys(self.variantPrices)[0];
+           }
+           return null; // Should not be reached
+         {% endif %}
+       }
+ 
+       self.updatePriceWithSellingPlanDiscount = function() {
+         // Not implementing this for now. See SN-454
+       }
+ 
+       function setupVariantChangeListener() {
+         var previousVariantId = null;
+ 
+         setInterval(function() {
+           if (self.getCurrentVariantId() !== previousVariantId) {
+             previousVariantId = self.getCurrentVariantId();
+ 
+             var variantId;
+             if (typeof self.variantPrices[self.getCurrentVariantId()] === 'undefined') {
+               variantId = Object.keys(self.variantPrices)[0];
+             } else {
+               variantId = self.getCurrentVariantId();
+             }
+ 
+             window.sn.productWidget.setPrices(self.variantPrices[variantId].price);
+             self.updatePriceWithSellingPlanDiscount();
+ 
+             window.sn.productWidget.updateSellingPlanGroupsVisibility(self.variantSellingPlanGroupIds[variantId]);
+           }
+         }, 500);
+       }
+ 
+       setupVariantChangeListener();
+     }
+ 
+     function selectPurchaseOption(context) {
+       context.purchaseOptionButton.classList.add('selected');
+       context.deliveryFrequencySection.style.display = 'block';
+ 
+       context.radioButtons[0].checked = true;
+       context.markRowAsSelected(context.radioButtons[0]);
+ 
+       window.sn.productPage.updatePriceWithSellingPlanDiscount();
+ 
+       // Colorize text and border
+       context.purchaseOptionButton.style.color = window.sn.color.product_widget_color
+       context.purchaseOptionButton.style.borderColor = window.sn.color.product_widget_color
+ 
+       // Colorize icon
+       context.purchaseOptionButton.svgGroup = document.querySelectorAll('#sn-product-widget__purchase-options button.selected svg path')
+       context.purchaseOptionButton.svgGroup.forEach(path => {
+         path.style.fill = window.sn.color.product_widget_color
+       })
+     }
+ 
+     function ProductWidget() {
+       var self = this;
+ 
+       function initialize() {
+         self.widgetElement = document.querySelector("#sn-product-widget");
+         
+         self.purchaseOptionsSection = self.widgetElement.querySelector("#sn-product-widget__purchase-options");
+         self.oneTimePurchaseButton = self.purchaseOptionsSection.querySelector("button");
+         self.freeId = self.widgetElement.querySelector(".sn-product-free") 
+             ? self.widgetElement.querySelector(".sn-product-free").getAttribute("data-id")
+             : null;
+         self.freeInput = self.widgetElement.querySelector(".free-input");
+         self.sectionOneTime = self.widgetElement.querySelector(".sn-product-widget__delivery-purchase");
+         self.sectionTriger = self.sectionOneTime.querySelector(".delivery-purchase-triger")?.children;
+         self.discountValue = self.widgetElement.querySelector(".radio__price")?.dataset;
+         if (self.sectionTriger) {
+           self.trigerObj = {
+             originPrice:"{{product_current.price}}",
+             priceSub: self.sectionTriger[0],
+             priceProfit: self.sectionTriger[1]
+           }
+         }
+         
+ 
+         // Initial color of the One Time Purchase button and icon should already come from liquid settings
+         self.oneTimePurchaseButton.style.color = window.sn.color.product_widget_color
+         self.oneTimePurchaseButton.style.borderColor = window.sn.color.product_widget_color
+         self.oneTimePurchaseButton.svgGroup = self.oneTimePurchaseButton.querySelectorAll('button.selected svg path')
+         self.oneTimePurchaseButton.svgGroup.forEach(path => {
+           path.style.fill = window.sn.color.product_widget_color
+         })
+ 
+         urlExists("{{ shop.url }}/policies/subscription-policy").then(function(exists) {
+           self.widgetElement.querySelectorAll(".policy-link").forEach(function(link) {
+             if (exists) {
+               link.style.color = window.sn.color.product_widget_color;
+             } else {
+               link.style.display = "none";
+             }
+           });
+         })
+ 
+         self.subscribePurchaseButtons = self.purchaseOptionsSection.querySelectorAll("button[data-selling-plan-group-id]");
+ 
+         self.deliveryFrequencySections = self.widgetElement.querySelectorAll(".sn-product-widget__delivery-frequency");
+ 
+         self.sellingPlanGroups = Array.from(self.subscribePurchaseButtons)
+           .map(function(subscribePurchaseButton, index) {
+             return new ProductWidgetSellingPlanGroup(
+               subscribePurchaseButton,
+               self.deliveryFrequencySections[index],
+             );
+           });
+ 
+         // For products that has "Only allow purchase of this product as a subscription" set to true
+         {% if product.requires_selling_plan %}
+ 
+           // Deselect one time purchase button, then hide it
+           self.purchaseOptionsSection.querySelector("button").classList.remove('selected')
+           self.purchaseOptionsSection.querySelector("button").style.display = 'none'
+ 
+           // Select the 1st selling plan group as the purchase option
+           selectPurchaseOption(self.sellingPlanGroups[0])
+ 
+           if (self.sellingPlanGroups.length === 1) {
+             self.purchaseOptionsSection.style.display = 'none';
+           }
+         {% endif %}
+ 
+         self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+           // we have to do this here as the selling plan group object does not have access
+           // to the other selling plans and the one-time button
+           sellingPlanGroup.purchaseOptionButton.addEventListener('click', function() {
+             self.hideAllSellingPlanGroups();
+             self.oneTimePurchaseButton.classList.remove('selected');
+ 
+             // Decolorize text and border
+             self.oneTimePurchaseButton.style.color = ''
+             self.oneTimePurchaseButton.style.borderColor = ''
+ 
+             // Decolorize icon isn't needed in here. The icon for oneTimePurchaseButton
+             // inherits the color from the parent container when set to blank.
+           });
+ 
+           sellingPlanGroup.initializePurchaseButtonListener();
+         });
+          
+              self.oneTimePurchaseButton.classList.remove('selected');  //Add Valery
+ 
+             // Decolorize text and border
+             self.oneTimePurchaseButton.style.color = ''          //Add Valery
+             self.oneTimePurchaseButton.style.borderColor = ''   //Add Valery
+            
+            
+            selectPurchaseOption(self.sellingPlanGroups[0]); //Add Valery
+         
+ 
+         self.oneTimePurchaseButton.addEventListener('click', function() {
+           // if (self.sectionTriger) {
+           //     const { originPrice, priceSub, priceProfit } = self.trigerObj;
+           //     const profitPriceNew = (Number(originPrice) * (Number(self.discountValue.discountValue) / 100) / 100).toFixed(1);
+           //     const discountPrice = ((Number(originPrice) / 100) - profitPriceNew).toFixed(1);
+ 
+           //     function replaceDigits(element, newDigit) {
+           //       let regex = /\d+(\.\d+)?/g;
+           //       element.innerHTML = element.innerHTML.replace(regex, newDigit);
+           //     }
+ 
+           //     replaceDigits(priceSub, discountPrice);
+           //     replaceDigits(priceProfit, profitPriceNew);
+           //   }
+ 
+           self.sectionOneTime.style.display = "flex";
+           if(self.freeId) {
+             self.freeInput.value = "";
+           }
+           self.hideAllSellingPlanGroups();
+           self.oneTimePurchaseButton.classList.add('selected');
+           window.sn.productPage.updatePriceWithSellingPlanDiscount();
+ 
+           // Colorize text and border
+           self.oneTimePurchaseButton.style.color = window.sn.color.product_widget_color
+           self.oneTimePurchaseButton.style.borderColor = window.sn.color.product_widget_color
+ 
+           // Colorize icon
+           self.oneTimePurchaseButton.svgGroup = self.oneTimePurchaseButton.querySelectorAll('button.selected svg path')
+           self.oneTimePurchaseButton.svgGroup.forEach(path => {
+             path.style.fill = window.sn.color.product_widget_color
+           })
+ 
+         });
+ 
+         self.widgetElement.querySelector('#powered-by').style.display = window.sn.datastore.shop.show_powered_by ? 'block' : 'none';
+          
+       }
+ 
+       self.hideAllSellingPlanGroups = function() {
+         self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+           sellingPlanGroup.hideSellingPlan();
+         });
+       };
+ 
+       self.updateSellingPlanGroupsVisibility = function(groupsToShow) {
+         // Hide subscriptions widget if there's no selling plan groups to show
+         if (groupsToShow.length === 0) {
+           self.widgetElement.style.display = 'none';
+           // Clear selections
+           self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+             sellingPlanGroup.hideSellingPlan();
+           })
+         } else {
+           self.widgetElement.style.display = 'inherit';
+           self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+             if (groupsToShow.includes(sellingPlanGroup.getId())) {
+               sellingPlanGroup.purchaseOptionButton.style.display = 'flex';
+             } else {
+               sellingPlanGroup.hideSellingPlan();
+               sellingPlanGroup.purchaseOptionButton.style.display = 'none';
+             }
+           });
+         }
+       };
+ 
+       self.setPrices = function(originalPrice) {
+         self.sellingPlanGroups.forEach(function(sellingPlanGroup) {
+           sellingPlanGroup.setPrices(originalPrice);
+         });
+       };
+      
+       initialize();
+     }
+ 
+     function ProductWidgetSellingPlanGroup(
+       purchaseOptionButton,
+       deliveryFrequencySection,
+     ) {
+       var self = this;
+       self.purchaseOptionButton = purchaseOptionButton;
+       self.purchaseOptionButtonDiscountBadge = purchaseOptionButton.querySelector(".subscription_max_discount");
+ 
+       self.deliveryFrequencySection = deliveryFrequencySection;
+       self.radioButtons = deliveryFrequencySection.querySelectorAll("input[type='radio']");
+       self.priceCells = deliveryFrequencySection.querySelectorAll("[data-discount-value]");
+       self.widgetElement = deliveryFrequencySection.closest("#sn-product-widget")
+       self.freeId = self.widgetElement.querySelector(".sn-product-free") 
+           ? self.widgetElement.querySelector(".sn-product-free").getAttribute("data-id")
+           : null;
+       self.freeInput = self.widgetElement.querySelector(".free-input");
+       self.sectionOneTime = self.widgetElement.querySelector(".sn-product-widget__delivery-purchase");
+       
+ 
+       self.originalPrice = null;
+       self.maxDiscount = null;
+ 
+       self.initializePurchaseButtonListener = function() {
+         self.purchaseOptionButton.addEventListener('click', function() {
+           self.sectionOneTime.style.display = "none";
+           if (self.freeInput && self.freeId ) {
+             self.freeInput.value = self.freeId;
+           }
+           selectPurchaseOption(self)
+         });
+       };
+ 
+       self.initializeRadioButtons = function() {
+         self.radioButtons.forEach(function(radioButton) {
+           radioButton.addEventListener('change', function(e) {
+             self.markRowAsSelected(e.target);
+             window.sn.productPage.updatePriceWithSellingPlanDiscount();
+           });
+         });
+       };
+ 
+       self.getId = function() {
+         return self.purchaseOptionButton.getAttribute('data-selling-plan-group-id');
+       };
+ 
+       self.hideSellingPlan = function() {
+         purchaseOptionButton.classList.remove('selected');
+         deliveryFrequencySection.style.display = 'none';
+ 
+         self.radioButtons.forEach(function(radioButton) {
+           radioButton.parentElement.parentElement.classList.remove('selected');
+           radioButton.checked = false;
+         })
+ 
+         // Decolorize text and border
+         purchaseOptionButton.style.color = ''
+         purchaseOptionButton.style.borderColor = ''
+ 
+         // Decolorize icon
+         purchaseOptionButton.svgHead = document.querySelectorAll('#sn-product-widget__purchase-options button svg path')
+         purchaseOptionButton.svgHead.forEach(path => {
+           path.style.fill = ''
+         })
+ 
+       };
+ 
+       self.markRowAsSelected = function(radioButton) {
+         self.radioButtons.forEach(function(otherRadioButton) {
+           var div = document.querySelector("#selling_plan_" + otherRadioButton.value)
+           div.classList.remove('selected')
+           div.style.backgroundColor = ''
+           div.style.color = ''
+         });
+ 
+         var div = document.querySelector("#selling_plan_" + radioButton.value)
+         div.classList.add('selected');
+         div.style.backgroundColor = window.sn.color.product_widget_rgb
+         div.style.color = window.sn.color.product_widget_color
+       };
+ 
+       self.setPrices = function(originalPrice) {
+         self.originalPrice = originalPrice;
+ 
+         function computeDiscountedPrice(discountType, discountValue) {
+           var discountedPrice;
+ 
+           switch(discountType)  {
+             case 'fixed_amount':
+               discountedPrice = originalPrice - discountValue;
+               break;
+             case 'percentage':
+               discountedPrice = originalPrice * (1 - discountValue);
+               break;
+             case 'price':
+               discountedPrice = discountValue;
+               break;
+             case '':
+               discountedPrice = originalPrice;
+               break;
+             default:
+               discountedPrice = '-'; // This is an error state.
+           }
+ 
+ 
+           if (discountType && discountValue > 0 && (!self.maxDiscount || self.maxDiscount.price > discountedPrice)) {
+             self.maxDiscount = {
+               price: discountedPrice,
+               value: discountValue,
+               type: discountType
+             };
+           }
+ 
+           return window.sn.helper.formatMoney(discountedPrice, 2);
+         }
+ 
+         self.priceCells.forEach(function(priceCell) {
+           var discountedPriceText = computeDiscountedPrice(
+             priceCell.getAttribute('data-discount-type'),
+             priceCell.getAttribute('data-discount-value') / 100
+           );
+ 
+           var nextDiscountedPriceText = computeDiscountedPrice(
+             priceCell.getAttribute('data-next-discount-type'),
+             priceCell.getAttribute('data-next-discount-value') / 100
+           );
+ 
+           var firstDiscountSpan = priceCell.querySelector("span.first-discount");
+           var secondDiscountSpan = priceCell.querySelector("span.second-discount");
+ 
+           if (priceCell.getAttribute('data-next-discount-type') === '') {
+             firstDiscountSpan.innerHTML =
+               "{discounted_price} /month"
+                 .replace("{discounted_price}", discountedPriceText);
+             secondDiscountSpan.style.display = 'none';
+           } else {
+             firstDiscountSpan.innerHTML =
+               "{discounted_price}/delivery initially"
+                 .replace("{discounted_price}", discountedPriceText);
+             secondDiscountSpan.innerHTML = 
+               "{discounted_price_after_x_cycles} after {change_discounts_after_x_cycles} deliveries"
+                 .replace("{discounted_price_after_x_cycles}", nextDiscountedPriceText)
+                 .replace("{change_discounts_after_x_cycles}", priceCell.getAttribute('data-after-cycle'));
+           }
+         });
+ 
+         if (self.maxDiscount && !isNaN(self.maxDiscount.value)) {
+           self.updateDiscountBadge();
+         }
+       };
+ 
+       self.updateDiscountBadge = function() {
+         var maxDiscountToPrint;
+         var maxDiscountToPrintValue;  //ADD VALERA
+         var maxDiscountValue; //ADD VALERA
+ 
+         switch (self.maxDiscount.type) {
+           case 'fixed_amount':
+             maxDiscountToPrint = window.sn.helper.formatMoney(Math.floor(self.maxDiscount.value), 0);
+             break;
+           case 'price':
+             maxDiscountToPrint = window.sn.helper.formatMoney(Math.floor(self.originalPrice - self.maxDiscount.value), 0);
+             break;
+           case 'percentage':
+             maxDiscountToPrint = Math.floor(self.maxDiscount.value * 100) + '%';
+             maxDiscountToPrintValue=window.sn.helper.formatMoney(Math.floor(self.originalPrice * self.maxDiscount.value), 0);
+             // maxDiscountValue =maxDiscountToPrint+" - that's "+ maxDiscountToPrintValue +" in your pocket! ";
+             maxDiscountValue =maxDiscountToPrint;
+             break;
+         }
+ 
+         self.purchaseOptionButtonDiscountBadge.innerHTML = "Save {save_value}".replace("{save_value}", maxDiscountValue);
+         self.purchaseOptionButtonDiscountBadge.style.display = 'block';
+         self.purchaseOptionButtonDiscountBadge.style.background = window.sn.color.product_widget_color
+ 
+       };
+ 
+       self.initializeRadioButtons();
+     }
+ 
+     // Asynchronous check if url exists
+     function urlExists (url) {
+       return new Promise(function (resolve, reject) {
+         var xhr = new XMLHttpRequest();
+         xhr.open('HEAD', url);
+         xhr.onload = function () {
+           // No other checks needed since this just validates if url exists
+           if (xhr.status != 404) {
+             resolve(true);
+           } else {
+             resolve(false);
+           }
+         };
+         // Whatever errors encountered, just return false
+         xhr.onerror = function () {
+           resolve(false);
+         };
+         xhr.send();
+       });
+     }
+ 
+     window.sn.helper = new Helper();
+     window.sn.productPage = new ProductPage();
+     window.sn.productWidget = new ProductWidget();
+   })()
+ 
+ 
+   </script>
+ {% endif %}
+ 

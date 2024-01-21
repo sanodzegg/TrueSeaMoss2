@@ -1,0 +1,535 @@
+{
+  "sections": {
+    "080f141a-f9a1-4024-80b1-13276ddc6643": {
+      "type": "sticky-button-product",
+      "settings": {
+        "title": "START YOUR TRUE HEALTHY JOURNEY"
+      }
+    },
+    "98ae4559-9795-4518-9fa5-10e0d5c35a52": {
+      "type": "section-custom-html",
+      "disabled": true,
+      "custom_css": [
+        ".custom-html-section {padding: 0px;}",
+        ".countdown_timer_bar_cta_clhosxbg91506661m4h75fkjmta,.countdown_timer_bar_cta_clhosxbg91506661m4h75fkjmta:visited {display: none;}"
+      ],
+      "settings": {
+        "title": "",
+        "html": "<div class=\"countdown-timer-block\" countdown-timer-id=\"clhosxbg91506661m4h75fkjmta\"><\/div><span style=\"color:red;\">\nSubscribe and always get this bundle at an even more favorable price with a 15% discount.<\/span>",
+        "wrapper": "full",
+        "bg_color": ""
+      }
+    },
+    "main": {
+      "type": "product",
+      "blocks": {
+        "d688ca30-3c12-4011-8ddd-0c09962bc319": {
+          "type": "mobile_header",
+          "settings": {
+            "bg_color": "#061d7f",
+            "txt_color": "#ffffff",
+            "title": "Manufactured in the USA",
+            "subtitle": "from 100% natural ingredients",
+            "img": "shopify:\/\/shop_images\/112.svg"
+          }
+        },
+        "01c8438b-927c-4de6-9eea-1aeb3722f08f": {
+          "type": "badge",
+          "settings": {
+            "title_1": "",
+            "text_1": "",
+            "img_2": "shopify:\/\/shop_images\/2.svg",
+            "title_2": "",
+            "text_2": "Made in USA",
+            "img_3": "shopify:\/\/shop_images\/3.svg",
+            "title_3": "",
+            "text_3": "Wildcrafted sea moss",
+            "title_4": "",
+            "text_4": "",
+            "img_5": "shopify:\/\/shop_images\/5.svg",
+            "title_5": "",
+            "text_5": "Sugar free"
+          }
+        },
+        "75cfcf7d-e12e-44d3-b461-40d2bb5424b5": {
+          "type": "text",
+          "settings": {
+            "title": "<p>Bestseller<\/p>",
+            "text_alignment": "left"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_price": false,
+            "subheading": "none",
+            "show_rating": false,
+            "show_rating_count": false
+          }
+        },
+        "cc44dab5-50a9-4aa6-8047-cd122076218b": {
+          "type": "badge_title",
+          "settings": {
+            "title": "Delicious benefit to your health!"
+          }
+        },
+        "d9022863-a439-4b64-a321-3d3bc665105f": {
+          "type": "shopify:\/\/apps\/trustoo-io-product-reviews\/blocks\/star-rating-widget\/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+          "settings": {
+            "star_size": 16,
+            "font_size": 14,
+            "block_aligment": "flex-start"
+          }
+        },
+        "c3dc3f91-91eb-4560-ac9d-dc263d0e52fc": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "{% render 'show-random-view-customers-product' %}\n<p>Welcome10\" promo code does not apply. Subscribe to save 15% on every delivery.<\/p>"
+          }
+        },
+        "b0e898c4-1cd8-4d17-9798-e8c6cb1df685": {
+          "type": "description",
+          "settings": {
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "not_add_product": false,
+            "show_image": false,
+            "name_option_1": "",
+            "text_option_1": "",
+            "name_option_2": "",
+            "text_option_2": "",
+            "sub_text_option_2": "",
+            "hide_option": "",
+            "info_page": "",
+            "info_page_title_override": "",
+            "add_to_cart": false,
+            "show_labels": false,
+            "show_quantity": false,
+            "show_payment_button": false,
+            "enable_subscriptions_selectors": true,
+            "name_q_1": "",
+            "text_image_1": "",
+            "text_under_1": "",
+            "name_q_2": "",
+            "text_image_2": "",
+            "text_under_2": "",
+            "name_q_3": "",
+            "text_image_3": "",
+            "text_under_3": ""
+          }
+        },
+        "b2efcdf8-96b5-4e95-9230-c454b186e198": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "",
+            "text_alignment": "left"
+          }
+        },
+        "4d46a75e-8050-439b-a77e-4dad71927217": {
+          "type": "shopify:\/\/apps\/recharge-subscriptions\/blocks\/subscription-widget\/371eed76-0b44-4869-9813-730372ea378e",
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "41dae8b5-733a-4afe-9e94-1fa906fc333f": {
+          "type": "content_recharge",
+          "settings": {
+            "hide_txt": false,
+            "title_sec": "Purchase Options",
+            "benefit_img_1": "shopify:\/\/shop_images\/3_6fdecc7e-2f73-40da-8f2b-8ee0f48eaabf.svg",
+            "benefit_title_1": "Flexible subscription plan",
+            "benefit_info_1": "<p>Change, pause or skip your delivery<\/p>",
+            "benefit_img_2": "shopify:\/\/shop_images\/4_0a03be14-29ff-4d52-9620-634b664863ba.svg",
+            "benefit_title_2": "Easy Cancel",
+            "benefit_info_2": "<p>You can <a href=\"#\" title=\"#\">manage or cancel your subscription online<\/a><\/p>",
+            "benefit_img_3": "shopify:\/\/shop_images\/2_d89c4981-6d24-465a-a1d7-b9fcc32a4a63.svg",
+            "benefit_title_3": "",
+            "benefit_info_3": "",
+            "benefit_title_4": "",
+            "benefit_info_4": "",
+            "quote": "",
+            "free_title": "Subscription includes",
+            "free_title2": "Subscription includes",
+            "free_badge": "FREE",
+            "icon_one_time": "shopify:\/\/shop_images\/123.svg",
+            "text_one_time": "If you subscribe",
+            "fake_price": "$22.99"
+          }
+        },
+        "inventory_countdown": {
+          "type": "inventory_countdown",
+          "settings": {
+          }
+        },
+        "f58ea924-4ace-43d3-98ea-3c54cb46f419": {
+          "type": "button_price",
+          "settings": {
+            "hide_price": false,
+            "show_payment_button": false
+          }
+        },
+        "5818a8d6-995f-4df9-8c5a-4e368fabbe8d": {
+          "type": "payment",
+          "settings": {
+          }
+        },
+        "44285c69-375b-40e2-b043-08590695493e": {
+          "type": "upsell_new",
+          "disabled": true,
+          "settings": {
+            "title": "Add With Extra 25% Off"
+          }
+        },
+        "f572b4e6-2c1a-4faa-a9d3-a3fd650e8c43": {
+          "type": "custom_liquid",
+          "disabled": true,
+          "settings": {
+            "custom_liquid": "<div  class=\"product__block product__bundle\" >\n              {%- render \"upsell-products-old-gel\" \n                products: product.metafields.custom.list_products.value, \n                title: block.settings.title\n              -%}\n            <\/div>"
+          }
+        }
+      },
+      "block_order": [
+        "d688ca30-3c12-4011-8ddd-0c09962bc319",
+        "01c8438b-927c-4de6-9eea-1aeb3722f08f",
+        "75cfcf7d-e12e-44d3-b461-40d2bb5424b5",
+        "title",
+        "cc44dab5-50a9-4aa6-8047-cd122076218b",
+        "d9022863-a439-4b64-a321-3d3bc665105f",
+        "c3dc3f91-91eb-4560-ac9d-dc263d0e52fc",
+        "b0e898c4-1cd8-4d17-9798-e8c6cb1df685",
+        "form",
+        "b2efcdf8-96b5-4e95-9230-c454b186e198",
+        "4d46a75e-8050-439b-a77e-4dad71927217",
+        "41dae8b5-733a-4afe-9e94-1fa906fc333f",
+        "inventory_countdown",
+        "f58ea924-4ace-43d3-98ea-3c54cb46f419",
+        "5818a8d6-995f-4df9-8c5a-4e368fabbe8d",
+        "44285c69-375b-40e2-b043-08590695493e",
+        "f572b4e6-2c1a-4faa-a9d3-a3fd650e8c43"
+      ],
+      "settings": {
+        "new_style": true,
+        "wrapper": "normal",
+        "image_size": "large",
+        "enable_zoom": true,
+        "enable_video_looping": false,
+        "bg_color": ""
+      }
+    },
+    "69242c67-5314-49b0-8e3f-a4a5415c50b4": {
+      "type": "section-logo-list",
+      "blocks": {
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-0": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lab-tested-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-1": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/made-in-usa-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-2": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wincrafted-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-3": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/non-gmo-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-4": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/sugar-free-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "1719cf26-23d1-41ab-bf07-5b933019d9ec": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/gluten-free-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        },
+        "c0365011-c24f-45db-8f09-6d420ce3613a": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/100-procentov-organic-sea-moss-trueseamoss.jpg",
+            "logos_width": 100,
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-0",
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-1",
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-2",
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-3",
+        "template--15851713429659__69242c67-5314-49b0-8e3f-a4a5415c50b4-16838947621b97cc5d-4",
+        "1719cf26-23d1-41ab-bf07-5b933019d9ec",
+        "c0365011-c24f-45db-8f09-6d420ce3613a"
+      ],
+      "disabled": true,
+      "custom_css": [
+        ".logo-list__slider {display: flow-root;}",
+        ".logo-list__slide {margin: 10px;}",
+        ".logo-list {padding-top: 0px; padding-bottom: 30px;}"
+      ],
+      "settings": {
+        "bg_color": ""
+      }
+    },
+    "b832ffcf-baa8-4be4-8125-da9be910d57d": {
+      "type": "section-custom-html",
+      "custom_css": [
+        ".custom-html-section {margin: 0px 0px; padding: 0px 0px;}"
+      ],
+      "settings": {
+        "title": "",
+        "html": "<h2>Unlock the Power of Sea Moss: 92 Minerals in Just 2 Spoons!<\/h2>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    },
+    "5363277f-09ea-4a3c-9458-1833a12ee5f3": {
+      "type": "section-overlapping-images",
+      "settings": {
+        "text_position": "right",
+        "text_alignment": "left",
+        "images_width": 600,
+        "images_offset": 60,
+        "image_1": "shopify:\/\/shop_images\/mango-pineapple-sea-moss-gel.webp",
+        "image_1_position": "center-center",
+        "image_link_1": "",
+        "image_2_position": "center-center",
+        "image_link_2": "#top",
+        "hide_image_2": false,
+        "heading": "Miracle of the Sea",
+        "description": "<p>Long ago a Sea Moss is a unique natural storehouse of vitamins and components necessary for a healthy body. It contains 92 active components which have favorably influenced the immune system of the human body. It provides a wide range of positive influences from boosting energy and improving digestion to promoting healthy skin and supporting thyroid function.<\/p>",
+        "type_of_button": "link",
+        "button_text": "ORDER NOW",
+        "button_link": "https:\/\/trueseamoss.com\/collections\/sea-moss-bundles\/products\/bundle-original-sea-moss-gel-mango-sea-moss",
+        "button_style": "primary",
+        "video_btn_text": "",
+        "video_btn_url": "",
+        "bg_color": ""
+      }
+    },
+    "c42c002a-91cf-420c-9fe0-0ce9a7a9d572": {
+      "type": "section-overlapping-images",
+      "settings": {
+        "text_position": "left",
+        "text_alignment": "left",
+        "images_width": 600,
+        "images_offset": 60,
+        "image_1_position": "center-center",
+        "image_link_1": "",
+        "image_2": "shopify:\/\/shop_images\/sea-moss-gummies-1-pack-trueseamoss_com_d379ea2f-8c1b-4e71-8705-45dac1ef438b.jpg",
+        "image_2_position": "center-center",
+        "image_link_2": "",
+        "hide_image_2": false,
+        "heading": "Some more details about the main components:",
+        "description": "<p><strong>Vitamin C<\/strong> - an antioxidant that supports the immune system and helps the body absorb iron. <\/p><p><strong>Vitamin B2<\/strong> - is important for energy production and the metabolism of fats, proteins, and carbohydrates.<\/p><p><strong>Iron<\/strong> - is important for the immune system, energy metabolism, supporting brain function and development.<\/p><p><strong>Magnesium<\/strong> - regulating nerves and muscle function, also maintaining healthy bones and regulating blood pressure and blood sugar level. <\/p><p><strong>Zinc<\/strong> - plays a role in immune function and helps to fight off infections and diseases.<\/p>",
+        "type_of_button": "link",
+        "button_text": "SHOP NOW!",
+        "button_link": "https:\/\/trueseamoss.com\/collections\/sea-moss-bundles\/products\/bundle-original-sea-moss-gel-mango-sea-moss",
+        "button_style": "primary",
+        "video_btn_text": "",
+        "video_btn_url": "",
+        "bg_color": ""
+      }
+    },
+    "7540ce21-8819-4315-b633-3bd721166bbc": {
+      "type": "section-overlapping-images",
+      "settings": {
+        "text_position": "right",
+        "text_alignment": "center",
+        "images_width": 600,
+        "images_offset": 60,
+        "image_1": "shopify:\/\/shop_images\/original-sea-moss-gel-1-packs-trueseamoss_com_e2076e81-3d09-4933-b628-d4bcd8742caf.jpg",
+        "image_1_position": "center-center",
+        "image_link_1": "",
+        "image_2_position": "center-center",
+        "image_link_2": "",
+        "hide_image_2": false,
+        "heading": "Hand made from real wildcrafted sea moss",
+        "description": "<p>We take pride in our commitment to using only the finest ingredients in our sea moss gel. That's why we exclusively use 100% authentic wildcrafted sea moss, carefully sourced from the pristine waters of St. Lucia in the Caribbean. This small island is renowned for producing the highest quality sea moss available, ensuring that our customers receive the full benefits and nutrients of this powerful superfood. With our sea moss gel, you can rest assured that you're getting the best possible product for your health and well-being.<\/p>",
+        "type_of_button": "link",
+        "button_text": "BUY NOW",
+        "button_link": "https:\/\/trueseamoss.com\/collections\/sea-moss-bundles\/products\/bundle-original-sea-moss-gel-mango-sea-moss?variant=43347152502939",
+        "button_style": "primary",
+        "video_btn_text": "",
+        "video_btn_url": "",
+        "bg_color": ""
+      }
+    },
+    "7c657f9a-2814-4140-8534-0da4a6023450": {
+      "type": "section-overlapping-images",
+      "settings": {
+        "text_position": "left",
+        "text_alignment": "left",
+        "images_width": 750,
+        "images_offset": 60,
+        "image_1_position": "center-center",
+        "image_link_1": "",
+        "image_2": "shopify:\/\/shop_images\/AAA.gif",
+        "image_2_position": "center-center",
+        "image_link_2": "",
+        "hide_image_2": false,
+        "heading": "Easy how-to-use instructions :",
+        "description": "<ul><li>To ensure the freshness and quality of our sea moss gel, <strong>we recommend storing it in the refrigerator<\/strong> as soon as you receive it.<\/li><li>The recommended daily amount is 1-2 tablespoons. <\/li><li>You can enjoy our sea moss gel by itself or mix it with your favorite beverages and foods. It's a versatile ingredient that blends well with smoothies, teas, juices, and even coffee. <\/li><\/ul><p><em>Feel free to make up your own receipts and share it with us on our social media :)<\/em><\/p>",
+        "type_of_button": "link",
+        "button_text": "COOL, TASTE NOW!",
+        "button_link": "https:\/\/trueseamoss.com\/collections\/sea-moss-bundles\/products\/bundle-original-sea-moss-gel-mango-sea-moss?variant=43347152502939",
+        "button_style": "primary",
+        "video_btn_text": "",
+        "video_btn_url": "",
+        "bg_color": ""
+      }
+    },
+    "f1a76d95-980e-4635-a159-44488674a61a": {
+      "type": "section-accordions",
+      "blocks": {
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-0": {
+          "type": "text",
+          "settings": {
+            "title": "What is Sea Moss?",
+            "text": "<p>Sea Moss is a type of seaweed\/algae believed to boost your immune health by helping prevent and relieve cold and flu-like symptoms. It is found on the Atlantic coastlines of North America\/Europe, and the Carribean Islands. Irish Sea Μοss has been used for generations in places like Ireland, Scotland, and Jamaica in food and healing remedies. Sea Moss is most commonly known for its anti-inflammatory, anti-aging, anti-bacterial, and anti-viral properties. <\/p>"
+          }
+        },
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "title": "What are the benefits of Sea Moss?",
+            "text": "<ul><li>Contains 92 of the 102 essential minerals that are body are composed of<\/li><li>Supports a Healthy Heart<\/li><li>Promotes Good Digestion, Soothes Digestive Tract<\/li><li>Helps Maintain a Healthy Weight<\/li><li>Is a great Post Workout Recovery Tonic<\/li><li>Promotes a Healthy Thyroid<\/li><li>Strengthens and Supports a Healthy Immune System<\/li><li>Improves and Boost Metabolism<\/li><li>Supports Healthy Hair, Skin and Nails (Nourishes and Beautifies them)<\/li><li>Relief from Flu Symptoms and Coughs<\/li><li>Removes Toxins and Heavy Metals<\/li><li>Strengthens Joints and Connective Tissue<\/li><li>Promotes Increased Energy and Nutrition<\/li><li>Supports the Oxygenation of Cells<\/li><li>Improves Nutrient Absorption<\/li><li>Anti-Inflammatory, Reduces Inflammation<\/li><li>Helps Eliminate Excessive Mucus<\/li><li>Suppresses Appetite and Provides Key Nutrients During Fasting<\/li><li>Protects Brain from Degeneration<\/li><li>Support Reproductive Health<\/li><li>Helps people suffering from Malnutrition<\/li><li>Helps fight against Radiation Poisoning<\/li><li>Increases Libido<\/li><li>Assists in Regulating Diabetes<\/li><li>Regulates High Blood Pressure<\/li><li>Anti-Cancerous, Aids in recovering from Cancer<\/li><li>Assists in the Treatment of COPD, such as Bronchitis<\/li><li>Aids in fighting Respiratory Infections, such as sore throats<\/li><li>Anti-Viral<\/li><li>Contains Zinc (helps the immune system fight of bacteria and also helps wounds heal more quickly)<\/li><li>Is a Prebiotic, which is a type of dietary fiber that’s essentially fertilizer for probiotics (healthy bacteria in your gut), and thus, helps further support digestion.<\/li><li>Contains Folate (essential for prenatal health and development)<\/li><li>Rich in Sulfur, which is known to lower levels of microorganisms on the skin and soothe inflammation<\/li><li>Contains vitamins and minerals like magnesium, Vitamin A, C, D, E, F, K, B12, B1, & B2<\/li><li>Contains Omega-3 Fatty Acids, which help to hydrate and promote healthy skin cell function<\/li><li>Contains a compound called Citrulline-Arginine, which facilitates cell growth.<\/li><li>Rich in collagen for healthier skin, hair, and nails.<\/li><\/ul>"
+          }
+        },
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-2": {
+          "type": "text",
+          "settings": {
+            "title": "Are there any downsides to Sea Moss?",
+            "text": "<p>Yes, overconsumption. Autoimmune thyroid conditions can come into play, such as Hashimoto's, which is a disease in which the immune system mistakenly attacks the thyroid gland. Hypothyroidism is one of the most common problems.<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-0",
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-1",
+        "template--15851713429659__f1a76d95-980e-4635-a159-44488674a61a-1683549290c73ade51-2"
+      ],
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subheading": "",
+        "text": "",
+        "tabs_bg_color": "",
+        "bg_color": "",
+        "text_color": "text-dark"
+      }
+    },
+    "icons": {
+      "type": "section-icons-row",
+      "blocks": {
+        "icon-0": {
+          "type": "text",
+          "settings": {
+            "icon_name": "truck",
+            "title": "FAST SHIPPING",
+            "text": "<p>We offer 2-4 Days US shipping<\/p>"
+          }
+        },
+        "icon-1": {
+          "type": "text",
+          "settings": {
+            "icon_name": "star",
+            "title": "RAVING REVIEWS",
+            "text": "<p>More than 5000+ satisfied customers<\/p>"
+          }
+        },
+        "icon-2": {
+          "type": "text",
+          "settings": {
+            "icon_name": "refresh-cw",
+            "title": "100% MONEY BACK GUARANTEE",
+            "text": "<p>No questions asked 30-days money back guarantee<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon-0",
+        "icon-1",
+        "icon-2"
+      ],
+      "disabled": true,
+      "settings": {
+        "alignment": "center",
+        "columns": 3,
+        "icons_width": 30,
+        "bg_color": "#fafafa",
+        "box_color": "",
+        "text_color": "#333333"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "wrapper": "normal",
+        "limit": 4,
+        "product_recommendations_heading": "YOU MAY ALSO LIKE",
+        "bg_color": ""
+      }
+    },
+    "168354558853d42aff": {
+      "type": "apps",
+      "blocks": {
+        "e94a4d89-e5f7-497f-bd4b-221ec644eea8": {
+          "type": "shopify:\/\/apps\/trustoo-io-product-reviews\/blocks\/review-widget\/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "e94a4d89-e5f7-497f-bd4b-221ec644eea8"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "080f141a-f9a1-4024-80b1-13276ddc6643",
+    "98ae4559-9795-4518-9fa5-10e0d5c35a52",
+    "main",
+    "69242c67-5314-49b0-8e3f-a4a5415c50b4",
+    "b832ffcf-baa8-4be4-8125-da9be910d57d",
+    "5363277f-09ea-4a3c-9458-1833a12ee5f3",
+    "c42c002a-91cf-420c-9fe0-0ce9a7a9d572",
+    "7540ce21-8819-4315-b633-3bd721166bbc",
+    "7c657f9a-2814-4140-8534-0da4a6023450",
+    "f1a76d95-980e-4635-a159-44488674a61a",
+    "icons",
+    "related",
+    "168354558853d42aff"
+  ]
+}

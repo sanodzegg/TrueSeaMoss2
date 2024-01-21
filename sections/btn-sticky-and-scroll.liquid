@@ -1,0 +1,87 @@
+{%- liquid
+  assign add_text = section.settings.add_text
+  assign scroll_text = section.settings.scroll_text
+  assign scroll_section = section.settings.scroll_section
+-%}
+<style>
+.product-groups-button-sticky {
+  display: none;
+}
+@media(max-width: 768px) {
+  .product-groups-button-sticky {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+  }
+  .product-buttons {
+    display: flex;
+    flex-direction: column;
+    padding: 0 15px;
+    position: relative;
+  }
+  .product-button-sticky {
+    position: absolute;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 30px);
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 22px;
+    font-weight: 700;
+    transition: bottom 0.3s ;
+  }
+  .product-button-sticky-add.is-show,
+  .product-button-sticky-scroll.is-show {
+    bottom: 15px;
+  }
+}
+
+</style>
+<div class="product-buttons">
+  <button class="product-button-sticky product-button-sticky-add btn" name="add-to-cart">{{- add_text -}}</button>
+  {% if scroll_section != blank and scroll_text != blank  %}
+  <button class="product-button-sticky product-button-sticky-scroll btn" name="scroll-to" data-scroll="{{- scroll_section -}}">{{- scroll_text -}}</button>
+  {% endif %}
+</div>
+{% schema %}
+{
+  "name": "Sticky & Scroll Button",
+  "class": "product-groups-button-sticky",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Settings for the add button"
+    },
+    {
+      "type": "text",
+      "id": "add_text",
+      "label": "Text for the button",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "paragraph",
+      "content": "Settings for the scroll button"
+    },
+    {
+      "type": "text",
+      "id": "scroll_text",
+      "label": "Text for the button",
+      "default": "Start Now"
+    },
+    {
+      "type": "text",
+      "id": "scroll_section",
+      "label": "Id section when will scroll"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky & Scroll Button"
+    }
+  ]
+}
+{% endschema %}

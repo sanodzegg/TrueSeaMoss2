@@ -1,0 +1,9 @@
+{% if valueColor contains "png" or valueColor contains "PNG"%}
+    {%- assign path = valueColor | append: '.png' -%}
+    {%- assign imgColor = images[path]  -%}
+    {{
+        imgColor | image_url: width: master | image_tag: widths: '500 700 800 900 1000 1100 1200 1300 1400 1500 1600 1800 2200',
+        alt: imgColor.alt,
+        loading: 'lazy'
+      }}
+{% endif %}

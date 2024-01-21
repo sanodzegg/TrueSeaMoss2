@@ -1,0 +1,515 @@
+<!-- /sections/featured-collection.liquid -->
+{%- liquid
+  assign collection = collections[section.settings.collection] | default: false
+  assign products = collection.products
+  assign heading =  section.settings.title
+  assign columns = settings.products_per_row_on_desktop | plus: 0
+  assign columns_small = columns | at_most: 2
+  assign columns_mobile = settings.products_per_row_on_mobile | plus: 0
+  assign products_rows = section.settings.products_rows | plus: 0
+  assign products_limit = columns | times: products_rows
+  assign layout = section.settings.products_layout
+  assign bg_color = section.settings.bg_color
+
+  assign carousel = false
+  if layout == 'carousel'
+    assign carousel = true
+  endif
+
+  assign mobile_class = ' grid--mobile'
+  if section.settings.enable_slider_mobile
+    assign mobile_class = ' carousel--mobile'
+  endif
+-%}
+
+{%- style -%}
+  {%- if bg_color != 'rgba(0,0,0,0)' and bg_color != '' -%}
+    #FeaturedCollection--{{ section.id }} {
+      background-color: {{ bg_color }};
+    }
+    #FeaturedCollection--{{ section.id }} .product-grid-item {
+      --bg: {{ bg_color }};
+    }
+  {%- endif -%}
+
+  @media screen and (min-width: 1024px) {
+    #FeaturedCollection--{{ section.id }} {
+      --grid: repeat({{ columns }}, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (min-width: 480px) and (max-width: 1023px) {
+    #FeaturedCollection--{{ section.id }} {
+      --grid: repeat({{ columns_small }}, minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 479px) {
+    #FeaturedCollection--{{ section.id }} {
+      --grid-mobile: repeat({{ columns_mobile }}, minmax(0, 1fr));
+    }
+  }
+
+
+ 
+ 
+  .quantity-selector {
+  top:10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5px;
+}
+
+.quantity-selector .quantity-change {
+  background-color: #fff; /* Цвет фона кнопок */
+  color: #333; /* Цвет текста кнопок */
+  border: 1px solid #ddd; /* Граница кнопок */
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.quantity-selector .quantity-input {
+  text-align: center;
+  width: 50px;
+  border: 1px solid #ddd;
+  margin: 0 5px;
+}
+
+.add-to-cart-btn {
+  background-color: #FFA500; /* Оранжевый цвет фона кнопки */
+  color: white; /* Белый цвет текста */
+  border: none;
+  padding: 0px 0px;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+  margin-top: 0px; /* Отступ сверху */
+}
+
+#mobile-go-to-cart-btn {
+  display: none; /* Скрытие кнопки по умолчанию */
+  position: fixed; /* Фиксированное позиционирование относительно окна браузера */
+  bottom: 0; /* Прижатие к нижней части экрана */
+  left: 0; /* Выравнивание по левому краю */
+  width: 100%; /* Ширина кнопки на весь экран */
+  background-color: #285234; /* Цвет фона кнопки */
+  color: white; /* Цвет текста кнопки */
+  text-align: center; /* Выравнивание текста по центру */
+  padding: 10px 0; /* Вертикальный отступ для увеличения области нажатия */
+  font-size: 18px; /* Размер шрифта текста */
+  border: none; /* Убрать границу кнопки */
+  cursor: pointer; /* Стиль курсора при наведении */
+  z-index: 1000; /* Убедитесь, что кнопка будет поверх других элементов */
+  text-decoration: none; /* Убираем подчеркивание текста ссылки */
+  opacity: 1; /* Полупрозрачность кнопки */
+}
+
+
+/* Медиа-запрос для стилей, применяемых только на мобильных устройствах */
+@media screen and (max-width: 767px) {
+  #mobile-go-to-cart-btn {
+    display: block; /* Показать кнопку только на мобильных устройствах */
+  }
+}
+
+/* Стили для отображения при наведении мыши */
+.quantity-selector .quantity-change:hover,
+.add-to-cart-btn:hover {
+  opacity: 0.8;
+}
+
+.price-container {
+  text-align: center; /* Центрирование текста */
+  color: #000000; /* Черный цвет текста */
+  background-color: transparent; /* Прозрачный фон */
+  padding: 0px; /* Внутренний отступ */
+  border-radius: 5px; /* Скругление углов */
+  display: inline-block; /* Сделать контейнер в форме блока */
+  margin: 5px; /* Внешний отступ */
+}
+
+.current-price {
+  font-size: 1.5em; /* Больший размер шрифта для текущей цены */
+  font-weight: bold; /* Жирный текст */
+  margin-right: 5px; /* Отступ справа */
+}
+
+.original-price {
+  font-size: 1em; /* Размер шрифта для оригинальной цены */
+  text-decoration: line-through; /* Перечеркнутый текст для оригинальной цены */
+  color: #000000; /* Черный цвет текста */
+}
+  .product__form{
+    margin-top: auto; /* Отодвигает кнопку вниз */
+    margin-bottom: 0px; /* Устанавливает нижний отступ в 0 */
+  }
+  .product-grid-item{
+       display: flex;
+       flex-direction: column;
+       height: 100%; /* Установите фиксированную высоту или проценты */
+  }
+  .purchase-options {
+  /*border: 1px solid #ccc;  Граница всего блока опций */
+  padding: 0px; /* Отступ внутри блока опций */
+  border-radius: 5px; /* Скругление углов блока опций */
+}
+
+.purchase-options h3 {
+  margin-bottom: 0px; /* Отступ заголовка от опций */
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px; /* Отступ между опциями */
+}
+
+.option input[type="radio"] {
+  margin-right: 10px; /* Отступ между радио кнопкой и текстом */
+  accent-color: #ff8a65; /* Цвет радио-кнопки */
+}
+
+.option label {
+  display: block;
+  flex-grow: 1;
+  background: #f5f5f5; /* Серый фон для текста */
+  padding: 0px; /* Отступ внутри текста */
+  border-radius: 5px; /* Скругление углов текста */
+  cursor: pointer; /* Указатель курсора при наведении */
+}
+
+/* Стиль для активного выбора */
+.option input[type="radio"]:checked + label {
+  background-color: #f0f0f0;
+  color: black; /* Белый текст для активного выбора */
+} 
+
+  :root {
+    --form-top: 14px;
+    --form-left: 20px;
+    --form-margin: 0px;
+}
+  .container-form-price{
+    padding: 0px;
+  }
+  .product__media__holder {
+    z-index: 20;
+  }
+
+  .dropdown {
+    position: relative;
+    font-family: Arial, sans-serif;
+    display: inline-block;
+    text-align: left;
+    z-index:2000;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    background-color: #f9f9f9;
+    min-width: 100%; /* Dropdown content width as wide as the dropdown button */
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    
+  }
+
+  /* Show dropdown content when it has 'show' class */
+  .show { display: block; }
+
+  .dropdown-button {
+    cursor: pointer;
+    padding: 0;
+    border: none;
+    background: none;
+    font-size: 24px;
+    
+  }
+  
+  .dropdown-title {
+    display: inline;
+    float: left;
+    margin-right: 20px;
+  }
+  .content_dropdown{
+     padding: 5px;
+  }
+  .content_dropdown_block{
+     padding: 5px;
+    text-align: left;
+  }
+{%- endstyle -%}
+
+<section
+  id="FeaturedCollection--{{ section.id }}"
+  class="featured-collection featured-collection--{{ layout }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="featured-collection"
+  data-columns="{{ columns }}">
+
+  {%- if heading != blank and collection.handle != 'all' -%}
+    <div class="featured-collection__title">
+      <div class="wrapper wrapper--full">
+        <h2 class="section__heading">{{ heading | escape }}</h2>
+
+        {%- if settings.show_spacer_lines -%}
+          <hr>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="wrapper wrapper--full">
+    <div class="featured-collection__container {% if carousel %}carousel__container{% else %}grid__container{% endif %}">
+      <div class="{% if carousel %}carousel{% else %}grid{% endif %}{{ mobile_class }}{% if products.size == 0 %} featured-collection--empty{% endif %}"{% if carousel %} data-slider data-slider-id="slider--{{ section.id }}"{% endif %}>
+        {%- if collection -%}
+          {% comment %} Check if there are any products in the collection {% endcomment %}
+          {%- if products.size > 0 -%}
+            {%- for product in collection.products limit: products_limit -%}
+              {%- if carousel -%}
+                {%- assign animation_delay = forloop.index0 -%}
+              {%- else -%}
+                {%- assign assign columns = settings.products_per_row_on_desktop | plus: 0 -%}
+                {%- assign animation_delay = forloop.index0 | modulo: columns | times: 1 -%}
+              {%- endif -%}
+              {%- render 'product-grid-item-bf-subs', product: product, carousel: carousel, animation_delay: animation_delay -%}
+             
+            {%- endfor -%}
+          {%- else -%}
+            <div class="collection--no-results">
+              <p>{{ 'collections.general.no_matches' | t }}</p>
+            </div>
+            
+          {%- endif -%}
+        {%- else -%}
+          {%- for i in (1..products_limit) -%}
+            {%- capture index -%}{%- cycle 1,2,3,4,5,6 -%}{%- endcapture -%}
+            {%- if carousel -%}
+              {%- assign animation_delay = forloop.index0 -%}
+            {%- else -%}
+              {%- assign assign columns = settings.products_per_row_on_desktop | plus: 0 -%}
+              {%- assign animation_delay = forloop.index0 | modulo: columns | times: 1 -%}
+            {%- endif -%}
+            {%- render 'product-grid-item--onboarding', carousel: carousel, index: index, animation_delay: animation_delay -%}
+            
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- if section.settings.show_collection_button -%}
+      <div{% if settings.animations_enabled %} data-aos="fade-up" data-aos-delay="{{ columns | plus: 1 | times: 150 }}" data-aos-anchor="#FeaturedCollection--{{ section.id }}"{% endif %}>
+        <a class="btn btn--{{ section.settings.button_style }} btn--view-all" href="{{ collection.url | default: '#!' }}">{{ 'collections.general.view_collection' | t }}</a>
+      </div>
+    
+    {%- endif -%}
+  </div>
+  {%- render 'rich-text' -%}
+  <div id="popupMessage" style="display: none; position: fixed; top: 110px; left: 50%; transform: translateX(-50%); background-color: black; color: white; padding: 10px; border-radius: 5px; z-index: 1000;">
+       Product added to cart
+  </div>
+  <a href="/cart" class="add-to-cart-btn" id="mobile-go-to-cart-btn">
+      GO TO CART
+  </a>
+  
+</section>
+
+{% schema %}
+{
+  "name": "Featured coll bf subs",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Best Sellers"
+    },
+     {
+      "type": "checkbox",
+      "id": "show_description",
+      "label": "Show description dropdoun",
+      "default": false
+    },
+     {
+      "type": "checkbox",
+      "id": "show_description_not_dropdoun",
+      "label": "Show description not dropdoun",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_description_custom",
+      "label": "Show description custom",
+      "default": false
+    },
+  
+     {
+      "type": "text",
+      "id": "head-description",
+      "label": "Heading",
+      "default": "About bundle"
+    },
+     {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description",
+          "default": "<p>description</p>"
+    },
+    
+    {
+      "type": "range",
+      "id": "products_rows",
+      "label": "Product rows",
+      "default":2,
+      "min": 1,
+      "max": 12,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "products_sales_procent",
+      "label": "Product sales procent",
+      "default":20,
+      "min": 0,
+      "max": 100,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "products_layout",
+      "label": "Layout",
+      "default": "grid",
+      "options": [
+        { "value": "grid", "label": "Grid" },
+        { "value": "carousel", "label": "Carousel" }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_button",
+      "label": "Show collection link button",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_subscription_menu",
+      "label": "Show subscription menu",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_compere_price",
+      "label": "Show compere price",
+      "default": true
+    },
+     {
+      "type": "checkbox",
+      "id": "show_cart_after_add",
+      "label": "Show cart after add",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_review_stars",
+      "label": "Show review stars",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quantity_select",
+      "label": "Show quantity select",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "button_style",
+      "label": "Button style",
+      "options": [
+        { "label": "Text", "value": "text" },
+        { "label": "Small button", "value": "primary btn--small" },
+        { "label": "Large button", "value": "primary" },
+        { "label": "Small outline button", "value": "secondary btn--small" },
+        { "label": "Large outline button", "value": "secondary" }
+      ]
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background"
+    },
+    {
+      "type": "header",
+      "content": "Mobile slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_slider_mobile",
+      "label": "Enable slider",
+      "default": true,
+      "info": "Horizontal slider in mobile layout."
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_desktop",
+      "label": "Products per row on desktop",
+      "default": 4,
+      "min": 1,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "type": "range",
+      "id": "products_per_row_mobile",
+      "label": "Products per row on mobile",
+      "default": 2,
+      "min": 1,
+      "max": 3,
+      "step": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured collection bf subscr",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}
+
+<script>
+function showPopup() {
+  var popup = document.getElementById('popupMessage');
+  popup.style.display = 'block'; // Показываем всплывающее окно
+   
+  // Скрываем всплывающее окно через 2 секунды
+  setTimeout(function() {
+    popup.style.display = 'none';
+  }, 2000);
+}
+
+ function toggleDropdown(idProduct) {
+    //alert ("myDropdown" + idProduct.toString());
+    var dropdown = document.getElementById("myDropdown" + idProduct.toString());
+    dropdown.classList.toggle("show");
+    
+    var button = document.getElementById("dropdown-button" + idProduct.toString());
+    if (dropdown.classList.contains("show")) {
+      button.textContent = '−'; // Minus sign
+    } else {
+      button.textContent = '+'; // Plus sign
+    }
+  }
+
+
+</script>

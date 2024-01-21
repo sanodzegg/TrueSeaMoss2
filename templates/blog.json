@@ -1,0 +1,79 @@
+{
+  "sections": {
+    "main": {
+      "type": "blog",
+      "blocks": {
+        "51833438-4576-4f6e-a37b-0e10989dccbd": {
+          "type": "top_article",
+          "settings": {
+            "article": "all-about-sea-moss\/true-sea-moss-real-sea-moss-user-s-experience",
+            "block_image": "shopify:\/\/shop_images\/sea-moss-after-covid-experience-trueseamoss.webp"
+          }
+        },
+        "092a12af-cdf5-4b71-b2d7-0d934f1a2fe5": {
+          "type": "top_article",
+          "settings": {
+            "article": "all-about-sea-moss\/how-sea-moss-can-improve-mental-clarity-and-health",
+            "block_image": "shopify:\/\/shop_images\/sea-moss-for-energy-and-mental-health-trueseamoss.webp"
+          }
+        },
+        "3085ae93-0709-43a3-bb81-e442abbceaa1": {
+          "type": "top_article",
+          "settings": {
+            "article": "all-about-sea-moss\/can-sea-moss-help-with-gastroparesis-symptoms",
+            "block_image": "shopify:\/\/shop_images\/how-sea-moss-effects-digestion-trueseamoss.webp"
+          }
+        },
+        "af25164b-4e47-465a-99b5-daa71895889f": {
+          "type": "top_article",
+          "settings": {
+            "article": "all-about-sea-moss\/what-our-real-customers-tell-about-sea-moss-eating",
+            "block_image": "shopify:\/\/shop_images\/sea-moss-benefits-real-experience-truesesmoss.webp"
+          }
+        },
+        "0e4facdf-f938-4a01-bd0a-9faa82d371e0": {
+          "type": "top_article",
+          "settings": {
+            "article": "sea-moss-benefits\/all"
+          }
+        }
+      },
+      "block_order": [
+        "51833438-4576-4f6e-a37b-0e10989dccbd",
+        "092a12af-cdf5-4b71-b2d7-0d934f1a2fe5",
+        "3085ae93-0709-43a3-bb81-e442abbceaa1",
+        "af25164b-4e47-465a-99b5-daa71895889f",
+        "0e4facdf-f938-4a01-bd0a-9faa82d371e0"
+      ],
+      "settings": {
+        "title_blog": "",
+        "title_our": "Our Top Picks",
+        "tag_button": "View categories",
+        "featured_article": "all-about-sea-moss\/true-sea-moss-real-sea-moss-user-s-experience",
+        "default_img": "shopify:\/\/shop_images\/1_1.webp",
+        "show_article": 2,
+        "title_article": "The Latest",
+        "post_columns": 2,
+        "image_aspect_ratio": 0.6,
+        "show_rss_icon": false,
+        "show_date": false,
+        "show_author": false,
+        "show_tags": false
+      }
+    },
+    "2f6f5e7d-0c0f-47a6-a66e-d55e92cc500a": {
+      "type": "section-custom-html",
+      "disabled": true,
+      "settings": {
+        "title": "HTML code",
+        "html": "<div class=\"custom-vstar-review-widget\" product-id=\"7683893166235\" style=\"width:100%\"><\/div>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "2f6f5e7d-0c0f-47a6-a66e-d55e92cc500a"
+  ]
+}

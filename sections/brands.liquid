@@ -1,0 +1,198 @@
+{%- style -%}
+    .brands{
+        display: flex;
+        justify-content: center;
+        padding: 0 15px;
+    }
+    .brands{
+        padding-top: {{section.settings.padding_top}}px;
+        margin-bottom: {{section.settings.padding_bottom}}px;
+    }
+    .brands-title{
+        color: #285234;
+        font-family: var(--FONT-STACK-BODY);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        white-space: nowrap;
+    }
+    .brands-wrapper{
+        border-radius: 10px;
+        background: #FFF;
+        box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+        padding: 53px 43px;
+        display: inline-flex;
+        margin: 0 auto;
+        background: {{ section.settings.bg_color }};
+        column-gap: 44px;
+        row-gap: 15px;
+        align-items: center;
+        z-index: 2;
+        margin-bottom: -20px;
+        max-width: 1096px;
+        box-sizing: border-box;
+    }
+    .brands-list{
+        display: flex;
+        gap: 30px;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    }
+    .brands-list-item{
+        box-sizing: border-box;
+        display: inline-flex;
+    }
+    .brands-list-item img{
+      max-height: 27px;
+      object-fit: contain;
+      width: 100%:
+    }
+    {%- comment -%}
+    {% for block in section.blocks %}
+    .brands-list-item{{ forloop.index }}{
+        width: {{ block.settings.width }}px;
+    }
+    {% endfor %}
+    {% for block in section.blocks %}
+    {%- assign size = section.blocks.size -%}
+        .brands-list-item{{ forloop.index }}{
+            max-width: calc(100% / {{size}} - 30px * {{size | minus: 1}} / {{size}} ); 
+            width:fit-content;
+        }
+    {% endfor %}
+    {%- endcomment -%}
+    @media screen and (max-width: 668px) {
+        .brands{
+            padding-top: {{section.settings.padding_top_mb}}px;
+            margin-bottom: {{section.settings.padding_bottom_mb}}px;
+        }
+        .brands-title{
+            font-size: 16px;
+            flex-wrap:nowrap;
+            padding: 0 10px;
+        }
+        .brands-wrapper{
+          flex-direction: column;
+          padding: 20px 8px 24px 8px;
+          width: 100%;
+        }
+        .brands-list{
+            gap: 20px;
+        }
+    {% for block in section.blocks %}
+    {%- assign size = section.blocks.size -%}
+        .brands-list-item{{ forloop.index }}{
+            max-width: calc(100% / {{size}} - 20px * {{size | minus: 1}} / {{size}} ); 
+            width:100%;
+        }
+    {% endfor %}
+    }
+
+{%- endstyle -%}
+    <div class="brands">
+    <div class="brands-wrapper">
+        <div class="brands-title">
+            {{ section.settings.title }}
+        </div>
+        <div class="brands-list">
+            {% for block in section.blocks %}
+              {% if block.settings.img != blank %}
+                <div class="brands-list-item brands-list-item{{ forloop.index }}">
+                    {{ 
+                      block.settings.img  | image_url: width: master | image_tag: widths: '375, 480, 550, 610, 720, 930, 1100 1200 1300 1400 1500 1600 1800 2200', 
+                      alt: block.settings.img.alt, 
+                      loading: 'lazy'
+                    }}
+                  {%- comment -%}
+                  <img 
+                    src="{{ block.settings.img | img_url: "master" }}" 
+                    alt="{{ block.settings.img.alt }}"
+                    loading="lazy"
+                  >
+                  {%- endcomment -%}
+                </div>
+              {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% schema %}
+{
+  "name": "Brands",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Featured in:"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background",
+      "default": "#fff"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Space top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": -100,
+      "max": 100,
+      "step": 2,
+      "unit": "px",
+      "label": "Space bottom",
+      "default": -54
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space top for mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": -50,
+      "max": 50,
+      "step": 1,
+      "unit": "px",
+      "label": "Space bottom for mobile",
+      "default": -14
+    }
+  ],
+  "blocks": [
+    {
+      "name": "Brand",
+      "type": "brand",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Brands"
+    }
+  ]
+}
+{% endschema %}

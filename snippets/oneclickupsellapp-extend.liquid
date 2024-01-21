@@ -1,0 +1,10 @@
+{% assign api = shop.metafields.zipifyoneclickupsell | size %}{%- unless api == 0 -%}
+<script>((o,c,u)=>{o[c]=o[c]||{},o[u]=o[u]||{},o[c].OCU=o[c].OCU||{api:o[u]}})(window,'Zipify','OCUApi');</script>
+
+<style>
+.ocu-main .ocu-modal__hero-section .ocu-modal__incart-image .wrapper {
+  width: initial;
+  max-width: initial;
+}
+</style>
+{%- endunless -%}

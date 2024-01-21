@@ -1,0 +1,469 @@
+{%- liquid
+  assign title = section.settings.title
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign sbm = section.settings.sbm | append: 'px'
+-%}
+{%- style-%}
+  .find-taste__{{section.id}} {
+    padding-top: {{st}};
+    padding-bottom: {{sb}};
+    position: relative;
+  }
+  .find-taste_decor {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2;
+  }
+  .find-taste__{{section.id}}{
+    background: {{ section.settings.bg_color }}
+  }
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {%- when "decor" -%}
+      .find-taste_decor-{{forloop.index}} {
+        {{block.settings.style}}
+      }
+    {%- endcase -%}    
+  {% endfor %}
+  @media(max-width: 998px) {
+    .find-taste__{{section.id}} {
+      padding-top: {{stm}} ;
+      padding-bottom: {{sbm}} ;
+    }
+    {% for block in section.blocks %}
+      {% case block.type %}
+        {%- when "decor" -%}
+        .find-taste_decor-{{forloop.index}} {
+          {{block.settings.style_mobile}}
+        }
+      {%- endcase -%}    
+    {% endfor %}
+  }
+{%- endstyle-%}
+{{ "find-your-taste.css" | asset_url | stylesheet_tag }}
+<div class="find-taste find-taste__{{section.id}}">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {%- when "decor" -%}
+        {% if block.settings.img_decor != blank %}
+          <img class="find-taste_decor find-taste_decor-{{forloop.index}}" 
+          src="{{block.settings.img_decor | img_url: 'master'}}" 
+          alt="{{block.settings.img_decor.alt }}" 
+          loading="lazy">
+        {% endif %} 
+    {%- endcase -%}
+  {% endfor %}
+
+  <div class="find-taste__container wrapper">
+    <h2 class="find-taste__title">{{title}}</h2>
+    {%- comment -%}desktop{%- endcomment -%}
+    <div class="find-taste__grid not_swiper">
+        {% for block in section.blocks %}
+          {% case block.type %}
+            {% when "product" %}            
+          {%- liquid
+            assign color_bg = block.settings.background
+            assign product = block.settings.current_product
+            assign product_title = product.title
+            assign product_img = product.featured_image
+            assign product_info = product.description | strip_html | truncatewords: 25, '...'
+
+            assign default_title = block.settings.title
+            assign default_img = block.settings.img
+            assign default_info = block.settings.info
+
+            assign btn_type = block.settings.type_of
+            assign btn_name = block.settings.name
+            assign btn_url = block.settings.url
+            assign enable_color = block.settings.enable_color
+
+          -%}
+          {% capture img  %}
+            {% if product != blank and default_img == blank  %}
+              <img src="{{product_img | img_url: 'master'}}" alt="{{product_img.alt}}" loading="lazy">
+            {%- elsif default_img != blank -%}
+              <img src="{{default_img | img_url: 'master'}}" alt="{{default_img.alt}}" loading="lazy">
+            {% endif %}
+          {% endcapture %}
+
+          {% capture title  %}
+            {% if product != blank and default_title == blank  %}
+              {{product_title}}
+            {%- elsif default_title != blank -%}
+              {{default_title}}
+            {% endif %}
+          {% endcapture %}
+
+          {% capture info  %}
+            {% if product != blank and default_info == blank  %}
+              {{product_info}}
+            {%- elsif default_info != blank  -%}
+              {{default_info}}
+            {% endif %}
+          {% endcapture %}
+
+          {%- capture button -%}
+            {% if btn_type == "scroll" and btn_name != blank  %}
+              <button class="taste__btn taste-item__btn"><span>{{btn_name}}</span></button>
+            {%- elsif btn_name != blank  -%}
+              <a class="taste-item__btn" href="{{btn_url}}"><span>{{btn_name}}</span></a>
+            {% endif %}
+          {%- endcapture -%}
+
+          {%- capture decor_circle -%}
+            {% for i in (1..7) %}
+            <span class="decor_circle" style="background-color: {{color_bg}};"></span>
+            {% endfor %}
+          {%- endcapture -%}
+          {% if img != blank or title != blank%}
+            <div class="find-taste__item taste-item">
+              <div class="taste-item__img {% if enable_color == false %}taste-item_not_bg{% endif %}">
+                {{img}}
+                {% if enable_color %}
+                <div class="taste-item__img_bg-color"  style="background-color: {{color_bg}}" ></div>
+                {% endif %}
+              </div>
+              <div class="taste-item__content">
+                  <h3 class="taste-item__title">{{title}}</h3>
+                  {% if enable_color %}
+                  <div class="taste-item__svg">{{decor_circle}}</div>
+                  {% endif %}
+                  <p class="taste-item__info">{{info}}</p>
+                  {{button}}
+              </div>
+            </div>
+          {% endif %}
+          {% endcase %}
+        {% endfor %}
+    </div>
+    {%- comment -%}mobile{%- endcomment -%}
+    <div class="find-taste__grid is_swiper">
+      <div class="find-taste__grid-next">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_341_1761)">
+          <path d="M9.99993 -0.000976562C4.47712 -0.000976562 0 4.47615 0 9.99895C0 15.5218 4.47712 19.9991 9.99993 19.9991C15.5227 19.9991 20 15.5218 20 9.99895C19.9938 4.47868 15.5204 0.00521093 9.99993 -0.000976562ZM9.99993 18.9989C5.02936 18.9989 0.999937 14.9696 0.999937 9.99895C0.999937 5.02838 5.02936 0.99896 9.99993 0.99896C14.9706 0.99896 18.9999 5.02838 18.9999 9.99895C18.9943 14.9671 14.9681 18.9933 9.99993 18.9989Z" fill="#222222"/>
+          <path d="M8.82938 6.12267C8.62139 5.9408 8.30555 5.96208 8.12372 6.16992C7.94208 6.37791 7.96332 6.69375 8.17116 6.87558L11.741 9.999L8.17097 13.1226C7.96294 13.3044 7.94189 13.6203 8.12353 13.8281C8.30536 14.0361 8.62121 14.0573 8.82924 13.8755L12.8292 10.3754C12.8828 10.3285 12.9259 10.2706 12.9553 10.2057C12.9848 10.1408 13.0001 10.0703 13.0001 9.99897C13.0001 9.92767 12.9848 9.85718 12.9553 9.79225C12.9259 9.72732 12.8828 9.66944 12.8292 9.6225L8.82938 6.12267Z" fill="#222222"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_341_1761">
+          <rect width="20" height="20" fill="white" transform="translate(0 -0.000976562)"/>
+          </clipPath>
+          </defs>
+          </svg>
+          
+      </div>
+      <div class="find-taste__grid-prev">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_341_1765)">
+            <path d="M10.0001 -0.000976562C15.5229 -0.000976562 20 4.47615 20 9.99895C20 15.5218 15.5229 19.9991 10.0001 19.9991C4.47726 19.9991 -4.76837e-05 15.5218 -4.76837e-05 9.99895C0.00618553 4.47868 4.4796 0.00521093 10.0001 -0.000976562ZM10.0001 18.9989C14.9706 18.9989 19.0001 14.9696 19.0001 9.99895C19.0001 5.02838 14.9706 0.99896 10.0001 0.99896C5.02945 0.99896 1.00008 5.02838 1.00008 9.99895C1.00575 14.9671 5.03189 18.9933 10.0001 18.9989Z" fill="#222222"/>
+            <path d="M11.1706 6.12267C11.3786 5.9408 11.6944 5.96208 11.8763 6.16992C12.0579 6.37791 12.0367 6.69375 11.8288 6.87558L8.25903 9.999L11.829 13.1226C12.0371 13.3044 12.0581 13.6203 11.8765 13.8281C11.6946 14.0361 11.3788 14.0573 11.1708 13.8755L7.17083 10.3754C7.11715 10.3285 7.07414 10.2706 7.04467 10.2057C7.01519 10.1408 6.99995 10.0703 6.99995 9.99897C6.99995 9.92767 7.01519 9.85718 7.04467 9.79225C7.07414 9.72732 7.11715 9.66944 7.17083 9.6225L11.1706 6.12267Z" fill="#222222"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_341_1765">
+              <rect width="20" height="20" fill="white" transform="matrix(-1 0 0 1 20 -0.000976562)"/>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="find-taste__grid swiper">
+        <div class="find-taste__wrapper swiper-wrapper">
+          {% for block in section.blocks %}
+            {% case block.type %}
+              {% when "product" %}
+            {%- liquid
+              assign color_bg = block.settings.background
+              assign product = block.settings.current_product
+              assign product_title = product.title
+              assign product_img = product.featured_image
+              assign product_info = product.description | strip_html | truncatewords: 25, '...'
+    
+              assign default_title = block.settings.title
+              assign default_img = block.settings.img
+              assign default_info = block.settings.info
+    
+              assign btn_type = block.settings.type_of
+              assign btn_name = block.settings.name
+              assign btn_url = block.settings.url
+              assign enable_color = block.settings.enable_color
+            -%}
+            {% capture img  %}
+            {% if product != blank and default_img == blank  %}
+              <img src="{{product_img | img_url: 'master'}}" alt="{{product_img.alt}}" loading="lazy">
+            {%- elsif default_img != blank -%}
+              <img src="{{default_img | img_url: 'master'}}" alt="{{default_img.alt}}" loading="lazy">
+            {% endif %}
+            {% endcapture %}
+    
+            {% capture title  %}
+              {% if product != blank and default_title == blank  %}
+                {{product_title}}
+              {%- elsif default_title != blank -%}
+                {{default_title}}
+              {% endif %}
+            {% endcapture %}
+    
+            {% capture info  %}
+              {% if product != blank and default_info == blank  %}
+                {{product_info}}
+              {%- elsif default_info != blank  -%}
+                {{default_info}}
+              {% endif %}
+            {% endcapture %}
+    
+            {%- capture button -%}
+              {% if btn_type == "scroll" and btn_name != blank  %}
+                <button class="taste__btn taste-item__btn"><span>{{btn_name}}</span></button>
+              {%- elsif btn_name != blank  -%}
+                <a class="taste-item__btn" href="{{btn_url}}"><span>{{btn_name}}</span></a>
+              {% endif %}
+            {%- endcapture -%}
+    
+            {%- capture decor_circle -%}
+              {% for i in (1..7) %}
+              <span class="decor_circle" style="background-color: {{color_bg}};"></span>
+              {% endfor %}
+            {%- endcapture -%}
+    
+            <div class="find-taste__item taste-item swiper-slide">
+              <div class="taste-item__img {% if enable_color == false %}taste-item_not_bg{% endif %}">{{img}}
+                {% if enable_color %}
+                <div class="taste-item__img_bg-color" style="background-color: {{color_bg}}"></div>
+                {% endif %}
+
+              </div>
+              <div class="taste-item__content">
+                  <h3 class="taste-item__title">{{title}}</h3>
+                  {% if enable_color %}
+                  <div class="taste-item__svg">{{decor_circle}}</div>
+                  {% endif %}
+                  <p class="taste-item__info">{{info}}</p>
+                  {{button}}
+              </div>
+            </div>
+            {% endcase %}
+          {% endfor %}
+        </div>
+    </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".taste__btn");
+    if (buttons.length != 0) {
+      buttons.forEach(el => el.addEventListener("click",scrollToPack))
+      const el = document.querySelector("#product__selectors_scroll") || document.querySelector("#list-variants-wrapper-scroll");
+      function scrollToPack() {
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - 150;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+
+    if (window.innerWidth <= 998 ) {
+      const swiper = new Swiper('.find-taste__grid.swiper', {
+        slidesPerView: 1,
+        spaceBetween: 70,
+        loop: false,
+        breakpoints: {
+          568: {
+            slidesPerView: 2,
+            spaceBetween: 20,
+          },
+          768: {
+            spaceBetween: 20,
+            slidesPerView: 3,
+          }
+        },
+        
+        navigation: {
+          nextEl: '.find-taste__grid-next',
+          prevEl: '.find-taste__grid-prev',
+        },
+
+
+      });
+    }
+
+  })
+</script>
+
+
+
+{% schema %}
+{
+  "name": "Find your taste",
+  "presets": [
+    {
+      "name": "Find your taste"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+      {
+        "type": "image_picker",
+        "id": "img_decor",
+        "label": "Image"
+      },
+        {
+          "type": "html",
+          "id": "style",
+          "label": "Style for image"
+        },
+        {
+          "type": "html",
+          "id": "style_mobile",
+          "label": "Style for image mobile"
+        }
+      ]
+    },
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "enable_color",
+          "label": "Enable background color",
+          "default": true
+        },
+        {
+          "type": "color",
+          "id": "background",
+          "label": "Background",
+          "default": "#F6E75D"
+        },
+        {
+          "type": "product",
+          "id": "current_product",
+          "label": "Current product"
+        },
+        {
+          "type": "header",
+          "content": "Default settings",
+          "info": "Default settings have a higher priority. if you want to show product information, you need to remove the default text field settings"
+        },
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "info",
+          "label": "Info"
+        },
+        {
+          "type": "header",
+          "content": "Button"
+        },
+        {
+          "type": "select",
+          "id": "type_of",
+          "label": "Type of button",
+          "default": "scroll",
+          "options": [
+            {
+              "value": "link",
+              "label": "Link"
+            },
+            {
+              "value": "scroll",
+              "label": "Scroll"
+            }
+          ]
+        },
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Name button",
+          "default": "SHOP NOW"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "Url button"
+        }
+
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 126
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 136
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Find Your Taste"
+    }
+  ]
+}
+{% endschema %}

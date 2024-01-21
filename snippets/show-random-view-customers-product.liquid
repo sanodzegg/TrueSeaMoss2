@@ -1,0 +1,12 @@
+{{ "<span style='font-size: calc(1rem*var(--adjust-body));'><b>👁 <span id='randomCountView'>252</span> customers are viewing this product</b></span></br>" }}
+
+<script>
+      function getRandomInt(max) {
+         return Math.floor(Math.random() * max);
+     }
+   (function(){
+       var randomCountEl =document.getElementById('randomCountView');
+       randomCountEl.textContent =  (64+getRandomInt(194)).toString();
+    
+   })()
+</script>

@@ -1,0 +1,311 @@
+{% liquid 
+  assign title = section.settings.heading
+  assign img = section.settings.img
+  assign decor_img = section.settings.decor_img
+  assign name_btn = section.settings.name_btn
+  assign link_btn = section.settings.link_btn
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign sbm = section.settings.sbm | append: 'px'
+%}
+{{"component-why-true.css" | asset_url | stylesheet_tag }}
+{%- style -%}
+.why-moss-{{section.id}} {
+  padding-top: {{st}};
+  padding-bottom: {{sb}};
+}
+{% for block in section.blocks %}
+  {%- case block.type -%}
+    {%- when 'decor' -%}
+      .why-moss-icon--{{forloop.index}} {
+        {{block.settings.icon_position}}
+      }
+      @media(max-width:786px) {
+        .why-moss-icon--{{forloop.index}} {
+          {{block.settings.icon_position_mobile}}
+        }
+      }
+    {%- when "text" -%}
+      {% liquid 
+        assign bg_img = block.settings.bg_img
+        assign top_p = block.settings.top_p | append: 'px'
+        assign left_p = block.settings.left_p | append: 'px'
+      %}
+      {% if bg_img %}
+        .item-content__element-{{forloop.index}}:after {
+          content: "";
+          min-height: 52px;
+          max-height: 60px;
+          height: 100%;
+          width: 100%;
+          background: url("{{bg_img | img_url: 'master' }}");
+          background-size: 100%;
+          background-repeat: no-repeat;
+          z-index: 1;
+          position:absolute;
+          top: {{top_p}};
+          left: {{left_p}};
+        }
+      {% endif %}
+  {%- endcase -%}   
+{% endfor %}
+
+@media(max-width: 998px) {
+  .why-moss-{{section.id}} {
+    padding-top: {{stm}};
+    padding-bottom: {{sbm}};
+  }
+{% for block in section.blocks %}
+  {%- case block.type -%}
+    {%- when "text" -%}
+      {% liquid 
+        assign top_p_m = block.settings.top_p_m | append: 'px'
+        assign left_p_m = block.settings.left_p_m | append: 'px'
+      %}
+      {% if bg_img %}
+        .item-content__element-{{forloop.index}}:after {
+          min-height: 30px;
+          max-height: 30px;
+          background-size: contain;
+          max-width: calc(100% - {{left_p_m}});
+          top: {{top_p_m}};
+          left: {{left_p_m}};
+        }
+      {% endif %}
+  {%- endcase -%}   
+{% endfor %}
+}
+{%- endstyle -%}
+<div class="why-moss why-moss-{{section.id}}">
+  {% for block in section.blocks %}
+    {%- case block.type -%}
+      {%- when "decor" -%}
+        {% if block.settings.background_icon %}
+          <div class="why-moss-icon--{{forloop.index}} why-moss-icon">
+            <img src="{{block.settings.background_icon | img_url: 'master'}}" alt="{{block.settings.background_icon.alt}}" loading="lazy">
+          </div> 
+        {% endif %}
+    {%- endcase -%}   
+  {% endfor %}  
+
+  {% if title %}
+    <h2 class="why-moss__title">{{title}}</h2>
+  {% endif %}
+  <div class="wrapper why-moss__container">
+    {% if img != blank %}
+      <div class="why-moss__item moss-item__img"  
+            style="--ratio: {{ img.aspect_ratio | default: 1.0 }}; --preview-ratio: {{ img.aspect_ratio | default: 1.0 }};"
+      >
+      {% if decor_img %}
+        <img class="moss-item__img-decor" src="{{decor_img| img_url: 'master'}}" alt="{{decor_img.alt}}" loading="lazy">
+      {% endif %}
+        {{ 
+          img  | image_url: width: master | image_tag: widths: '375, 480, 550, 610, 720, 930, 1100 1200 1300 1400 1500 1600 1800 2200', 
+          alt: img.alt, 
+          class: "moss-item__img-main",
+          loading: 'lazy'
+        }}      
+      </div>
+    {% endif %}
+    <div class="why-moss__item moss-item__content item-content">
+      <div class="item-content__blocks">
+        {% for block in section.blocks %}
+          {%- case block.type -%}
+            {%- when "text" -%}
+              {% liquid 
+                assign bg_img = block.settings.bg_img
+                assign text = block.settings.text
+              %}
+              <div class="item-content__element item-content__element-{{forloop.index}}">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+                  <circle cx="10.022" cy="10" r="10" fill="#A3DB7C"/>
+                </svg>
+                <p>{{text}}</p>
+              </div>
+          {%- endcase -%}   
+        {% endfor %}
+      </div>
+      {% if name_btn %}
+        <a class="item-content__link"  href="{{link_btn}}" title="{{name_btn}}"><span>{{name_btn}}</span></a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Why true",
+  "presets": [
+    {
+      "name": "Why true"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id":"background_icon",
+          "label":"background icon"
+        },
+        {
+          "type": "html",
+          "id":"icon_position",
+          "label": "icon position for desktop",
+          "info": "(CSS format)"
+        },
+        {
+          "type": "html",
+          "id":"icon_position_mobile",
+          "label": "icon position for mobile",
+          "info": "(CSS format)"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+
+        {
+          "type": "image_picker",
+          "id": "bg_img",
+          "label": "Background image"
+        },
+        {
+          "type": "paragraph",
+          "content": "Settings for desktop"
+        },
+        {
+          "type": "range",
+          "id": "top_p",
+          "label": "Top position for background image",
+          "unit": "px",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left_p",
+          "label": "Left position for background image",
+          "unit": "px",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Settings for mobile"
+        },
+        {
+          "type": "range",
+          "id": "top_p_m",
+          "label": "Top position for background image",
+          "unit": "px",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left_p_m",
+          "label": "Left position for background image",
+          "unit": "px",
+          "min": -20,
+          "max": 20,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why True Sea Moss?"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "decor_img",
+      "label": "Decor over the image"
+    },
+    {
+      "type": "text",
+      "id": "name_btn",
+      "label": "Name for the button"
+    },
+    {
+      "type": "url",
+      "id": "link_btn",
+      "label": "Link for the button"
+    }
+  ]
+}
+{% endschema %}

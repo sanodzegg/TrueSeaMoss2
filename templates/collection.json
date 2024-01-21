@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "subcollections": {
+      "type": "subcollections",
+      "settings": {
+        "layout": "grid",
+        "image_source": "collection",
+        "image_aspect_ratio": 0.6,
+        "image_overlay_opacity": 10,
+        "bg_color": "",
+        "text_color": "text-light"
+      }
+    },
+    "hero": {
+      "type": "collection-image-with-title",
+      "settings": {
+        "banner_height": "one-fifty-height",
+        "text_position": "middle-center",
+        "show_image": true,
+        "text_color": "text-light",
+        "overlay_opacity": 10,
+        "banner_bg_color": "#fafafa"
+      }
+    },
+    "main": {
+      "type": "collection",
+      "settings": {
+        "show_breadcrumbs": true,
+        "enable_sorting": true,
+        "enable_filters": true,
+        "filter_mode": "default",
+        "bg_color": ""
+      }
+    },
+    "390680ce-356d-4ab8-afdb-10db5709d83f": {
+      "type": "section-custom-html",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "html": "<div class=\"custom-vstar-review-widget\" style=\"width:100%\"><\/div>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    },
+    "cd8df67e-d0bc-4a9b-8ea2-1d5d4cd4c66d": {
+      "type": "selection-product-grid-21-04-23",
+      "disabled": true,
+      "settings": {
+        "show_products": false,
+        "collection": "",
+        "title": "Best Sellers",
+        "products_rows": 2,
+        "products_layout": "grid",
+        "show_collection_button": true,
+        "button_style": "text",
+        "bg_color": "",
+        "enable_slider_mobile": true
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "hero",
+    "main",
+    "390680ce-356d-4ab8-afdb-10db5709d83f",
+    "cd8df67e-d0bc-4a9b-8ea2-1d5d4cd4c66d"
+  ]
+}

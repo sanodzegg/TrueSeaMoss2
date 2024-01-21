@@ -1,0 +1,232 @@
+{%- style -%}
+  .rtwb {
+      position: relative;
+  }
+  .rtwb p{
+      margin: 0;
+  }
+  .rtwb strong,
+  .rtwb em{
+      font-family: var(--FONT-STACK-HEADING);
+      font-weight: 700;
+      font-style: normal;
+      line-height: normal;
+      padding: 5px;
+  }
+  .rtwb strong{
+      background: #DFE1F2;
+  }
+  .rtwb em{
+      background: #F0DFCE;
+  }
+  .rtwb_text {
+      color: #222;
+      text-align: center;
+      font-family: var(--FONT-STACK-BODY);
+      font-size: 30px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: normal;
+      max-width: 762px;
+      padding: 100px 24px 65px;
+      margin: 0 auto;
+      z-index: 2;
+      position: relative;
+  }
+
+  .decor {
+      position: absolute;
+      object-fit: contain;
+      width: 100%;
+      height: 100%;
+  }
+
+  .image_1 {
+      max-width: 362px;
+      max-height: 449px;
+      bottom: 62px;
+      left: 0;
+  }
+
+  .image_2 {
+      max-width: 200px;
+      max-height: 292px;
+      bottom: 60px;
+      right: 0;
+  }
+  .mob_image{
+      display: none;
+  }
+  .desk_image{
+      display: block;
+  }
+  @media (max-width: 998px) {
+      .desk_image{
+          display: none;
+      }
+      .mob_image{
+          display: block;
+      }
+      .image_1 {
+          max-width: 69px;
+          max-height: 165px;
+          bottom: 137px;
+          left: 0;
+      }
+
+      .image_2 {
+          max-width: 70px;
+          max-height: 146px;
+          bottom: 34px;
+          right: 0;
+      }
+
+  }
+  @media screen and (max-width: 800px) {
+
+      .rtwb_text{
+          font-size: 18px;
+          padding: 47px 24px 50px;
+      }
+  }
+
+  .section-{{ section.id }} {
+      padding-top: {{ section.settings.st }}px;
+      padding-bottom: {{ section.settings.sb }}px;
+      position: relative;
+  }
+
+  .rtwb_wrapper {
+      background: {{ section.settings.bg_color }};
+  }
+
+  @media (max-width: 998px) {
+      .section-{{ section.id }} {
+          padding-top: {{ section.settings.stm }}px;
+          padding-bottom: {{ section.settings.sbm }}px;
+      }
+  }
+
+  {%- endstyle -%}
+
+{% if section.settings.text != blank %}
+  <div class="rtwb section-{{ section.id }}">
+      {% if section.settings.img_1 != blank %}
+          <img class="decor desk_image image_1 {% if section.settings.img_1_m == blank %}mob_image{% endif %}" src="{{ section.settings.img_1 | img_url: "master" }}"
+               alt="{{ section.settings.img_1.alt }}">
+      {% endif %}
+      {% if section.settings.img_2 != blank %}
+          <img class="decor desk_image image_2 {% if section.settings.img_1_m == blank %}mob_image{% endif %}" src="{{ section.settings.img_2 | img_url: "master" }}"
+               alt="{{ section.settings.img_2.alt }}">
+      {% endif %}
+      {% if section.settings.img_1_m != blank %}
+          <img class="decor mob_image image_1" src="{{ section.settings.img_1_m | img_url }}"
+               alt="{{ section.settings.img_1_m.alt }}">
+      {% endif %}
+      {% if section.settings.img_2_m != blank %}
+          <img class="decor mob_image image_2" src="{{ section.settings.img_2_m | img_url }}"
+               alt="{{ section.settings.img_2_m.alt }}">
+      {% endif %}
+
+      <div class="rtwb_wrapper">
+          <div class="rtwb_text">
+              {{ section.settings.text }}
+          </div>
+      </div>
+  </div>
+{% endif %}
+
+
+
+{% schema %}
+{
+"name": "Rich text with bubbles",
+"settings": [
+  {
+    "type": "richtext",
+    "id": "text",
+    "label": "Text",
+    "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto autem consectetur corporis eos est magnam nisi perferendis, possimus sed voluptas.</p>"
+  },
+  {
+    "type": "color",
+    "id": "bg_color",
+    "label": "Background color",
+    "default": "#E9F3F9"
+  },
+  {
+    "type": "header",
+    "content": "Space desktop"
+  },
+  {
+    "type": "image_picker",
+    "id": "img_1",
+    "label": "Image 1"
+  },
+  {
+    "type": "image_picker",
+    "id": "img_2",
+    "label": "Image 2"
+  },
+  {
+    "type": "image_picker",
+    "id": "img_1_m",
+    "label": "Image 1 mobile"
+  },
+  {
+    "type": "image_picker",
+    "id": "img_2_m",
+    "label": "Image 2 mobile"
+  },
+  {
+    "type": "range",
+    "id": "st",
+    "label": "Space top",
+    "unit": "px",
+    "min": 0,
+    "max": 200,
+    "step": 2,
+    "default": 120
+  },
+  {
+    "type": "range",
+    "id": "sb",
+    "label": "Space bottom",
+    "unit": "px",
+    "min": 0,
+    "max": 200,
+    "step": 2,
+    "default": 120
+  },
+  {
+    "type": "header",
+    "content": "Space mobile"
+  },
+  {
+    "type": "range",
+    "id": "stm",
+    "label": "Space top",
+    "unit": "px",
+    "min": 0,
+    "max": 200,
+    "step": 2,
+    "default": 60
+  },
+  {
+    "type": "range",
+    "id": "sbm",
+    "label": "Space bottom",
+    "unit": "px",
+    "min": 0,
+    "max": 200,
+    "step": 2,
+    "default": 70
+  }
+],
+"presets": [
+  {
+    "name": "Rich text with bubbles"
+  }
+]
+}
+{% endschema %}

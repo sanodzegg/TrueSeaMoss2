@@ -1,0 +1,387 @@
+{
+  "sections": {
+    "main": {
+      "type": "product",
+      "blocks": {
+        "75cfcf7d-e12e-44d3-b461-40d2bb5424b5": {
+          "type": "text",
+          "settings": {
+            "title": "<p>{{ product.vendor }}<\/p>",
+            "text_alignment": "left"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {
+            "show_price": true,
+            "subheading": "none",
+            "show_rating": true,
+            "show_rating_count": false
+          }
+        },
+        "c3dc3f91-91eb-4560-ac9d-dc263d0e52fc": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'product-text-sales-19-04-23' %}"
+          }
+        },
+        "c38d4fb6-d989-4186-b871-b85fdbd349d4": {
+          "type": "text",
+          "settings": {
+            "title": "<p><strong>FREE 2-DAY SHIPPING ON ALL ORDERS FROM 30$<\/strong><\/p>",
+            "text_alignment": "left"
+          }
+        },
+        "inventory_countdown": {
+          "type": "inventory_countdown",
+          "settings": {
+          }
+        },
+        "form": {
+          "type": "form",
+          "settings": {
+            "show_image": false,
+            "name_option_1": "",
+            "text_option_1": "",
+            "name_option_2": "",
+            "text_option_2": "",
+            "sub_text_option_2": "",
+            "hide_option": "",
+            "info_page": "",
+            "info_page_title_override": "",
+            "add_to_cart": false,
+            "show_labels": false,
+            "show_quantity": false,
+            "show_payment_button": false,
+            "enable_subscriptions_selectors": true
+          }
+        },
+        "bbd14f27-48a3-4370-a658-598bef7fd347": {
+          "type": "shopify:\/\/apps\/recharge-subscriptions\/blocks\/subscription-widget\/371eed76-0b44-4869-9813-730372ea378e",
+          "disabled": true,
+          "settings": {
+            "product": "{{product}}"
+          }
+        },
+        "icon": {
+          "type": "icon",
+          "settings": {
+            "icon_name": "check",
+            "icon_color": "",
+            "icon_width": 20,
+            "icon_text": "FREE 2-DAY SHIPPING ON ALL ORDERS FROM 30$",
+            "text_size": 90,
+            "width": "full",
+            "text_alignment": "center",
+            "bg_color": "#ffffff",
+            "remove_padding": true
+          }
+        },
+        "description": {
+          "type": "description",
+          "settings": {
+          }
+        },
+        "product_accordions": {
+          "type": "product_accordions",
+          "settings": {
+            "accordion_heading_1": "Ingredients",
+            "accordion_text_1": "<p>{{ product.metafields.custom.ingridients | metafield_tag }}<\/p>",
+            "accordion_page_1": "",
+            "accordion_heading_2": "Composition",
+            "accordion_text_2": "<p>{{ product.metafields.custom.composition | metafield_tag }}<\/p>",
+            "accordion_page_2": "",
+            "accordion_heading_3": "How to keep your sea moss fresh",
+            "accordion_text_3": "<p>Sea moss gel<\/p><ul><li>keep refrigerated: 30 days<\/li><li>keep frozen: 6 month<\/li><\/ul><p>Sea moss gummies, capsulles, powder<\/p><ul><li>keep 2 years<\/li><\/ul>",
+            "accordion_page_3": "",
+            "accordion_heading_4": "How to use",
+            "accordion_text_4": "<p>{{ product.metafields.custom.how_to_use | metafield_tag }}<\/p>",
+            "accordion_page_4": "",
+            "accordion_heading_5": "",
+            "accordion_text_5": "",
+            "accordion_page_5": ""
+          }
+        }
+      },
+      "block_order": [
+        "75cfcf7d-e12e-44d3-b461-40d2bb5424b5",
+        "title",
+        "c3dc3f91-91eb-4560-ac9d-dc263d0e52fc",
+        "c38d4fb6-d989-4186-b871-b85fdbd349d4",
+        "inventory_countdown",
+        "form",
+        "bbd14f27-48a3-4370-a658-598bef7fd347",
+        "icon",
+        "description",
+        "product_accordions"
+      ],
+      "settings": {
+        "new_style": false,
+        "wrapper": "normal",
+        "image_size": "medium",
+        "enable_zoom": true,
+        "enable_video_looping": false,
+        "bg_color": ""
+      }
+    },
+    "97c4f806-5bf7-456e-9a95-fdf6a4723c20": {
+      "type": "section-video-custom-link",
+      "settings": {
+        "video_url_input": "https:\/\/cdn.shopify.com\/videos\/c\/o\/v\/81b75ba9d86c422f9261575cf593d585.mp4",
+        "video_size": "large"
+      }
+    },
+    "5ce04279-e39a-4357-91c9-36cdf0300df6": {
+      "type": "section-logo-list",
+      "blocks": {
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-0": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/lab-tested-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-1": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/made-in-usa-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-2": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/wincrafted-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-3": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/non-gmo-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-4": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/sugar-free-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "a1e9ee26-6082-4b36-8299-db99073d8d4c": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/gluten-free-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        },
+        "ed949814-b6a8-4f3c-be34-28b2bc90645c": {
+          "type": "item_logo",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/100-procentov-organic-sea-moss-trueseamoss.jpg",
+            "logos_width": 120,
+            "url": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-0",
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-1",
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-2",
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-3",
+        "template--15806806032539__5ce04279-e39a-4357-91c9-36cdf0300df6-1686136959b428893c-4",
+        "a1e9ee26-6082-4b36-8299-db99073d8d4c",
+        "ed949814-b6a8-4f3c-be34-28b2bc90645c"
+      ],
+      "custom_css": [
+        ".logo-list__slider {display: flow-root;}",
+        ".logo-list__slide {margin: 10px;}",
+        ".logo-list {padding-top: 0px; padding-bottom: 30px;}"
+      ],
+      "settings": {
+        "bg_color": ""
+      }
+    },
+    "1686138373ddcb0eb4": {
+      "type": "apps",
+      "blocks": {
+        "50c68d31-c615-4d74-94c8-dce6af325e96": {
+          "type": "shopify:\/\/apps\/trustoo-product-ali-reviews\/blocks\/review-widget\/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "50c68d31-c615-4d74-94c8-dce6af325e96"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "165986931295629bef": {
+      "type": "section-marquee",
+      "blocks": {
+        "1659869311959fda0a-2": {
+          "type": "text",
+          "settings": {
+            "text": "<p>24\/7 LIVE CHAT SUPPORT<\/p>",
+            "icon_name": "bell",
+            "icon_color": "",
+            "icon_width": 20,
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        }
+      },
+      "block_order": [
+        "1659869311959fda0a-2"
+      ],
+      "settings": {
+        "st": 0,
+        "sb": 60,
+        "stm": 0,
+        "sbm": 60,
+        "bg_color": "#285234",
+        "color": "#ffffff",
+        "gradient": false,
+        "background": "linear-gradient(86deg, #FF914F 2.38%, rgba(246, 231, 93, 0.75) 23.92%, #C8B7E1 45.83%, rgba(96, 198, 255, 0.49) 75.98%, #A3DB7C 96.35%)",
+        "layout": "marquee",
+        "padding": 20,
+        "slider_speed": 7,
+        "marquee_speed": 175,
+        "text_size": 150,
+        "text_size_mobile": 150,
+        "message_spacing": 25
+      }
+    },
+    "icons": {
+      "type": "section-icons-row",
+      "blocks": {
+        "icon-0": {
+          "type": "text",
+          "settings": {
+            "icon_name": "truck",
+            "title": "Free Shipping",
+            "text": "<p>on all orders from 30$<\/p>"
+          }
+        },
+        "icon-1": {
+          "type": "text",
+          "settings": {
+            "icon_name": "refresh-cw",
+            "title": "Free Returns",
+            "text": "<p>within 30 days of purchase<\/p>"
+          }
+        },
+        "icon-2": {
+          "type": "text",
+          "settings": {
+            "icon_name": "heart",
+            "title": "1% Donated Annually",
+            "text": "<p>to forest conservation<\/p>"
+          }
+        }
+      },
+      "block_order": [
+        "icon-0",
+        "icon-1",
+        "icon-2"
+      ],
+      "settings": {
+        "alignment": "center",
+        "columns": 3,
+        "icons_width": 30,
+        "bg_color": "#fafafa",
+        "box_color": "",
+        "text_color": "#333333"
+      }
+    },
+    "overlapping-images-0": {
+      "type": "section-overlapping-images",
+      "settings": {
+        "text_position": "right",
+        "text_alignment": "center",
+        "images_width": 750,
+        "images_offset": 60,
+        "image_1": "shopify:\/\/shop_images\/sea-moss-gried-and-gummies.webp",
+        "image_1_position": "center-center",
+        "image_link_1": "",
+        "image_2": "shopify:\/\/shop_images\/elderberry-sea-moss-gel-and-dried_53377841-e5b1-4de2-91c0-320d90dc7fc7.webp",
+        "image_2_position": "center-center",
+        "image_link_2": "",
+        "hide_image_2": false,
+        "heading": "MADE WITH LOVE, MADE FOR FAMILY",
+        "description": "<p>Our sea moss is sourced from the pristine waters of the Caribbean and is carefully hand-picked and sun-dried to preserve its natural properties. We work closely with local farmers and fishermen to ensure that our products are sustainably sourced and contribute to the well-being of the local communities.<\/p><p>Our products are suitable for anyone looking to improve their overall health and well-being, including those with specific dietary requirements such as vegan, vegetarian, or gluten-free. We also offer a range of recipes and tips to help our customers incorporate sea moss into their daily routine and reap the benefits of this incredible superfood.<\/p>",
+        "type_of_button": "link",
+        "button_text": "",
+        "button_link": "",
+        "button_style": "primary",
+        "video_btn_text": "",
+        "video_btn_url": "",
+        "bg_color": ""
+      }
+    },
+    "grid": {
+      "type": "section-grid",
+      "blocks": {
+        "grid-0": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/and-gummies-sea-moss-trueseamoss-com.webp",
+            "bg_position": "center-center",
+            "overlay_opacity": 10,
+            "text_position": "center",
+            "subheading": "",
+            "title": "",
+            "text": "",
+            "button_text": "",
+            "link": "",
+            "secondary_button_text": "",
+            "secondary_button_link": "",
+            "text_color": "text-light"
+          }
+        }
+      },
+      "block_order": [
+        "grid-0"
+      ],
+      "settings": {
+        "height": "550",
+        "wrapper": "normal",
+        "add_spacing": true,
+        "heading_size": 150,
+        "button_style": "secondary btn--small",
+        "secondary_button_style": "secondary btn--small",
+        "bg_color": "",
+        "enable_slider_mobile": true
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": {
+        "wrapper": "normal",
+        "limit": 4,
+        "product_recommendations_heading": "YOU MAY ALSO LIKE",
+        "bg_color": ""
+      }
+    }
+  },
+  "order": [
+    "main",
+    "97c4f806-5bf7-456e-9a95-fdf6a4723c20",
+    "5ce04279-e39a-4357-91c9-36cdf0300df6",
+    "1686138373ddcb0eb4",
+    "165986931295629bef",
+    "icons",
+    "overlapping-images-0",
+    "grid",
+    "related"
+  ]
+}

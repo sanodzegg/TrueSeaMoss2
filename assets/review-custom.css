@@ -1,0 +1,240 @@
+.review-custom {
+  display: none;
+}
+@media (max-width: 768px) {
+  .review-custom {
+    margin-top: 50px;
+    display: block;
+    padding-top: 83px;
+    padding-bottom: 55px;
+    background-color: #eff5eb;
+  }
+
+  .review-wrapper {}
+
+  .wrapper {}
+
+  .review-title {
+    text-align: center;
+    color: #285234;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0 0 14px 0;
+  }
+
+  .review-subtitle {
+    color: #285234;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    margin: 0 0 10px 0;
+    text-align: center;
+  }
+
+  .review-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    column-gap: 15px;
+    margin: 0 0 20px 0;
+  }
+
+  .review-number__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+  }
+
+  .review-number__text {
+    padding-top: 5px;
+    color: #222;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 300;
+    line-height: 1;
+  }
+
+  .review-grid {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    row-gap: 20px;
+  }
+
+  .review-item {
+    width: 100%;
+    position: relative;
+    border-radius: 20px;
+    background: #FFF;
+    padding: 28px 8px 15px 26px;
+  }
+
+  .review-item__photo {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 8px;
+    top: 15px;
+  }
+
+  .review-item__photo img,
+  .review-item__photo svg {
+    max-width: 100%;
+    width: 100%;
+    height: 100%;
+  }
+
+  .review-item__main {
+    position: relative;
+    width: 100%;
+    padding: 10px 10px 10px 13px;
+    border-radius: 15px;
+    background: #F1F2F6;
+    box-shadow: 0px 4px 10px 0px rgba(34, 34, 34, 0.15);
+  }
+
+  .person-name {
+    font-family: var(--FONT-STACK-BODY);
+    margin: 0 0 12px 0;
+    color: #222;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 8px;
+  }
+
+  .person-feedback {
+    margin: 0;
+    color: #222;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+
+  .person-icon {
+    padding: 3px 5px 3px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 0;
+    row-gap: 0;
+    position: absolute;
+
+    border-radius: 20px;
+    background: #FFF;
+    box-shadow: 0px 4px 10px 0px rgba(34, 34, 34, 0.10);
+    bottom: -12px;
+    right: 5px;
+  }
+
+  .review-like {
+    width: 20px;
+    height: 20px;
+    z-index: 2;
+  }
+
+  .review-heart {
+    z-index: 1;
+    width: 20px;
+    height: 20px;
+  }
+
+  .review-like+.review-heart {
+    margin-left: -3px;
+  }
+
+  .review-like+.person-number {
+    margin-left: 10px;
+  }
+
+  .review-heart+.person-number {
+    margin-left: 3px;
+  }
+
+  .person-number {
+    padding-top: 5px;
+    padding-right: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #222;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 14px;
+  }
+
+  .review-item__fotter {
+    margin: 10px 0 0 13px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    row-gap: 5px;
+    column-gap: 10px;
+  }
+
+  .review-fotter__item {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: block;
+    line-height: 1;
+  }
+
+  .review-fotter__text {
+    color: #222;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 10px;
+    opacity: 0.7;
+    transition: color 0.3s;
+    cursor: pointer;
+  }
+
+  .review-fotter__text:hover {
+    color: var(--hover);
+  }
+
+  .hide-el {
+    display: none;
+  }
+
+  .review-btn {
+    margin: 24px auto 0 auto;
+    color: #285234;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    column-gap: 5px;
+    transition: all 0.3s;
+  }
+
+  .review-btn span {
+    pointer-events: none;
+  }
+
+  .review-btn:hover {
+    color: #222;
+  }
+
+  .review-btn:hover svg path {
+    fill: #222;
+  }
+
+  .review-btn[data-open="false"] svg {
+    transform: rotate(180deg);
+  }
+}

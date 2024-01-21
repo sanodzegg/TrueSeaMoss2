@@ -1,0 +1,22 @@
+{
+  "parent": "product.landing-page-for-bundle.json",
+  "context": {
+    "market": "us"
+  },
+  "sections": {
+    "main": {
+      "disabled": false,
+      "settings": {
+      },
+      "blocks": {
+        "form": {
+          "settings": {
+            "btn_w_s": "One-time Purchase",
+            "text_benefit": "If you subscribe, it's just 50.99 and you will save $9 from every delivery",
+            "name_option": "Delivery Frequency"
+          }
+        }
+      }
+    }
+  }
+}

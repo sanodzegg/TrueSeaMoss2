@@ -1,0 +1,57 @@
+{{ 'option-taste.css' | asset_url | stylesheet_tag }}
+{%- liquid
+    assign title = block.title
+    assign info = block.info  
+    assign info_next = block.info_next  
+    assign active_index = block.active_index 
+-%}
+
+<div class="option-taste_container" id="option-taste">
+    <div style="display: none;" class="filds-line"></div>
+    <div class="option-taste_text">
+        <span class="option-taste_title">{{title}}</span>
+        <div class="option-taste-info">{{info}}</div>
+        <div class="option-taste-next">{{info_next}}</div>
+    </div>
+    <div class="option-taste_wrap">
+        {% for i in (1..12) %}
+            {% if active_index contains forloop.index%}
+                {%- assign active = true -%}
+            {%- else -%}
+                {%- assign active = false -%}
+            {% endif %}
+            {%- capture key_title -%}name_taste_{{i}}{%- endcapture -%}
+            {%- capture key_image -%}img_taste_{{i}}{%- endcapture -%}
+            {%- capture key_text -%}badge_text_{{i}}{%- endcapture -%}
+            {% if block[key_title] != blank and  block[key_image] != blank %}
+                <div class="option-taste_item {% if active %}_active-item{% endif %}" data-active="{% if active %}true{% else %}false{% endif %}">
+                    {% if block[key_text] != blank %}
+                        <span class="taste-item__badge">{{block[key_text]}}</span>
+                    {% endif %}
+                    <input type="hidden" data-name="{{block[key_title]}}" data-quantity="{% if active %}1{% else %}0{% endif %}">
+                    <input 
+                        type="checkbox" 
+                        name="taste" 
+                        id="taste_item-{{forloop.index}}" 
+                        {% if active %}checked{% endif %} 
+                    >
+   
+                    <label for="taste_item-{{forloop.index}}">
+                        {{
+                            block[key_image] | image_url: width: "120x" | image_tag: widths: '500 700 800 900 1000 1100 1200 1300 1400 1500 1600 1800 2200',
+                            alt: block[key_image].alt,
+                            loading: 'lazy'
+                          }}
+                        <span>{{block[key_title]}}</span>
+                        <div class="option-taste_quantity">
+                            <span data-name="minus" class="option-taste_btn option-taste_btn-minus">-</span>
+                            <input class="option-taste_input" type="number" value="1">
+                            <span data-name="plus" class="option-taste_btn option-taste_btn-plus">+</span>
+                        </div>
+                    </label>
+                </div>                
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<script src="{{'option-taste.js '| asset_url}}" defer="defer"></script>

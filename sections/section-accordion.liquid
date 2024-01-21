@@ -1,0 +1,105 @@
+<style>
+  .accordions-wrapper .product__accordion__title {
+    font-weight: 700;
+    font-family: var(--FONT-STACK-HEADING);
+    margin: 0;
+    color: #285234;
+  }
+</style>
+<div class="accordions-wrapper product__accordions">
+  <div class="wrapper">
+    {%- render 'product-accordions', block_settings: section.settings -%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "Accordions",
+  "presets": [
+    {
+      "name": "Accordions"
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "accordion_heading_1",
+      "label": "Accordion heading 1",
+      "default": "Materials and specs"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_text_1",
+      "label": "Accordion text 1",
+        "default": "<p>Use this accordion to add info such as Materials, Sizing, Features, Shipping and Returns policies</p>"
+    },
+    {
+      "type": "page",
+      "id": "accordion_page_1",
+      "label": "Accordion page 1",
+      "info": "Example: Size chart"
+    },
+    {
+      "type": "text",
+      "id": "accordion_heading_2",
+      "label": "Accordion heading 2",
+      "default": "Shipping and returns"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_text_2",
+      "label": "Accordion text 2",
+        "default": "<p>Use this accordion to add info such as Materials, Sizing, Features, Shipping and Returns policies</p>"
+    },
+    {
+      "type": "page",
+      "id": "accordion_page_2",
+      "label": "Accordion page 2"
+    },
+    {
+      "type": "text",
+      "id": "accordion_heading_3",
+      "label": "Accordion heading 3"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_text_3",
+      "label": "Accordion text 3"
+    },
+    {
+      "type": "page",
+      "id": "accordion_page_3",
+      "label": "Accordion page 3"
+    },
+    {
+      "type": "text",
+      "id": "accordion_heading_4",
+      "label": "Accordion heading 4"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_text_4",
+      "label": "Accordion text 4"
+    },
+    {
+      "type": "page",
+      "id": "accordion_page_4",
+      "label": "Accordion page 4"
+    },
+    {
+      "type": "text",
+      "id": "accordion_heading_5",
+      "label": "Accordion heading 5"
+    },
+    {
+      "type": "richtext",
+      "id": "accordion_text_5",
+      "label": "Accordion text 5"
+    },
+    {
+      "type": "page",
+      "id": "accordion_page_5",
+      "label": "Accordion page 5"
+    }
+  ]
+}
+{% endschema %}

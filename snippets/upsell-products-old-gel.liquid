@@ -1,0 +1,236 @@
+{% if products != blank %}
+<div class="product-bundle_wrapper" data-cart-type="{{settings.cart_type}}">
+  
+    <div class="product-bundle_header">
+        <h2 class="product-bundle_title">{{title}}</h2>
+        <div class="product-bundle_navigation">
+            <div class="button-prev-bundle">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_92_288)">
+                        <path
+                            d="M10.0001 0C15.5229 0 20 4.47712 20 9.99993C20 15.5227 15.5229 20 10.0001 20C4.47726 20 -4.76837e-05 15.5227 -4.76837e-05 9.99993C0.00618553 4.47965 4.4796 0.0061875 10.0001 0ZM10.0001 18.9999C14.9706 18.9999 19.0001 14.9706 19.0001 9.99993C19.0001 5.02936 14.9706 0.999937 10.0001 0.999937C5.02945 0.999937 1.00008 5.02936 1.00008 9.99993C1.00575 14.9681 5.03189 18.9943 10.0001 18.9999Z"
+                            fill="#222222" fill-opacity="1" />
+                        <path
+                            d="M11.1709 6.12365C11.3789 5.94177 11.6947 5.96305 11.8765 6.1709C12.0582 6.37888 12.0369 6.69473 11.8291 6.87655L8.25927 9.99997L11.8293 13.1236C12.0373 13.3054 12.0583 13.6213 11.8767 13.829C11.6949 14.0371 11.379 14.0583 11.171 13.8765L7.17107 10.3764C7.1174 10.3295 7.07438 10.2716 7.04491 10.2067C7.01544 10.1417 7.00019 10.0713 7.00019 9.99995C7.00019 9.92864 7.01544 9.85816 7.04491 9.79323C7.07438 9.7283 7.1174 9.67042 7.17107 9.62347L11.1709 6.12365Z"
+                            fill="#222222" fill-opacity="1" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_92_288">
+                            <rect width="20" height="20" fill="white" transform="matrix(-1 0 0 1 20 0)" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+            <div class="button-next-bundle">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g clip-path="url(#clip0_92_284)">
+                        <path
+                            d="M9.99993 0C4.47712 0 0 4.47712 0 9.99993C0 15.5227 4.47712 20 9.99993 20C15.5227 20 20 15.5227 20 9.99993C19.9938 4.47965 15.5204 0.0061875 9.99993 0ZM9.99993 18.9999C5.02936 18.9999 0.999937 14.9706 0.999937 9.99993C0.999937 5.02936 5.02936 0.999937 9.99993 0.999937C14.9706 0.999937 18.9999 5.02936 18.9999 9.99993C18.9943 14.9681 14.9681 18.9943 9.99993 18.9999Z"
+                            fill="#222222" fill-opacity="1" />
+                        <path
+                            d="M8.82913 6.12365C8.62115 5.94177 8.30531 5.96305 8.12348 6.1709C7.94184 6.37888 7.96307 6.69473 8.17092 6.87655L11.7407 9.99997L8.17073 13.1236C7.9627 13.3054 7.94165 13.6213 8.12329 13.829C8.30512 14.0371 8.62096 14.0583 8.82899 13.8765L12.8289 10.3764C12.8826 10.3295 12.9256 10.2716 12.9551 10.2067C12.9846 10.1417 12.9998 10.0713 12.9998 9.99995C12.9998 9.92864 12.9846 9.85816 12.9551 9.79323C12.9256 9.7283 12.8826 9.67042 12.8289 9.62347L8.82913 6.12365Z"
+                            fill="#222222" fill-opacity="1" />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_92_284">
+                            <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div class="swiper swiper-bundle">
+        <div class="swiper-wrapper swiper-wrapper-bundle">
+            {% for item in products %}
+            {%- liquid
+            assign img = item.featured_image
+            assign avalible_product = item.selected_or_first_available_variant.available
+            assign id_product = item.selected_or_first_available_variant.id
+            assign title = item.title
+            assign origin_price = item.selected_or_first_available_variant.price
+            assign compare_price = item.selected_or_first_available_variant.compare_at_price
+            assign profit_per = origin_price | times: 100.0 | divided_by: compare_price | ceil
+            assign profit = 100 | minus: profit_per | append: '%' | prepend:'Save '
+
+            if compare_price > origin_price
+            assign is_compare = true
+            else
+            assign is_compare = false
+            endif
+            -%}
+            {% unless avalible_product == false %}
+            <div data-bundle="{{id_product}}" class="swiper-slide swiper-slide-bundle swiper">
+                <label class="swiper-slide-label" for="bundle_id--{{forloop.index}}"></label>
+                <input type="checkbox" id="bundle_id--{{forloop.index}}" name="bundle" value="{{id_product}}">
+                {% if is_compare %}
+                <span class="slide-bundle_badge">
+                    {{ 'products.product.sale' | t }}
+                </span>
+                {% endif %}
+                <div class="slide-bundle_img">
+                    <img src="{{img | img_url: 'master'}}" alt="{{img.alt}}" loading="lazy">
+                </div>
+                <div class="slide-bundle_text">
+                    <h3 class="slide-bundle_title">{{title}}</h3>
+                    <span class="slide-bundle_badge slide-bundle_badge-mobile ">
+                        {{ 'products.product.sale' | t }}
+                    </span>
+                    <div class="slide-bundle_price">
+                        {% if is_compare %}
+                        <span class="origin-price">{{origin_price | money }}</span>
+                        <span class="compare-price">{{compare_price | money }}</span>
+                        {%- else -%}
+                        <span class="origin-price">{{origin_price | money }}</span>
+                        {% endif %}
+                    </div>
+                    {% if is_compare %}
+                    <span class="slide-bundle_sale">{{profit}}</span>
+                    {% endif %}
+                    <button
+                    onclick="addToCartBundle(this)"
+                        type="submit1"
+                        name="add1"
+                        class="slide-bundle_button">
+                        <span data-add-to-cart-text>
+                            {{ 'products.product.add_to_cart' | t }}
+                        </span>
+              
+                    </button>
+                </div>
+
+            </div>
+            {% endunless %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="bundle-pagination"></div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const swiper = new Swiper('.swiper-bundle', {
+            slidesPerView: 1.37,
+            spaceBetween: 15,
+            loop: false,
+            navigation: {
+                nextEl: '.button-next-bundle',
+                prevEl: '.button-prev-bundle'
+            },
+            pagination: {
+                el: '.bundle-pagination',
+            },
+            breakpoints: {
+                568: {
+                    slidesPerView: 2.0
+                },
+                768: {
+                    slidesPerView: 2.5
+                },
+                1140: {
+                    slidesPerView: 3.37
+                }
+            }
+        });
+    })
+
+    async function addToCartBundle(event) {
+        try {
+            const typeCart = document.querySelector("[data-cart-type]").getAttribute("data-cart-type");
+            const slide = event.closest(".swiper-slide-bundle");
+            const id = slide.querySelector("input[name='bundle']").value;
+
+            let formData = {
+                'items': [{
+                    id: id,
+                    quantity: 1
+                }]
+            };
+
+            const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+            document.dispatchEvent(new CustomEvent('cart:update_bundle', { bubbles: true }));
+            slide.classList.add("selected");
+            if (data && typeCart === "page") {
+                window.location.href = "/cart";
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
+    const fetchCartProduct = async () => {
+        const res = await fetch("/cart.js");
+        const cartItems = await res.json();
+        return cartItems.items;
+    };
+
+    document.addEventListener('cart:update_active_slide', async (event)=> {
+        let items = event.detail ? event.detail : await fetchCartProduct();
+        const arraySlide = document.querySelectorAll(".swiper-slide-bundle");
+        if (arraySlide.length == 0 || items == null) return;
+        const arrayIdProductInCart = items.map(el => el.id);
+        arraySlide.forEach( el => {
+            const id = Number(el.dataset.bundle)
+            el.classList.toggle("selected",arrayIdProductInCart.includes(id))
+        })
+    });
+
+
+    // const inputSlide = document.querySelectorAll(".swiper-slide input");
+    // const bundleInput = document.querySelector(".bundle-input");
+    // let arrayId = []
+    //     inputSlide.forEach( el => {
+    //         el.addEventListener("input", function() {
+    //             const slideParent = el.closest(".swiper-slide").classList;
+    //             let index = arrayId.indexOf(el.value);
+    //             slideParent.toggle("selected", el.checked)
+    //             if (el.checked) {
+    //                 arrayId.push(el.value)
+    //             } else {
+    //                 arrayId.splice(index,1)
+    //             }
+    //             bundleInput.value = JSON.stringify(arrayId);
+    //         })
+    //     })
+
+    //     const buttonForm = document.querySelector(".product__submit__item button");
+    //     buttonForm.addEventListener("click",function(event) {
+    //         if (arrayId.length !== 0) {
+    //             let objCart = arrayId.map(el => {
+    //                 return ({
+    //                     "id": el,
+    //                     "quantity": 1
+    //                 })
+
+    //             let formData = {
+    //                 'items': objCart
+    //             };
+    //             fetch(window.Shopify.routes.root + 'cart/add.js', {
+    //                 method: 'POST',
+    //                 headers: {
+    //                     'Content-Type': 'application/json'
+    //                 },
+    //                 body: JSON.stringify(formData)
+    //                 })
+    //                 .then(response => {
+    //                     return response.json();
+    //                 })
+    //                 .catch((error) => {
+    //                     console.error('Error:', error);
+    //                 })
+    //             })
+    //         }
+            
+            
+    //     })
+
+</script>
+{% endif %}

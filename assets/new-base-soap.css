@@ -1,0 +1,152 @@
+.body {
+  background: #f8f8f8 !important;
+}
+
+.taste-item__btn {
+  padding: 10px 14px !important;
+}
+
+.benefits_title {
+  margin-bottom: 30px !important;
+
+}
+
+.custom_img_w_txt .custom_bg_1 {
+  right: unset !important;
+  opacity: 1 !important;
+  left: -7px !important;
+  top: 14px !important
+}
+
+.custom_img_w_txt .custom_bg_2 {
+  right: 0 !important;
+  left: unset !important;
+  opacity: 1 !important;
+}
+
+
+@media(min-width: 769px) {
+  .ingredients-list-wrapper {
+    justify-content: center !important;
+  }
+}
+
+@media(max-width: 998px) {
+
+  .find-taste__grid-next,
+  .find-taste__grid-prev {
+    top: 25% !important;
+  }
+
+  .find-taste__title {
+    max-width: calc(100% - 80px);
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+}
+
+@media(max-width: 835px) {
+  .custom_img_w_txt .custom_bg_1 {
+    right: 0 !important;
+    top: 30px !important;
+    left: unset !important;
+  }
+}
+
+
+.benefits_element {
+  margin-bottom: 50px !important;
+}
+
+.custom_benefits_header {
+  margin-bottom: 80px !important;
+}
+
+@media (max-width: 1000px) {
+  .custom_benefits_header {
+    margin-bottom: 53px !important;
+  }
+
+  .benefits_element {
+    margin-bottom: 10px !important;
+  }
+
+  .product-soap .product_centered_image {
+    margin-bottom: 0;
+  }
+
+  .product-soap .product_centered_image .main_img {
+    width: 165px !important;
+    height: 248px !important;
+  }
+}
+
+@media (max-width: 835px) {
+  .product-soap .mb_img_box-text1 {
+    left: unset;
+    right: 15px;
+    color: #222;
+    max-width: calc(100% - 127px);
+  }
+
+  .product-soap .mb_img_box-text2 {
+    color: #222;
+  }
+
+  .product-soap .mb_img-box {
+    margin-bottom: 0;
+    padding-bottom: 89%;
+  }
+
+  .product-soap .mb_img-box .mb_img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    max-height: unset;
+
+  }
+}
+
+@media(max-width: 768px) {
+  .ingredient {
+    width: 100%;
+    max-width: 110px !important;
+    height: 110px !important;
+    display: flex;
+    align-items: center;
+  }
+
+  .ingredient-short_title {
+    margin: auto !important;
+  }
+
+  .ingredient_card {
+    padding: 30px 40px 30px 13px !important;
+  }
+}
+
+@media(max-width: 650px) {
+  .take_care-block-swiper {
+    overflow: visible
+  }
+
+  .product-soap .take_care-block.swiper-slide {
+    height: auto !important;
+    overflow: visible
+  }
+}
+
+.take_care-block {
+  /* height: 100% !important; */
+}
+
+#vstar-noreviews,
+#vstar-noreviews:not(.page-width, .wrapper, .site-wrapper) {
+  background: #f8f8f8;
+}
+
+#noreviews-wrapper {
+  background-color: #f8f8f8 !important;
+}

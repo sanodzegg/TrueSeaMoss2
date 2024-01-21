@@ -1,0 +1,885 @@
+<div class="custom_benefits">
+    <div class="wrapper">
+        <div class="custom_benefits_wrapper">
+            <div class="custom_benefits_header">
+                {% if section.settings.benefits_title != blank %}
+                    <div class="benefits_title">{{ section.settings.benefits_title }}</div>
+                {% endif %}
+                {% if section.settings.benefits_sub_title != blank %}
+                    <div class="benefits_subtitle">
+                        {{ section.settings.benefits_sub_title }}
+                    </div>
+                {% endif %}
+
+            </div>
+
+            <div class="custom_benefits_container">
+                {%- for block in section.blocks -%}
+                    {%- case block.type -%}
+                        {%- when 'Benefit' -%}
+                            {% if forloop.index < 5 %}
+                                {% if block.settings.benefit_title != blank and block.settings.benefit_subtitle != blank %}
+
+                                    <div class="benefits_element {% if forloop.first %}open{% endif %}">
+                                        {% if block.settings.arrow_first %}
+                                            <div class="benefits_content">
+                                                {% if block.settings.benefit_title != blank %}
+                                                    <div class="benefits_element_title">
+                                                        {{ block.settings.benefit_title }}
+                                                        <div class="iconsDrop">
+                                                            <div class="plus">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                                     viewBox="0 0 20 20" fill="none">
+                                                                    <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+                                                                    <line y1="10.5088" x2="20" y2="10.5088" stroke="#222222"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="minus">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="2"
+                                                                     viewBox="0 0 20 2" fill="none">
+                                                                    <line y1="0.508789" x2="20" y2="0.508789" stroke="#222222"/>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if block.settings.benefit_subtitle != blank %}
+                                                    <div class="benefits_element_subtitle">
+                                                        {{ block.settings.benefit_subtitle }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                            {% if block.settings.benefit_arrow != blank %}
+                                                <div class="arrow normal_arrow" style="top: {{ block.settings.top }}px; right: {{ block.settings.left }}px;">
+                                                    <img src="{{ block.settings.benefit_arrow | img_url: "master" }}"
+                                                         alt="arrow" loading='lazy'/>
+                                                </div>
+                                            {% endif %}
+
+                                        {% else %}
+                                            {% if block.settings.benefit_arrow != blank %}
+                                                <div class="arrow mirror" style="top: {{ block.settings.top }}px; left: {{ block.settings.left }}px;">
+                                                    <img src="{{ block.settings.benefit_arrow | img_url: "master" }}"
+                                                         alt="arrow"loading='lazy'/>
+                                                </div>
+                                            {% endif %}
+                                            <div class="benefits_content">
+                                                {% if block.settings.benefit_title != blank %}
+                                                    <div class="benefits_element_title">
+                                                        {{ block.settings.benefit_title }}
+                                                        <div class="iconsDrop">
+                                                            <div class="plus">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                                     viewBox="0 0 20 20" fill="none">
+                                                                    <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+                                                                    <line y1="10.5088" x2="20" y2="10.5088" stroke="#222222"/>
+                                                                </svg>
+                                                            </div>
+                                                            <div class="minus">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="2"
+                                                                     viewBox="0 0 20 2" fill="none">
+                                                                    <line y1="0.508789" x2="20" y2="0.508789" stroke="#222222"/>
+                                                                </svg>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% if block.settings.benefit_subtitle != blank %}
+                                                    <div class="benefits_element_subtitle">
+                                                        {{ block.settings.benefit_subtitle }}
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                    {%- endcase -%}
+                {%- endfor -%}
+
+
+                {%- for block in section.blocks -%}
+                {%- case block.type -%}
+                {%- when 'Benefit' -%}
+                {% if forloop.index > 4 %}
+                {% if block.settings.benefit_title != blank and block.settings.benefit_subtitle != blank %}
+
+                <div class="benefits_element">
+                    {% if block.settings.arrow_first %}
+                    <div class="benefits_content">
+                        <div >
+                            {% if block.settings.benefit_title != blank %}
+                                <div class="benefits_element_title">
+                                    {{ block.settings.benefit_title }}
+                                    <div class="iconsDrop">
+                                        <div class="plus">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                 height="20" viewBox="0 0 20 20" fill="none">
+                                                <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+                                                <line y1="10.5088" x2="20" y2="10.5088"
+                                                      stroke="#222222"/>
+                                            </svg>
+                                        </div>
+                                        <div class="minus">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                                 height="2" viewBox="0 0 20 2" fill="none">
+                                                <line y1="0.508789" x2="20" y2="0.508789"
+                                                      stroke="#222222"/>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if block.settings.benefit_subtitle != blank %}
+                                <div class="benefits_element_subtitle">
+                                    {{ block.settings.benefit_subtitle }}
+
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% if block.settings.benefit_arrow != blank %}
+                    <div class="arrow normal_arrow" style="top: {{ block.settings.top }}px; right: {{ block.settings.left }}px;">
+                    <img src="{{ block.settings.benefit_arrow | img_url: "master" }}"
+                         alt="arrow" loading='lazy'/>
+                </div>
+                {% endif %}
+            {% else %}
+                {% if block.settings.benefit_arrow != blank %}
+                    <div class="arrow mirror" style="top: {{ block.settings.top }}px; left: {{ block.settings.left }}px;">
+                        <img src="{{ block.settings.benefit_arrow | img_url: "master" }}"
+                             alt="arrow" loading='lazy'/>
+                    </div>
+                {% endif %}
+                <div class="benefits_content">
+                    <div >
+                        {% if block.settings.benefit_title != blank %}
+                            <div class="benefits_element_title">
+                                {{ block.settings.benefit_title }}
+                                <div class="iconsDrop">
+                                    <div class="plus">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                             height="20" viewBox="0 0 20 20" fill="none">
+                                            <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+                                            <line y1="10.5088" x2="20" y2="10.5088"
+                                                  stroke="#222222"/>
+                                        </svg>
+                                    </div>
+                                    <div class="minus">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20"
+                                             height="2" viewBox="0 0 20 2" fill="none">
+                                            <line y1="0.508789" x2="20" y2="0.508789"
+                                                  stroke="#222222"/>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% if block.settings.benefit_subtitle != blank %}
+                            <div class="benefits_element_subtitle">
+                                {{ block.settings.benefit_subtitle }}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+            {% endif %}
+            {%- endcase -%}
+            {%- endfor -%}
+            {% if section.settings.benefit_center_image != blank %}
+                <div class="product_centered_image">
+                    {% if section.settings.center_arrow != blank %}
+                        <div class="mb_arrow arrow_center">
+                            <img src="{{ section.settings.center_arrow | img_url }}"
+                                 alt="{{ section.settings.center_arrow.alt }}" loading='lazy'>
+                        </div>
+                    {% endif %}
+                    {% if section.settings.left_arrow != blank %}
+                        <div class="mb_arrow arrow_left">
+                            <img src="{{ section.settings.left_arrow | img_url }}"
+                                 alt="{{ section.settings.left_arrow.alt }}"loading='lazy'>
+                        </div>
+                    {% endif %}
+                    {% if section.settings.right_arrow != blank %}
+                        <div class="mb_arrow arrow_right">
+                            <img src="{{ section.settings.right_arrow | img_url }}"
+                                 alt="{{ section.settings.right_arrow.alt }}" loading='lazy'>
+                        </div>
+                    {% endif %}
+                    {% if section.settings.benefit_center_image %}
+                        {% comment %} {{ 
+                            section.settings.benefit_center_image  | image_url: width: master | image_tag: widths: '375, 480, 550, 610, 720, 930, 1100 1200 1300 1400 1500 1600 1800 2200', 
+                            alt: section.settings.benefit_center_image.alt, 
+                            class: "main_img",
+                            loading: 'lazy'
+                        }}  {% endcomment %}
+
+                        <picture>
+                            <source media="(max-width: 767px)" srcset="{{section.settings.benefit_center_image | img_url: '300x'}}">
+                            <img src="{{section.settings.benefit_center_image | img_url: '600x'}}" alt="" loading='lazy' class="main_img">
+                          </picture>
+                    {% endif %} 
+                    {%- comment -%}
+                    <img class="main_img" src="{{ section.settings.benefit_center_image | img_url: "master" }}"
+                         alt="center image">
+                    {%- endcomment -%}
+                </div>
+            {% endif %}
+        </div>
+                                              <div class="benefits_footer_text">
+        {{ section.settings.footer_text }}
+    </div>
+
+
+            {% if section.settings.mb_button != balnk %}
+                {% if section.settings.mb_button_url != blank %}
+                    <a href="{{ section.settings.mb_button_url }}" class="mobile_button">
+                        {{ section.settings.mb_button }}
+                    </a>
+                {% else %}
+                    <div class="mobile_button">
+                        {{ section.settings.mb_button }}
+                    </div>
+                {% endif %}
+
+            {%  endif %}
+    </div>
+    <div class="background_icons">
+        {% for block in section.blocks %}
+            {% case block.type %}
+                {%- when "decor" -%}
+                    {% if block.settings.img_decor != blank %}
+                        <img class="benefits_decor benefits_decor-{{forloop.index}}"
+                             src="{{block.settings.img_decor | img_url: 'master'}}"
+                             alt="{{block.settings.img_decor.alt }}"
+                             loading="lazy">
+                    {% endif %}
+            {%- endcase -%}
+        {% endfor %}
+    </div>
+</div>
+
+
+    
+
+</div>
+
+<style>
+    .benefits_decor{
+        position: absolute;
+    }
+    .custom_benefits{
+        position: relative;
+        background-color: {{ section.settings.benefits_background_color }};
+        padding-top: {{section.settings.padding_top}}px;
+        padding-bottom: {{section.settings.padding_bottom}}px;
+    }
+    .mirror{
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+    }
+    .arrow.normal_arrow{
+        left: auto;
+        right: 0;
+
+    }
+    .benefits_footer_text {
+        color: #222;
+        font-family: var(--FONT-STACK-HEADING);
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        text-align: center;
+    }
+
+    .benefits_element {
+        margin-bottom: 30px;
+        display: flex;
+        align-items: flex-end;
+        position: relative;
+    }
+
+    .benefits_element.open .benefits_element_subtitle {
+        max-height: none;
+        margin-bottom: 20px;
+     }
+
+    .benefits_element_title {
+        color: #222;
+        font-family: var(--FONT-STACK-HEADING);
+        font-size: 30px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        text-transform: capitalize;
+        margin-bottom: 20px;
+    }
+
+    .benefits_element_subtitle {
+        color: #222;
+        font-family: var(--FONT-STACK-BODY);
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    .benefits_element_subtitle  span {
+        background-color: rgb(206,232,172);
+        border-radius: 5px;
+        padding: 0 5px;
+        display: inline ;
+    }
+    .custom_benefits_container {
+        display: grid;
+        column-gap: 10px;
+        align-items: center;
+        grid-template-columns: 1fr auto 1fr;
+        grid-template-rows: repeat(auto-fill, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+    }
+
+    .product_centered_image {
+        grid-area: 1 / 2 / 5 / 3;
+        margin: auto;
+
+    }
+
+    .custom_benefits_header {
+        text-align: center;
+        margin-bottom: 70px;
+    }
+
+    .benefits_title {
+        color: #285234;
+        font-family: var(--FONT-STACK-HEADING);
+        font-size: 60px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-bottom: 60px;
+        letter-spacing: 1px;
+    }
+
+    .benefits_subtitle {
+        width: fit-content;
+        margin: auto;
+        padding: 10px;
+        color: #222;
+        text-align: center;
+        font-family: var(--FONT-STACK-BODY);
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        background: linear-gradient(90deg, rgba(96, 198, 255, 0.40) 0%, rgba(200, 183, 225, 0.40) 37.50%, rgba(255, 145, 79, 0.40) 78.65%, rgba(163, 219, 124, 0.40) 100%);
+    }
+
+    .custom_benefits_wrapper {
+        position: relative;
+
+    }
+
+    .iconsDrop {
+        display: none;
+    }
+
+    .iconsDrop svg {
+        height: 20px;
+        width: 20px;
+    }
+
+    .mobile_button {
+        color: #FFF;
+        font-family: Harmonia Sans Pro Cyr;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: uppercase;
+        border-radius: 10px;
+        background: #285234;
+        width: 100%;
+        text-align: center;
+        padding: 20px 30px;
+        display: none;
+    }
+
+    .mb_arrow {
+        display: none;
+    }
+
+    .benefits_element .benefits_content {
+        max-width: calc(100% - 157px);
+    }
+    .benefits_element .benefits_element_title{
+        cursor: default;
+    }
+    .benefits_element:nth-child(2n) .benefits_content {
+        /*justify-content: end;*/
+        margin-left: auto;
+    }
+    .arrow{
+        position: absolute;
+        left: 0;
+        max-width: 166px;
+    }
+    img.main_img {
+        width: 270px;
+        max-height: 406px;
+        object-fit: contain;
+    }
+    @media screen and (max-width: 1250px) {
+        .benefits_element{
+            margin-bottom: 30px;
+        }
+    }
+    @media screen and (max-width: 1100px) {
+        .benefits_element{
+            margin-bottom: 10px;
+        }
+    }
+    @media (max-width: 1000px) {
+        .custom_benefits{
+            padding-top: {{section.settings.padding_top_mb}}px;
+            padding-bottom: {{section.settings.padding_bottom_mb}}px;
+        }
+        .background_icon10 {
+            top: 40px !important;
+
+        }
+        .background_icon img{
+            height: 124px;
+        }
+        .benefits_element:nth-child(2n) {
+            justify-content: space-between;
+        }
+
+        .benefits_element .benefits_content {
+            max-width: none;
+
+        }
+        .benefits_element .benefits_element_title{
+            cursor: pointer;
+        }
+
+        .mb_arrow {
+            display: block;
+        }
+
+        .mobile_button {
+            display: block;
+            cursor: pointer;
+            will-change: color,border,background;
+            transition: color .3s ease,border .3s ease,background 0s linear 0s;
+            position: relative;
+            z-index: 1;
+        }
+        .mobile_button:hover{
+            color: var(--button-primary-bg);
+            transition: color .3s ease,border .3s ease,background
+        }
+        .mobile_button:before{
+            content: "";
+            position: absolute;
+            display: flex;
+            left: -1px;
+            top: 0;
+            right: -1px;
+            bottom: 0;
+            background: #fff;
+            transform: scaleY(0);
+            transform-origin: top center;
+            will-change: transform;
+            z-index: -1;
+            transition: transform .3s ease;
+        }
+        .mobile_button:hover:before{
+            transform-origin: bottom center;
+            transform: none;
+        }
+
+        .custom_benefits_wrapper {
+
+
+        }
+
+        .benefits_title {
+            font-size: 34px;
+            margin-bottom: 50px;
+        }
+
+        .benefits_subtitle {
+            font-size: 16px;
+        }
+
+        .custom_benefits_header {
+            margin-bottom: 60px;
+        }
+
+
+        .custom_benefits_container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .arrow {
+            display: none;
+        }
+
+        .benefits_element_title {
+            font-size: 18px;
+        }
+
+        .iconsDrop {
+            display: block;
+        }
+
+        .benefits_element_title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .benefits_element_title .plus {
+            display: block;
+        }
+
+        .benefits_element_title .minus {
+            display: none;
+        }
+
+        .benefits_element_title.active .minus {
+            display: block;
+        }
+
+        .benefits_element_title.active .plus {
+            display: none;
+        }
+
+        .benefits_element_subtitle {
+            max-height: 0;
+            overflow: hidden;
+            transition-duration: 200ms;
+        }
+
+        .benefits_element {
+            margin-bottom: 10px;
+        }
+
+        .product_centered_image {
+            padding-top: 70px;
+            position: relative;
+            margin: 0;
+            text-align: center;
+            width: 100%;
+            order: 100;
+            margin-bottom: 30px;
+
+        }
+
+        .product_centered_image .main_img {
+            width: 125px;
+            height: 187px;
+        }
+
+        .mb_arrow {
+            top: 0;
+            position: absolute;
+        }
+
+        .arrow_left {
+            left: 0;
+        }
+        .arrow_left img{
+            width: 112px;
+            height: 123px;
+            object-fit: contain;
+        }
+
+        .arrow_right {
+            right: 0;
+        }
+
+        .arrow_center {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .arrow_center img{
+            height: 58px;
+            width: 29px;
+            object-fit: contain;
+        }
+        .arrow_right img{
+            height: 125px;
+            width: 134px;
+            object-fit: contain;
+        }
+        .benefits_footer_text {
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
+
+    }
+    @media(max-width: 768px) {
+        .benefits_element_subtitle {
+            font-size: 14px;
+        }
+    }
+</style>
+<style>
+    .faq_decor{
+        position: absolute;
+    }
+   {% for block in section.blocks %}
+   {% case block.type %}
+   {%- when "decor" -%}
+   .benefits_decor-{{forloop.index}} {
+   {{block.settings.style}}
+   }
+   {%- endcase -%}
+   {% endfor %}
+
+   @media(max-width: 998px) {
+   {% for block in section.blocks %}
+   {% case block.type %}
+   {%- when "decor" -%}
+       .benefits_decor-{{forloop.index}} {
+       {{block.settings.style_mobile}}
+       }
+   {%- endcase -%}
+   {% endfor %}
+   }
+</style>
+<script>
+ document.addEventListener('DOMContentLoaded', function () {
+    const containerSf = document.querySelector(".mobile_button");
+    const el = document.querySelector("#product__selectors_scroll");
+
+    if (el) {
+        containerSf.addEventListener("click", handleScrollToProduct);
+    }
+
+    function handleScrollToProduct() {
+        const y = el.getBoundingClientRect().top + window.pageYOffset - 150;
+        window.scrollTo({ top: y, behavior: "smooth" });
+    }
+
+    if (window.innerWidth <= 768) {
+        const headers = document.querySelectorAll(".benefits_element_title");
+
+      
+        if (headers.length > 0) {
+            let firstContent = headers[0].nextElementSibling;
+            firstContent.style.maxHeight = firstContent.scrollHeight + 'px';
+            firstContent.style.marginBottom = '20px';
+            headers[0].classList.add('active');
+        }
+
+        headers.forEach(header => {
+            header.addEventListener("click", () => {
+                let content = header.nextElementSibling;
+                
+                if (content.style.maxHeight && content.style.maxHeight !== '0px') {
+                    content.style.maxHeight = '0px';
+                    content.style.marginBottom = '0px';
+                } else {
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                    content.style.marginBottom = '20px';
+                }
+                
+                header.classList.toggle('active');
+            });
+        });
+    }
+});
+
+  
+</script>
+{% schema %}
+{
+  "name": "Custom benefits",
+  "blocks": [
+    {
+      "name": "benefit",
+      "type": "Benefit",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "text",
+          "id": "benefit_title",
+          "label": "Benefit title"
+        },
+        {
+          "type": "textarea",
+          "id": "benefit_subtitle",
+          "label": "Benefit subtitle"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefit_arrow",
+          "label": "Benefit arrow icon"
+        },
+        {
+          "type": "checkbox",
+          "id": "arrow_first",
+          "label": "Benefit arrow after subtitle ?"
+        },
+        {
+          "type": "range",
+          "id": "top",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Top space arrow",
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left",
+          "min": -100,
+          "max": 100,
+          "step": 2,
+          "unit": "px",
+          "label": "Left space arrow",
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img_decor",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "id": "style",
+          "label": "Style for image"
+        },
+        {
+          "type": "html",
+          "id": "style_mobile",
+          "label": "Style for image mobile"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "benefits_title",
+      "label": "Title"
+    },
+    {
+      "type": "inline_richtext",
+      "id": "benefits_sub_title",
+      "label": "Sub-title"
+    },
+    {
+      "type": "color",
+      "id": "benefits_background_color",
+      "label": "Background color"
+    },
+    {
+      "type": "image_picker",
+      "id": "benefit_center_image",
+      "label": "Benefit center image"
+    },
+    {
+      "type": "text",
+      "id": "footer_text",
+      "label": "Footer text"
+    },
+    {
+      "type": "header",
+      "content": "Arrow on mobile"
+    },
+    {
+      "type": "image_picker",
+      "id": "left_arrow",
+      "label": "Left arrow"
+    },
+    {
+      "type": "image_picker",
+      "id": "center_arrow",
+      "label": "Center arrow"
+    },
+    {
+      "type": "image_picker",
+      "id": "right_arrow",
+      "label": "Right arrow"
+    },
+    {
+      "type": "text",
+      "id": "mb_button",
+      "label": "Mobile button",
+      "default": "choose my package"
+    },
+    {
+      "type": "url",
+      "id": "mb_button_url",
+      "label": "Mobile button url"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 1,
+      "unit": "px",
+      "label": "Space top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space top for mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space bottom for mobile",
+      "default": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Custom benefits",
+      "blocks": [
+        {
+          "type": "Benefit"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

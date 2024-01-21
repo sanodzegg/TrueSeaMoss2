@@ -1,0 +1,16 @@
+{{ "<p style='font-size: calc(1rem*var(--adjust-body));'><b>👁 <span id='randomCountView'>252</span> customers are viewing this product</b></p></br>" }}
+{%- comment -%}
+{{ "<span style='font-size: calc(1rem*var(--adjust-body));'><b>Get -25% off first subscription order and -15% off all future orders.</b></span></br>" }}
+{{ "<span style='font-size: calc(1rem*var(--adjust-body));'><b>Just enter the promo code «welcome10» when you first subscribe.</b></span>" }}
+{%- endcomment -%}
+
+<script>
+      function getRandomInt(max) {
+         return Math.floor(Math.random() * max);
+     }
+   (function(){
+       var randomCountEl =document.getElementById('randomCountView');
+       randomCountEl.textContent =  (64+getRandomInt(194)).toString();
+    
+   })()
+</script>

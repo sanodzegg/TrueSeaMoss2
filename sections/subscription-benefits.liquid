@@ -1,0 +1,566 @@
+{% liquid 
+  assign title = section.settings.title
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign sbm = section.settings.sbm | append: 'px'
+  assign max_width = section.settings.max_width | minus: 10 | append: 'px'
+  assign height_img = section.settings.height_img | append: '%'
+  assign height_img_mobile = section.settings.height_img_mobile | append: 'px'
+
+  assign img = section.settings.img
+  assign btn_type = section.settings.type_of
+  assign btn_name = section.settings.name
+  assign btn_url = section.settings.url
+
+  if template.name == "index"
+    assign template_name = "sub-benefits__index"
+  endif
+%}
+{{"subscription-benefits.css" | asset_url | stylesheet_tag }}
+
+{%- style -%}
+.sub-benefits__{{section.id}} {
+  margin-top: {{st}};
+  margin-bottom: {{sb}};
+  position: relative;
+}
+.sub-benefits__decor {
+  display: none;
+  width:fit-content;
+  position: absolute;
+  z-index: 1;
+}
+{% for block in section.blocks  %}
+  {% case block.type %}
+    {%- when "decor" -%}
+      .sub-benefits__decor--{{forloop.index}} {
+      top: {{block.settings.top}}%;
+      left: {{block.settings.left}}%;
+      transform: translateX(-{{block.settings.left}}%);
+      {% if block.settings.show %}
+        display: inline-flex;
+      {%- else -%}
+      display: none !important;
+      {% endif %}
+    }
+    {% when "checkmark" %}  
+    .benefits-checkmark-{{forloop.index}} h3 {
+      background-color: {{block.settings.bg_title}};
+      border-radius: 14px; 
+      padding-left: {{block.settings.pl_title | default: 0}}px;
+      margin-left: -{{block.settings.pl_title | default: 0}}px;
+      padding-right:{{block.settings.pr_title | default: 0}}px;
+      padding-top:9px;
+      padding-bottom:9px;
+    }
+  {% endcase %}
+{% endfor %}
+
+@media(max-width: 768px) {
+  .sub-benefits__{{section.id}} {
+    margin-top: {{stm}};
+    margin-bottom: {{sbm}};
+  }
+  .sub-benefits__img {
+    height: {{height_img_mobile}};
+  }
+  {% for block in section.blocks  %}
+    {% case block.type %}
+      {%- when "decor" -%}
+      .sub-benefits__decor--{{forloop.index}} {
+        top: {{block.settings.top_m}}%;
+        left: {{block.settings.left_m}}%;
+        transform: translateX(-{{block.settings.left_m}}%);
+        {% if block.settings.show_m %}
+        display: inline-flex;
+        {%- else -%}
+        display: none !important;
+        {% endif %}
+      }
+      {% when "checkmark" %}  
+      .benefits-checkmark-{{forloop.index}} h3 {
+        padding-left: {{block.settings.pl_title_m | default: 0}}px;
+        margin-left: -{{block.settings.pl_title_m | default: 0}}px;
+        padding-right:{{block.settings.pr_title_m | default: 0}}px;
+      }
+    {% endcase %}
+  {% endfor %}
+}
+{%- endstyle -%}
+
+{%- capture decor -%}
+  {% for block in section.blocks  %}
+    {% case block.type %}
+      {% when "decor" %}
+      <div class="sub-benefits__decor sub-benefits__decor--{{forloop.index}}">
+        {% render "benefit-svg" type: block.settings.icon %}
+      </div>
+    {% endcase %}
+  {% endfor %}
+{%- endcapture -%}
+
+{%- capture check_benefits -%}
+  {% for block in section.blocks  %}
+    {% case block.type %}
+      {% when "checkmark" %} 
+      <div class="benefits-checkmark__item">
+        <div class="benefits-checkmark__icon">{% render "benefit-svg" type: block.settings.icon %}</div>
+        <div class="benefits-checkmark__text benefits-checkmark-{{forloop.index}}">
+          <h3>
+            {{block.settings.title}}
+          </h3>
+          <p>{{block.settings.text}}</p>
+        </div>
+      </div>
+    {% endcase %}
+  {% endfor %}
+  <div class="benefits-checkmark__button">
+    {% if btn_type == "scroll" and btn_name != blank  %}
+      <button class="checkmark__btn checkmark-item__btn"><span>{{btn_name}}</span></button>
+    {%- elsif btn_name != blank  -%}
+      <a class="checkmark-item__btn" href="{{btn_url}}"><span>{{btn_name}}</span></a>
+    {% endif %}
+  </div>
+  
+{%- endcapture -%}
+
+{%- capture circle_benefits -%}
+  {% for block in section.blocks  %}
+    {% case block.type %}
+      {% when "point" %}
+      <div class="benefits-circle__item">
+        <div class="benefits-circle__icon">{% render "benefit-svg" type: block.settings.icon %}</div>
+        <p class="benefits-circle__text">{{block.settings.text}}</p>
+      </div>
+    {% endcase %}
+  {% endfor %}
+{%- endcapture -%}
+
+
+
+<div class="sub-benefits sub-benefits__{{section.id}} {{template_name}}">
+  {{decor}}
+  <div class="sub-benefits__container wrapper">
+      <h2 class="sub-benefits__title">{{title}}</h2>
+      <div class="sub-benefits__grid">
+          <div class="sub-benefits__img" style="max-width: {{max_width}}; padding-bottom: {{height_img}}">
+            
+            <picture>
+              <source media="(max-width: 767px)" srcset="{{img | img_url: '600x'}}">
+              <img src="{{img | img_url: '700x'}}" alt="{{img.alt}}" loading="lazy">
+            </picture>
+          </div>
+          <div class="sub-benefits__circle benefits-circle">{{circle_benefits}}</div>
+          <div class="sub-benefits__checkmark benefits-checkmark">{{check_benefits}}</div>
+      </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".checkmark__btn.checkmark-item__btn");
+    if (buttons.length != 0) {
+      buttons.forEach(el => el.addEventListener("click",scrollToPack))
+      const el = document.querySelector("#product__selectors_scroll");
+      function scrollToPack() {
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - 150;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Subscription benefits",
+  "blocks": [
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Type of icon",
+          "options": [
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "bear",
+              "label": "Bear"
+            },
+            {
+              "value": "percentages",
+              "label": "Percentages"
+            },
+            {
+              "value": "circle",
+              "label": "Circle"
+            },
+            {
+              "value": "circle_orange",
+              "label": "Circle orange"
+            },
+            {
+              "value": "circle_green",
+              "label": "Circle green"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Position desktop"
+        },
+        {
+          "type": "checkbox",
+          "id": "show",
+          "label": "Show on desktop",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "top",
+          "label": "Top",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left",
+          "label": "Left",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "header",
+          "content": "Position mobile"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_m",
+          "label": "Show on mobile",
+          "default": true
+        },
+        {
+          "type": "range",
+          "id": "top_m",
+          "label": "Top",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "left_m",
+          "label": "Left",
+          "unit": "%",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        }
+      ]
+    },
+    {
+      "type": "checkmark",
+      "name": "checkmark",
+      "limit": 5,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Type of icon",
+          "options": [
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "bear",
+              "label": "Bear"
+            },
+            {
+              "value": "percentages",
+              "label": "Percentages"
+            },
+            {
+              "value": "circle",
+              "label": "Circle yellow"
+            },
+            {
+              "value": "circle_orange",
+              "label": "Circle orange"
+            },
+            {
+              "value": "circle_green",
+              "label": "Circle green"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            }
+          ]
+        },  
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "color",
+          "id": "bg_title",
+          "label": "Backround color title",
+          "default": "transparent"
+        },
+        {
+          "type": "paragraph",
+          "content": "Dekstop settings for padding "
+        },
+        {
+          "type": "range",
+          "id": "pr_title",
+          "label": "Padding right from title",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "pl_title",
+          "label": "Padding left from title",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "paragraph",
+          "content": "Mobile settings for padding "
+        },
+        {
+          "type": "range",
+          "id": "pr_title_m",
+          "label": "Padding right from title",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "range",
+          "id": "pl_title_m",
+          "label": "Padding left from title",
+          "unit": "px",
+          "min": 0,
+          "max": 100,
+          "step": 1,
+          "default": 0
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "point",
+      "name": "Point",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Type of icon",
+          "options": [
+            {
+              "value": "gift",
+              "label": "Gift"
+            },
+            {
+              "value": "bear",
+              "label": "Bear"
+            },
+            {
+              "value": "percentages",
+              "label": "Percentages"
+            },
+            {
+              "value": "circle",
+              "label": "Circle"
+            },
+            {
+              "value": "circle_orange",
+              "label": "Circle orange"
+            },
+            {
+              "value": "circle_green",
+              "label": "Circle green"
+            },
+            {
+              "value": "checkmark",
+              "label": "Checkmark"
+            }
+          ]
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Text"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 160
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 160
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Subscription benefits"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width for the image",
+      "unit": "px",
+      "min": 0,
+      "max": 660,
+      "step": 20,
+      "default": 480
+    },
+    {
+      "type": "range",
+      "id": "height_img",
+      "label": "Height for the image desktop",
+      "unit": "%",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 41
+    },
+    {
+      "type": "range",
+      "id": "height_img_mobile",
+      "label": "Height for the image mobile",
+      "unit": "px",
+      "min": 210,
+      "max": 400,
+      "step": 5,
+      "default": 210
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "select",
+      "id": "type_of",
+      "label": "Type of button",
+      "info": "Scrolling only works on the product page",
+      "default": "scroll",
+      "options": [
+        {
+          "value": "link",
+          "label": "Link"
+        },
+        {
+          "value": "scroll",
+          "label": "Scroll"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name button",
+      "default": "Subscribe now"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Url button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription benefits"
+    }
+  ]
+}
+{% endschema %}

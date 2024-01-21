@@ -1,0 +1,1599 @@
+{% if product.metafields.custom.redirect %}
+<script>
+  window.location.href = "{{ product.metafields.custom.redirect }}";
+</script>
+{% endif %}
+{%- comment -%} /sections/product-template {%- endcomment -%}
+{%- liquid
+  assign bg_color = section.settings.bg_color
+  assign wrapper = section.settings.wrapper
+  assign wrapper_class = 'wrapper'
+  if wrapper != 'normal'
+    assign wrapper_class = wrapper_class | append: ' wrapper--' | append: wrapper
+  endif
+-%}
+
+{% if section.settings.new_style %}
+{{ 'new-base-product.css' | asset_url | stylesheet_tag: preload: true }}
+{% endif %}
+
+{%- if bg_color != 'rgba(0,0,0,0)' and bg_color != '' -%}
+  {%- style -%}
+    #ProductTemplate--{{ section.id }} { background: {{ bg_color }}; }
+    .shop-pay-terms { --payment-terms-background-color: {{ bg_color }} }
+  {%- endstyle -%}
+{%- endif -%}
+
+<section id="ProductTemplate--{{ section.id }}"
+  class="product-single"
+  data-enable-history-state="true"
+  data-section-type="product-template"
+  data-section-id="{{ section.id }}">
+  <div class="{{ wrapper_class }}">
+    {%- render 'product' section: section, unique: section.id -%}
+  </div>
+</section>
+
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+<script type="application/ld+json">
+{
+  "@context": "http://schema.org/",
+  "@type": "Product",
+  "name": {{ product.title | strip_html | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  {%- if product.featured_media -%}
+    {%- assign media_size = product.featured_media.preview_image.width | append: 'x' -%}
+    "image": [
+      {{ product.featured_media | img_url: media_size | prepend: "https:" | json }}
+    ],
+  {%- endif -%}
+  "description": {{ product.description | strip_html | json }},
+  {%- if current_variant.sku != blank -%}
+    "sku": {{ current_variant.sku | json }},
+  {%- endif -%}
+  "brand": {
+    "@type": "Thing",
+    "name": {{ product.vendor | json }}
+  },
+  {%- if current_variant.barcode -%}
+    "gtin8": "{{ product.variants.first.barcode }}",
+  {%- endif -%}
+  {%- if current_variant.barcode.size == 12 -%}
+    "gtin12": "{{ product.variants.first.barcode }}",
+  {%- endif -%}
+  {%- if current_variant.barcode.size == 13 -%}
+    "gtin13": "{{ product.variants.first.barcode }}",
+  {%- endif -%}
+  {%- if current_variant.barcode.size == 14 -%}
+    "gtin14": "{{ product.variants.first.barcode }}",
+  {%- endif -%}
+  "offers": [
+    {%- for variant in product.variants -%}
+      {
+        "@type" : "Offer",
+        {%- if variant.sku != blank -%}
+          "sku": {{ variant.sku | json }},
+        {%- endif -%}
+        "availability" : "http://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}",
+        "price" : {{ variant.price | divided_by: 100.00 | json }},
+        "priceCurrency" : {{ cart.currency.iso_code | json }},
+        "url" : {{ shop.url | append: variant.url | json }}
+      }{% unless forloop.last %},{% endunless %}
+    {%- endfor -%}
+  ]
+}
+</script>
+
+{% schema %}
+{
+  "name": "Product pages",
+  "class": "shopify-section--product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "new_style",
+      "label": "New Style",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "wrapper",
+      "label": "Width",
+      "default": "normal",
+      "options": [
+        { "label": "Normal" , "value": "normal" },
+        { "label": "Wide", "value": "full" }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "Image size",
+      "options": [
+        {
+          "value": "small",
+          "label": "Small"
+        },
+        {
+          "value": "medium",
+          "label": "Medium"
+        },
+        {
+          "value": "large",
+          "label": "Large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "Media",
+      "info": "Learn more about [media types](https://help.shopify.com/manual/products/product-media)"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_zoom",
+      "label": "Enable zoom",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_video_looping",
+      "label": "Enable video looping",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "@app"
+    },
+    {
+      "type": "product_list",
+      "name": "Product list",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "special_class",
+          "label": "Enable special class for PP soap",
+          "default": false
+        },
+        {
+          "type": "textarea",
+          "id": "remove_spacing_text",
+          "label": "Removing word-spacing for product title",
+          "info": "Enter the name of the product separated by commas to remove indentation between words"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_toggle_btn",
+          "label": "Turn on the show more button",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "more_btn",
+          "label": "Text for the more button",
+          "default": "See more flavors"
+        },
+        {
+          "type": "text",
+          "id": "less_btn",
+          "label": "Text for the less button",
+          "default": "Hide flavors"
+        },
+        {
+          "type": "text",
+          "id": "text_delivery",
+          "label": "Text for the budge delivery",
+          "default": "Add 2 jars to get a monthly supply"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "1. Select Taste and Quantity:"
+        },
+        {
+          "type": "text",
+          "id": "little_badge",
+          "label": "The badge next to the text"
+        },
+        {
+          "type": "text",
+          "id": "text_above",
+          "label": "Text above product option"
+        },
+        {
+          "type": "text",
+          "id": "heading_badge",
+          "label": "Heading for badge",
+          "default": "Product Fact - 2 jars per 1 month"
+        },
+        {
+          "type": "color",
+          "id": "color_text",
+          "label": "Color text for the badge",
+          "default": "#222"
+        },
+        {
+          "type": "color",
+          "id": "background_badge",
+          "label": "Background color for the badge",
+          "default": "#D2C3E9"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_1",
+          "label": "Image for 1 box"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_2",
+          "label": "Image for 2 box"
+        }
+      ]
+    },
+    {
+      "type": "content_recharge",
+      "name": "Content for recharge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Settings for subscriptions selectors"
+        },
+        {
+          "type": "checkbox",
+          "id": "hide_txt",
+          "label": "Hide benefit and fake price for subscription",
+          "default": false
+        },
+        {
+          "type": "text",
+          "id": "title_sec",
+          "label": "Title section subscription",
+          "default": "Purchase Options"
+        },
+        {
+          "type": "header",
+          "content": "Benefit 1"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefit_img_1",
+          "label": "Benefit img"
+        },
+        {
+          "type": "text",
+          "id": "benefit_title_1",
+          "label": "Benefit title",
+          "default": "Flexible subscription plan"
+        },
+        {
+          "type": "richtext",
+          "id": "benefit_info_1",
+          "label": "Benefit info"
+        },
+        {
+          "type": "header",
+          "content": "Benefit 2"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefit_img_2",
+          "label": "Benefit img"
+        },
+        {
+          "type": "text",
+          "id": "benefit_title_2",
+          "label": "Benefit title",
+          "default": "Flexible subscription plan"
+        },
+        {
+          "type": "richtext",
+          "id": "benefit_info_2",
+          "label": "Benefit info"
+        },
+        {
+          "type": "header",
+          "content": "Benefit 3"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefit_img_3",
+          "label": "Benefit img"
+        },
+        {
+          "type": "text",
+          "id": "benefit_title_3",
+          "label": "Benefit title",
+          "default": "Flexible subscription plan"
+        },
+        {
+          "type": "richtext",
+          "id": "benefit_info_3",
+          "label": "Benefit info"
+        },
+        {
+          "type": "header",
+          "content": "Benefit 4"
+        },
+        {
+          "type": "image_picker",
+          "id": "benefit_img_4",
+          "label": "Benefit img"
+        },
+        {
+          "type": "text",
+          "id": "benefit_title_4",
+          "label": "Benefit title",
+          "default": "Flexible subscription plan"
+        },
+        {
+          "type": "richtext",
+          "id": "benefit_info_4",
+          "label": "Benefit info"
+        },
+        {
+          "type": "header",
+          "content": "Settings for quote"
+        },
+        {
+          "type": "html",
+          "id": "quote",
+          "label": "Quote",
+          "info": "87% of our customers feel the first tangible effects of using sea moss after 2 months of continuous use."
+        },
+        {
+          "type": "header",
+          "content": "Settings for free product"
+        },
+        {
+          "type": "text",
+          "id": "free_title",
+          "label": "Title",
+          "default": "Subscription includes"
+        },
+         {
+          "type": "text",
+          "id": "free_title2",
+          "label": "Title2",
+          "default": "Subscription includes"
+        },
+        {
+          "type": "text",
+          "id": "free_badge",
+          "label": "Free badge",
+          "default": "FREE"
+        },
+        {
+          "type": "header",
+          "content": "Settings for One time option"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_one_time",
+          "label": "Icon"
+        },
+        {
+          "type": "html",
+          "id": "text_one_time",
+          "label": "Text",
+          "default": "If you subscribe, <span>it's just $42</span>  and you will <span> save $5</span>  from every delivery"
+        },
+        {
+          "type": "text",
+          "id": "fake_price",
+          "label": "Fake price for free product",
+          "default": "$22.99"
+        }
+      ]
+    },
+    {
+      "type": "only_price",
+      "name": "Only price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Work only on if  product template have suffix Gel"
+        }
+      ]
+    },
+    {
+      "type": "badge",
+      "name": "Trust badge",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Badge №1"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №2"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №3"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №4"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_4",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №5"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_5",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_5",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_5",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "badge_mobile",
+      "name": "Trust badge mobile",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "Badge №1"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_1",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_1",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_1",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №2"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_2",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_2",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_2",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №3"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_3",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_3",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_3",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №4"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_4",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_4",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_4",
+          "label": "Text"
+        },
+        {
+          "type": "header",
+          "content": "Badge №5"
+        },
+        {
+          "type": "image_picker",
+          "id": "img_5",
+          "label": "Image"
+        },
+        {
+          "type": "text",
+          "id": "title_5",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text_5",
+          "label": "Text"
+        }
+      ]
+    },
+    {
+      "type": "button_price",
+      "name": "Button and price",
+      "limit": 1,
+      "settings": [
+        {
+            "type": "checkbox",
+            "id": "hide_price",
+            "label": "Hide price",
+            "info": "The price block works only on a template gel or bandle",
+            "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_payment_button",
+          "label": "Show payment button",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "mobile_header",
+      "name": "Mobile header",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#3B3B6F"
+        },
+        {
+          "type": "color",
+          "id": "txt_color",
+          "label": "Text color",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Manufactured in the USA"
+        },
+        {
+          "type": "text",
+          "id": "subtitle",
+          "label": "Subitle",
+          "default": "from 100% natural & organic ingredients"
+        },
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Image"
+        }
+      ]
+    },
+    {
+      "type": "sticky_btn",
+      "name": "Sticky button",
+      "limit": 1,
+      "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Checkout"
+          }
+      ]
+    },
+    {
+      "type": "upsell_new",
+      "name": "Bundle",
+      "limit": 1,
+      "settings": [
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Add Extras",
+            "info": "To create a badge, you need to put any text in the <span></span> tag"
+          }
+      ]
+    },
+    {
+      "type": "badge_title",
+      "name": "Badge title",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Delicious benefit to your health!"
+        }
+      ]
+    },
+    {
+      "type": "payment",
+      "name": "Payment",
+      "limit": 1
+    },
+    {
+      "type": "title",
+      "name": "Title and price",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "checkbox",
+          "id": "show_price",
+          "label": "Show price",
+          "default": false
+        },
+        {
+          "type": "select",
+          "id": "subheading",
+          "label": "Navigation",
+          "default": "none",
+          "options": [
+            { "value": "none", "label": "None" },
+            { "value": "breadcrumbs", "label": "Breadcrumbs" },
+            { "value": "collection", "label": "Collection" },
+            { "value": "vendor", "label": "Vendor" }
+          ]
+        },
+        {
+          "type": "header",
+          "content": "Star rating",
+          "info": "Requires an app to set the metafield value for reviews.rating"
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating",
+          "label": "Show star rating",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_rating_count",
+          "label": "Show rating count",
+          "default": false
+        }
+      ]
+    },
+    {
+        "name": "Taste option",
+        "type": "taste",
+        "settings": [
+            {
+              "type": "header",
+              "content": "Work only on if  product template have suffix Gel"
+            },
+            {
+              "type": "header",
+              "content": "Settings for Text"
+            },
+            {
+              "type": "text",
+              "id": "title",
+              "label": "Title"
+            },
+            {
+              "type": "html",
+              "id": "info",
+              "label": "Info current option",
+              "info": "It is important. This text must have <span></span> tags for js to work correctly. Example *You need to select <span>1</span> more tastes to get <span>3</span> packs"
+            },
+            {
+              "type": "html",
+              "id": "info_next",
+              "label": "Info next option",
+              "info": "It is important. This text must have <span></span> tags for js to work correctly. Example *You need to select <span>1</span> more tastes to get <span>3</span> packs"
+            },
+            {
+              "type": "select",
+              "id": "active_index",
+              "label": "Choose which taste position will be active from the start",
+              "default": "none",
+              "options": [
+                {
+                  "value": "none",
+                  "label": "None"
+                },
+                {
+                  "value": "1",
+                  "label": "1"
+                },
+                {
+                  "value": "2",
+                  "label": "2"
+                },
+                {
+                  "value": "4",
+                  "label": "4"
+                },
+                {
+                  "value": "5",
+                  "label": "5"
+                },
+                {
+                  "value": "6",
+                  "label": "6"
+                },
+                {
+                  "value": "7",
+                  "label": "7"
+                },
+                {
+                  "value": "8",
+                  "label": "8"
+                },
+                {
+                  "value": "9",
+                  "label": "9"
+                },
+                {
+                  "value": "10",
+                  "label": "10"
+                }
+              ]
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_1",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_1",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_1",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_2",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_2",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_2",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_3",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_3",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_3",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_4",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_4",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_4",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_5",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_5",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_5",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_6",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_6",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_6",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_7",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_7",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_7",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_8",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_8",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_8",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_9",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_9",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_9",
+              "label": "Image for taste"
+            },
+            {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_10",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_10",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_10",
+              "label": "Image for taste"
+            },
+             {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_11",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_11",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_11",
+              "label": "Image for taste"
+            },
+             {
+              "type": "header",
+              "content": "Settings for taste"
+            },
+            {
+              "type": "text",
+              "id": "badge_text_12",
+              "label": "Text for badge"
+            },
+            {
+              "type": "text",
+              "id": "name_taste_12",
+              "label": "Taste name"
+            },
+            {
+              "type": "image_picker",
+              "id": "img_taste_12",
+              "label": "Image for taste"
+            }
+        ]
+    },
+    {
+      "name": "Form",
+      "type": "form",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "header",
+          "content": "New options variant",
+          "info": "To enable it, you need to turn on the 'New options' checkbox. Work only on if  product template have suffix Gel"
+        },
+        {
+          "type": "checkbox",
+          "id": "not_add_product",
+          "label": "Do not add the main product",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_image",
+          "label": "New options",
+          "default": false
+        },
+        {
+          "type": "header",
+          "content": "Text for name option Pack"
+        },
+        {
+          "type": "text",
+          "id": "name_option_1",
+          "label": "Name option "
+        }, 
+        {
+          "type": "text",
+          "id": "text_option_1",
+          "label": "Text option"
+        }, 
+        {
+          "type": "header",
+          "content": "Text for name option Taste"
+        },
+        {
+          "type": "text",
+          "id": "name_option_2",
+          "label": "Name option "
+        }, 
+        {
+          "type": "text",
+          "id": "text_option_2",
+          "label": "Text option"
+        }, 
+        {
+          "type": "text",
+          "id": "sub_text_option_2",
+          "label": "Subtext option"
+        }, 
+        {
+          "type": "text",
+          "id": "hide_option",
+          "label": "Hide name option",
+          "info": "Name of the option to be hidden. Fill name option through symblol ,"
+        },
+        {
+          "type": "header",
+          "content": "Size chart"
+        },
+        {
+          "type": "page",
+          "id": "info_page",
+          "label": "Page"
+        },
+        {
+          "type": "text",
+          "id": "info_page_title_override",
+          "label": "Page title override"
+        },
+        {
+          "type": "header",
+          "content": "Form elements"
+        },
+        {
+          "type": "checkbox",
+          "id": "add_to_cart",
+          "label": "Show button add to cart",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_labels",
+          "label": "Show variant labels",
+          "default": true
+        },
+        {
+          "type": "checkbox",
+          "id": "show_quantity",
+          "label": "Show quantity selector",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "show_payment_button",
+          "label": "Show dynamic checkout buttons",
+          "info": "Each customer will see their preferred payment method from those available on your store, such as PayPal or Apple Pay. [Learn more](https://help.shopify.com/en/manual/online-store/os/dynamic-checkout)",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Subscriptions",
+          "info": "Learn more about [subscriptions](https://help.shopify.com/en/manual/products/subscriptions)"
+        },
+        {
+          "type": "checkbox",
+          "id": "enable_subscriptions_selectors",
+          "label": "Enable subscription selectors",
+          "info": "Shown on products with subscription options",
+          "default": true
+        },
+        {
+          "type": "header",
+          "content": "Settings for quantity",
+          "info": "Work only on the gel product page"
+        },
+        {
+          "type": "paragraph",
+          "content": "The first quantity option"
+        },
+        {
+          "type": "text",
+          "id": "name_q_1",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_q_1",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_image_1",
+          "label": "Text under the image"
+        },
+        {
+          "type": "text",
+          "id": "text_under_1",
+          "label": "Text under the box"
+        },
+        {
+          "type": "paragraph",
+          "content": "The second quantity option"
+        },
+        {
+          "type": "text",
+          "id": "name_q_2",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_q_2",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_image_2",
+          "label": "Text under the image"
+        },
+        {
+          "type": "text",
+          "id": "text_under_2",
+          "label": "Text under the box"
+        },
+        {
+          "type": "paragraph",
+          "content": "The third quantity option"
+        },
+        {
+          "type": "text",
+          "id": "name_q_3",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_q_3",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_image_3",
+          "label": "Text under the image"
+        },
+        {
+          "type": "text",
+          "id": "text_under_3",
+          "label": "Text under the box"
+        }
+      ]
+    },
+    {
+      "name": "Product description",
+      "type": "description",
+      "settings": []
+    },
+    {
+      "name": "Accordions",
+      "type": "product_accordions",
+      "settings": [
+        {
+          "type": "text",
+          "id": "accordion_heading_1",
+          "label": "Accordion heading 1",
+          "default": "Materials and specs"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_text_1",
+          "label": "Accordion text 1",
+            "default": "<p>Use this accordion to add info such as Materials, Sizing, Features, Shipping and Returns policies</p>"
+        },
+        {
+          "type": "page",
+          "id": "accordion_page_1",
+          "label": "Accordion page 1",
+          "info": "Example: Size chart"
+        },
+        {
+          "type": "text",
+          "id": "accordion_heading_2",
+          "label": "Accordion heading 2",
+          "default": "Shipping and returns"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_text_2",
+          "label": "Accordion text 2",
+            "default": "<p>Use this accordion to add info such as Materials, Sizing, Features, Shipping and Returns policies</p>"
+        },
+        {
+          "type": "page",
+          "id": "accordion_page_2",
+          "label": "Accordion page 2"
+        },
+        {
+          "type": "text",
+          "id": "accordion_heading_3",
+          "label": "Accordion heading 3"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_text_3",
+          "label": "Accordion text 3"
+        },
+        {
+          "type": "page",
+          "id": "accordion_page_3",
+          "label": "Accordion page 3"
+        },
+        {
+          "type": "text",
+          "id": "accordion_heading_4",
+          "label": "Accordion heading 4"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_text_4",
+          "label": "Accordion text 4"
+        },
+        {
+          "type": "page",
+          "id": "accordion_page_4",
+          "label": "Accordion page 4"
+        },
+        {
+          "type": "text",
+          "id": "accordion_heading_5",
+          "label": "Accordion heading 5"
+        },
+        {
+          "type": "richtext",
+          "id": "accordion_text_5",
+          "label": "Accordion text 5"
+        },
+        {
+          "type": "page",
+          "id": "accordion_page_5",
+          "label": "Accordion page 5"
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "upsell",
+      "name": "Upsell",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        },
+        {
+          "type": "paragraph",
+          "content": "Upsell is best as a one-click add to cart, so upsell products should have no variants. [Learn more](https://groupthought.com/link/pipeline/docs/upsell/variant)"
+        },
+        {
+          "type": "header",
+          "content": "Upsell in cart"
+        },
+        {
+          "type": "paragraph",
+          "content": "Use a dynamic source with the metafield Namespace and key 'theme.upsell' to allow product upsells to follow users into the cart. Use any other name to limit this feature to the product page. [Learn more](https://groupthought.com/link/pipeline/docs/upsell/cart)"
+        }
+      ]
+    },
+    {
+      "name": "Share button",
+      "type": "share-button",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Share",
+          "info": "If you include a link in social media posts, the page\’s featured image will be shown as the preview image.[Learn more](https://help.shopify.com/en/manual/online-store/images/showing-social-media-thumbnail-images)"
+        },
+        {
+          "type": "paragraph",
+          "content": "A store title and description are included with the preview image.[Learn more](https://help.shopify.com/en/manual/promoting-marketing/seo/adding-keywords#set-a-title-and-description-for-your-online-store)"
+        }
+      ]
+    },
+    {
+      "name": "Pickup availability",
+      "type": "pickup",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Show customers where they can pick up the product. [Learn more](https://help.shopify.com/en/manual/shipping/setting-up-and-managing-your-shipping/local-methods/local-pickup#show-pickup-availability-to-your-customers)"
+        }
+      ]
+    },
+    {
+      "name": "Custom Liquid",
+      "type": "custom_liquid",
+      "settings": [
+        {
+          "type": "liquid",
+          "id": "custom_liquid",
+          "label": "Custom liquid",
+          "info": "Add app snippets or other Liquid code to create advanced customizations."
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "title",
+          "label": "Text",
+          "default": "<p>Give more details about the product</p>"
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Text alignment",
+          "default": "left",
+          "options": [
+            { "label": "Center", "value": "center" },
+            { "label": "Left", "value": "left" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "icon",
+      "name": "Icon",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon_name",
+          "label": "Select an icon",
+          "default": "check",
+          "options": [
+            { "value": "alert-circle", "label": "Alert" },
+            { "value": "archive", "label": "Archive" },
+            { "value": "arrow-up-circle", "label": "Arrow" },
+            { "value": "arrow-up-right", "label": "Arrow right" },
+            { "value": "at-sign", "label": "At sign" },
+            { "value": "award", "label": "Award" },
+            { "value": "bell", "label": "Bell" },
+            { "value": "bookmark", "label": "Bookmark" },
+            { "value": "calendar", "label": "Calendar" },
+            { "value": "camera", "label": "Camera" },
+            { "value": "check", "label": "Check" },
+            { "value": "clipboard", "label": "Clipboard" },
+            { "value": "clock", "label": "Clock" },
+            { "value": "compass", "label": "Compass" },
+            { "value": "credit-card", "label": "Credit card" },
+            { "value": "dollar-sign", "label": "Dollar sign" },
+            { "value": "download", "label": "Download" },
+            { "value": "edit-2", "label": "Pencil" },
+            { "value": "flag", "label": "Flag" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "help-circle", "label": "Question mark" },
+            { "value": "info", "label": "Info" },
+            { "value": "mail", "label": "Mail" },
+            { "value": "map-pin", "label": "Map" },
+            { "value": "message-circle", "label": "Message" },
+            { "value": "music", "label": "Music" },
+            { "value": "paperclip", "label": "Paperclip" },
+            { "value": "phone", "label": "Phone" },
+            { "value": "plus", "label": "Plus" },
+            { "value": "refresh-cw", "label": "Recycle" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "smile", "label": "Smile" },
+            { "value": "star", "label": "Star" },
+            { "value": "thumbs-up", "label": "Thumbs up" },
+            { "value": "truck", "label": "Truck" },
+            { "value": "zap", "label": "Lightening" },
+            { "value": "none", "label": "None"}
+          ]
+        },
+        {
+          "type": "color",
+          "id": "icon_color",
+          "label": "Color"
+        },
+        {
+          "type": "image_picker",
+          "id": "icon_image",
+          "label": "Image",
+          "info": "If set overrides the icon above"
+        },
+        {
+          "type": "range",
+          "id": "icon_width",
+          "label": "Width",
+          "min": 20,
+          "max": 50,
+          "step": 1,
+          "unit": "px",
+          "default": 20
+        },
+        {
+          "type": "header",
+          "content": "Text"
+        },
+        {
+          "type": "text",
+          "id": "icon_text",
+          "label": "Heading",
+          "default": "Free shipping over $99"
+        },
+        {
+          "type": "range",
+          "id": "text_size",
+          "label": "Size",
+          "default": 90,
+          "min": 50,
+          "max": 125,
+          "step": 5,
+          "unit": "%"
+        },
+        {
+          "type": "header",
+          "content": "Layout"
+        },
+        {
+          "type": "select",
+          "id": "width",
+          "label": "Width",
+          "default": "full",
+          "options": [
+            { "label": "Wide", "value": "full" },
+            { "label": "Half", "value": "half" }
+          ]
+        },
+        {
+          "type": "select",
+          "id": "text_alignment",
+          "label": "Alignment",
+          "default": "left",
+          "options": [
+            { "label": "Center", "value": "center" },
+            { "label": "Left", "value": "left" }
+          ]
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#ffffff"
+        },
+        {
+          "type": "checkbox",
+          "id": "remove_padding",
+          "label": "Remove padding",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "inventory_countdown",
+      "name": "Inventory countdown",
+      "limit": 1,
+      "settings": []
+    },
+    {
+      "type": "popup_text",
+      "name": "Popup text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Text",
+          "default": "Read more"
+        },
+        {
+          "type": "page",
+          "id": "popup_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+

@@ -1,0 +1,182 @@
+{
+  "sections": {
+    "subcollections": {
+      "type": "subcollections",
+      "disabled": true,
+      "settings": {
+        "layout": "grid",
+        "image_source": "collection",
+        "image_aspect_ratio": 0.6,
+        "image_overlay_opacity": 10,
+        "bg_color": "",
+        "text_color": "text-light"
+      }
+    },
+    "hero": {
+      "type": "collection-image-with-title",
+      "disabled": true,
+      "settings": {
+        "banner_height": "one-fifty-height",
+        "text_position": "middle-center",
+        "show_image": true,
+        "text_color": "text-light",
+        "overlay_opacity": 10,
+        "banner_bg_color": "#fafafa"
+      }
+    },
+    "main": {
+      "type": "collection",
+      "disabled": true,
+      "settings": {
+        "show_breadcrumbs": true,
+        "enable_sorting": true,
+        "enable_filters": true,
+        "filter_mode": "default",
+        "bg_color": ""
+      }
+    },
+    "390680ce-356d-4ab8-afdb-10db5709d83f": {
+      "type": "section-custom-html",
+      "disabled": true,
+      "settings": {
+        "title": "",
+        "html": "<div class=\"custom-vstar-review-widget\" style=\"width:100%\"><\/div>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    },
+    "9ece9ece-9474-4d44-945c-13787ce58c37": {
+      "type": "selection-product-grid-21-04-23",
+      "disabled": true,
+      "settings": {
+        "show_products": false,
+        "collection": "",
+        "title": "Best Sellers",
+        "products_rows": 2,
+        "products_layout": "grid",
+        "show_collection_button": true,
+        "show_fake_price": true,
+        "button_style": "text",
+        "bg_color": "",
+        "enable_slider_mobile": true
+      }
+    },
+    "59aed660-6555-4989-bbc2-adadfdba9a4d": {
+      "type": "section-custom-html",
+      "custom_css": [
+        ".custom-html-section {padding-top: 20px; padding-bottom: 0px; text-align: center;}"
+      ],
+      "settings": {
+        "title": "",
+        "html": "<style>\n\n@media (max-width: 768px)\n.custom-twi__title {\n    font-size: 24px;\n    line-height: 26px;\n    margin-bottom: 0px;\n}\n.custom-twi__title {\n    color: #285234;\n    text-align: center;\n    font-family: var(--FONT-STACK-HEADING);\n    font-size: 40px;\n    font-style: normal;\n    font-weight: 600;\n    line-height: 50px;\n    text-transform: capitalize;\n    margin: 0 auto 0px;\n}\n@media (max-width: 768px)\n.custom-twi__title {\n    font-size: 34px;\n    line-height: 36px;\n    margin-bottom: -20px;\n}\n<\/style>\n\n<span class=\"custom-twi__title\">GET BEST SEA MOSS PRODUCTS<\/span>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    },
+    "de670e54-fdd6-43d5-9010-57a5318fd884": {
+      "type": "section-collection-BF-subscr",
+      "custom_css": [
+        ".rich-text--no-image {padding: 0;}",
+        ".custom-html-section {padding-top: 10px;}",
+        ".current-price {font-size: 1.5em; font-weight: bold; margin-right: 5px; display: none;}",
+        ".original-price {font-size: 1em; text-decoration: none; color: #000000;}"
+      ],
+      "settings": {
+        "collection": "best-collection",
+        "title": "",
+        "show_description": false,
+        "show_description_not_dropdoun": false,
+        "show_description_custom": false,
+        "head-description": "About bundle",
+        "description": "<p>description<\/p>",
+        "products_rows": 7,
+        "products_sales_procent": 50,
+        "products_layout": "grid",
+        "show_collection_button": false,
+        "show_subscription_menu": true,
+        "show_compere_price": true,
+        "show_cart_after_add": false,
+        "show_review_stars": false,
+        "show_quantity_select": true,
+        "button_style": "text",
+        "bg_color": "",
+        "enable_slider_mobile": false,
+        "products_per_row_desktop": 4,
+        "products_per_row_mobile": 2
+      }
+    },
+    "2cd2a0e4-d5bb-4c0b-a6e0-8a074c365a05": {
+      "type": "subscription-benefits",
+      "blocks": {
+        "56832266-4ea2-430b-bbe4-4dc32937ba29": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Save your special Price",
+            "bg_title": "rgba(0,0,0,0)",
+            "pr_title": 28,
+            "pl_title": 0,
+            "pr_title_m": 0,
+            "pl_title_m": 0,
+            "text": "save half the price on all products you add to your Subscription Plan during BF"
+          }
+        },
+        "0750bc57-9948-47af-a2d3-014ff92abe4f": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Proceed to get exclusively prepared for you",
+            "bg_title": "rgba(0,0,0,0)",
+            "pr_title": 0,
+            "pl_title": 0,
+            "pr_title_m": 0,
+            "pl_title_m": 0,
+            "text": "upgrade your plan with new products and favs for as long as you decide"
+          }
+        },
+        "bcc539b3-d170-4657-aaf9-f58c531f51fa": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Pause, edit, skip or cancel ",
+            "bg_title": "rgba(0,0,0,0)",
+            "pr_title": 0,
+            "pl_title": 0,
+            "pr_title_m": 0,
+            "pl_title_m": 0,
+            "text": "don’t feel bound and be free to manage your subscription with all the products inside the plan"
+          }
+        }
+      },
+      "block_order": [
+        "56832266-4ea2-430b-bbe4-4dc32937ba29",
+        "0750bc57-9948-47af-a2d3-014ff92abe4f",
+        "bcc539b3-d170-4657-aaf9-f58c531f51fa"
+      ],
+      "settings": {
+        "st": 160,
+        "sb": 160,
+        "stm": 60,
+        "sbm": 60,
+        "title": "Special Subscription Benefits",
+        "img": "shopify:\/\/shop_images\/DSC02652_1.png",
+        "max_width": 660,
+        "height_img": 78,
+        "height_img_mobile": 285,
+        "type_of": "scroll",
+        "name": "",
+        "url": ""
+      }
+    }
+  },
+  "order": [
+    "subcollections",
+    "hero",
+    "main",
+    "390680ce-356d-4ab8-afdb-10db5709d83f",
+    "9ece9ece-9474-4d44-945c-13787ce58c37",
+    "59aed660-6555-4989-bbc2-adadfdba9a4d",
+    "de670e54-fdd6-43d5-9010-57a5318fd884",
+    "2cd2a0e4-d5bb-4c0b-a6e0-8a074c365a05"
+  ]
+}

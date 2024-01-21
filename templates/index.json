@@ -1,0 +1,944 @@
+{
+  "sections": {
+    "6548fa05-815d-431d-9228-64628dc68e6f": {
+      "type": "section-slideshow",
+      "blocks": {
+        "template--15931963572379__6548fa05-815d-431d-9228-64628dc68e6f-image-2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/trueseamoss-main-banner-desktop2.jpg",
+            "image_mobile": "shopify:\/\/shop_images\/trueseamoss-main-banner-mobile2.png",
+            "bg_position": "center-center",
+            "overlay_opacity": 0,
+            "text_width": "normal",
+            "text_position": "bottom-left",
+            "text_color": "text-light",
+            "title": "",
+            "text": "",
+            "slide_btn_text": "",
+            "slide_btn_link": "https:\/\/trueseamoss.com\/products\/sea-moss-gel-trueseamoss",
+            "imageLink": true,
+            "slide_btn_style": "primary btn--small",
+            "slide_btn_text_2": "",
+            "slide_btn_link_2": "",
+            "slide_btn_style_2": "secondary",
+            "video_btn_text": "",
+            "video_btn_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "template--15931963572379__6548fa05-815d-431d-9228-64628dc68e6f-image-2"
+      ],
+      "custom_css": [
+
+      ],
+      "settings": {
+        "slide_height": "original-height",
+        "show_nav_dots": true,
+        "show_nav_arrows": true,
+        "show_arrow_down": false,
+        "autoplay": false,
+        "duration": 4,
+        "transition": "slide",
+        "enable_zoom_animation": false,
+        "heading_size": 120
+      }
+    },
+    "69c7a6f5-e4cd-41be-8690-8e93e56799ea": {
+      "type": "brands",
+      "blocks": {
+        "74d79358-9c2d-4c4f-86ac-a71a9da1c3a8": {
+          "type": "brand",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/logo_1_a27e62b1-9c33-4c4e-8dc1-eb2753bdb2f3.svg"
+          }
+        },
+        "70915dd9-cf6f-4e39-a9ff-064b65228da7": {
+          "type": "brand",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/logo_2_1c4c1e23-56c2-4dfc-bed6-fe86f14044c7.svg"
+          }
+        },
+        "4892227a-d85a-47f7-8535-12a49db2cedb": {
+          "type": "brand",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/logo_3_b612bfff-1525-43fd-bca2-bbff65bad94f.svg"
+          }
+        },
+        "aa0bf417-d771-44c0-a47a-3105527b7c3e": {
+          "type": "brand",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/logo_4_0e085a92-abf7-4bc5-89bf-b77a5dd251db.svg"
+          }
+        },
+        "d838605e-f867-4095-9298-a7b92226705c": {
+          "type": "brand",
+          "settings": {
+            "img": "shopify:\/\/shop_images\/logo_5_c5a27ec7-2d29-4dc6-a67a-afdeae042a8c.svg"
+          }
+        }
+      },
+      "block_order": [
+        "74d79358-9c2d-4c4f-86ac-a71a9da1c3a8",
+        "70915dd9-cf6f-4e39-a9ff-064b65228da7",
+        "4892227a-d85a-47f7-8535-12a49db2cedb",
+        "aa0bf417-d771-44c0-a47a-3105527b7c3e",
+        "d838605e-f867-4095-9298-a7b92226705c"
+      ],
+      "settings": {
+        "title": "Featured in:",
+        "bg_color": "#ffffff",
+        "padding_top": 20,
+        "padding_bottom": 26,
+        "padding_top_mb": 60,
+        "padding_bottom_mb": 0
+      }
+    },
+    "ef9bd88a-f9b6-45dc-97f1-61b6f3e4b1f4": {
+      "type": "custom-text-with-image",
+      "blocks": {
+        "d89b6e22-9f02-4d30-864b-1dc5807b8d34": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/Desktop_2_f0cd3877-9089-468f-96b2-b8242233cf1e.png",
+            "image_aspect_ratio": 46
+          }
+        },
+        "bb791254-fc50-48e1-9e84-9e4f7c930fce": {
+          "type": "text",
+          "settings": {
+            "text": "<p>True Sea Moss is a natural superfood from the Ocean. <br\/>It provides<strong> over 90% <\/strong><br\/>of the essential vitamins & minerals the human <strong>body needs daily.<\/strong><\/p>",
+            "badge": "#ff914f",
+            "text_badge": "#ffffff",
+            "max_width": 445,
+            "left_text": false
+          }
+        }
+      },
+      "block_order": [
+        "d89b6e22-9f02-4d30-864b-1dc5807b8d34",
+        "bb791254-fc50-48e1-9e84-9e4f7c930fce"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.custom-twi__item-img {flex: 1 1 53%; } .custom-twi__item-text {flex: 1 1 47%; } .custom-twi__item-richtext {max-width: calc(100% + 25px) !important; margin-left: -25px; }}"
+      ],
+      "settings": {
+        "st": 120,
+        "sb": 0,
+        "stm": 62,
+        "sbm": 0,
+        "heading": "So, what is Sea Moss?",
+        "text_btn": "Unlock True Sea Moss",
+        "link_btn": "shopify:\/\/products\/sea-moss-gel-trueseamoss"
+      }
+    },
+    "16953868276a78d859": {
+      "type": "apps",
+      "blocks": {
+        "9e69fa88-2873-4d61-a4f5-6eda48f2bf77": {
+          "type": "shopify:\/\/apps\/trustoo-io-product-reviews\/blocks\/card-carousel\/c8f15077-6475-4e86-ad06-b66038d5ba2c",
+          "settings": {
+          }
+        }
+      },
+      "block_order": [
+        "9e69fa88-2873-4d61-a4f5-6eda48f2bf77"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "ab9fc12d-7602-4217-99ea-84a6340cee66": {
+      "type": "custom-text-with-image",
+      "blocks": {
+        "c5d10b01-c4d3-448e-852d-dc1c30108813": {
+          "type": "text",
+          "settings": {
+            "text": "<p> True Sea Moss <strong>is suitable for everyone<\/strong> who wants to take care of their well-being and nourish their body with essential vitamins and minerals naturally.<\/p>",
+            "badge": "#c8b7e1",
+            "text_badge": "#222222",
+            "max_width": 530,
+            "left_text": true
+          }
+        },
+        "641e84e2-c904-4eed-87c6-6a3371d458ab": {
+          "type": "image",
+          "settings": {
+            "image": "shopify:\/\/shop_images\/2_e00efa2f-f8d1-4961-bc1c-87a5eaebc596.png",
+            "image_aspect_ratio": 45
+          }
+        },
+        "7e3ed54f-b517-481c-a9ad-d3a1ffcb4891": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/moss_bd8807ed-6b2d-4d8e-8453-0eae9bd74c71.svg",
+            "style": "right: -10%;\nbottom: -100px;",
+            "style_mobile": "display:none;"
+          }
+        },
+        "85263059-325a-4bb5-87d9-e9b3b7143d73": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/moss_ef13c1d1-1962-4af5-93e5-ce5bfb8cb4b5.svg",
+            "style": "display: none;",
+            "style_mobile": "display: block;\nright: 0px;\nbottom: 40px;"
+          }
+        }
+      },
+      "block_order": [
+        "c5d10b01-c4d3-448e-852d-dc1c30108813",
+        "641e84e2-c904-4eed-87c6-6a3371d458ab",
+        "7e3ed54f-b517-481c-a9ad-d3a1ffcb4891",
+        "85263059-325a-4bb5-87d9-e9b3b7143d73"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.custom-twi__title {margin-bottom: 10px; }}"
+      ],
+      "settings": {
+        "st": 118,
+        "sb": 120,
+        "stm": 0,
+        "sbm": 60,
+        "heading": "Who Does It Suit?",
+        "text_btn": "Unlock True Sea Moss",
+        "link_btn": "shopify:\/\/products\/sea-moss-gel-trueseamoss"
+      }
+    },
+    "bb5e6775-5854-40c2-bbad-63672a7bf2b4": {
+      "type": "custom_video_section",
+      "blocks": {
+        "template--15931963572379__bb5e6775-5854-40c2-bbad-63672a7bf2b4-background_icon-1": {
+          "type": "background_icon",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/decor1.png",
+            "icon_position": "top: 0px;\nleft: 0px;",
+            "icon_position_mobile": "display:none;"
+          }
+        },
+        "9cd838c7-7d89-4761-9936-48abc72f7cb6": {
+          "type": "background_icon",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/decor_3.png",
+            "icon_position": "left: 0;\ntop: 500px;",
+            "icon_position_mobile": "display:none;"
+          }
+        },
+        "f2317c4d-7f3f-40f4-b726-565e5bf7b2d4": {
+          "type": "background_icon",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/decor_2.png",
+            "icon_position": "top: 300px;\nright:0px;",
+            "icon_position_mobile": "display:none;"
+          }
+        },
+        "c005a8c2-2bc3-4219-be98-70b89db287c3": {
+          "type": "background_icon",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/line_28966d4e-7fe0-4825-9fdf-01552637a1dd.png",
+            "icon_position": "display:none;",
+            "icon_position_mobile": "display:block;\ntop: 170px;\nleft: 0px;"
+          }
+        }
+      },
+      "block_order": [
+        "template--15931963572379__bb5e6775-5854-40c2-bbad-63672a7bf2b4-background_icon-1",
+        "9cd838c7-7d89-4761-9936-48abc72f7cb6",
+        "f2317c4d-7f3f-40f4-b726-565e5bf7b2d4",
+        "c005a8c2-2bc3-4219-be98-70b89db287c3"
+      ],
+      "settings": {
+        "video_title": "<p>Beyond more words: Just discover real Sea Moss users experience<\/p>",
+        "video_background_color": "#faf9ef",
+        "video": "shopify:\/\/files\/videos\/Real Sea Moss Users Experiences.mp4",
+        "video_url": "https:\/\/youtu.be\/ADmbz1_Dav8",
+        "enable_video_looping": false,
+        "enable_video_autoplay": true,
+        "enable_video_controls": false,
+        "text": "Discover our case STUDIES",
+        "url": "shopify:\/\/blogs\/all-about-sea-moss",
+        "padding_top": 60,
+        "padding_bottom": 70,
+        "padding_top_mb": 40,
+        "padding_bottom_mb": 25
+      }
+    },
+    "4b948200-4741-4f34-a7d9-1eb6b672034c": {
+      "type": "custom_benefits",
+      "blocks": {
+        "ba0aa796-44f2-4493-b5c1-a2aa1ca576c2": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Nutrient-Rich",
+            "benefit_subtitle": "Sea moss contains <span>over 90 essential minerals that our bodies need,<\/span> including iodine, calcium, zinc, and potassium.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_229.svg",
+            "arrow_first": true,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "62135c12-cf09-4e7e-b352-d8a12da9dbfa": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Digestive Health",
+            "benefit_subtitle": "It can acts <span>as a prebiotic,<\/span> thereby aiding in the growth of beneficial bacteria in the gut and improving digestive health.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_229.svg",
+            "arrow_first": false,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "fe4567ee-0684-43f5-bb25-126fe4a0fd7b": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Immune Support",
+            "benefit_subtitle": "The high percentage of antioxidants in sea moss helps combat free radicals in the human body, which, in turn, <span>aids in reducing sickness.<\/span>",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_231.svg",
+            "arrow_first": true,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "71caac8d-ec29-4dfb-987b-d72ae506e8bc": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Energy and Mood",
+            "benefit_subtitle": "Due to its high vitamin and mineral content, sea moss <span>can provide a natural energy boost<\/span> and <span>help balance deficiencies<\/span>, leading to a vital feeling",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_231.png",
+            "arrow_first": false,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "9a85b24f-d562-4b2e-9667-f1711d842276": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Respiratory Health",
+            "benefit_subtitle": "For centuries it was used to <span>relieve respiratory issues <\/span> as it dissolves mucus and helps in clearing out the lungs.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_234.svg",
+            "arrow_first": true,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "6c848a31-167e-4cb6-8bfb-f5807305a09c": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Skin Health",
+            "benefit_subtitle": "Vitamins C, A and sulfur are improving the complexion <span>by nourishing the skin <\/span> and getting rid of various skin issues such as irritation, dryness, and even acne.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_234.svg",
+            "arrow_first": false,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "67ed52f7-4c22-4f2d-89e3-9f8bb040e928": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Strong Detoxifier",
+            "benefit_subtitle": "The algin in sea moss can help to <span>detoxify the body <\/span> by drawing out heavy metals and other contaminants  that we may ingest through our diet and other sources.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_232.svg",
+            "arrow_first": true,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "7dc56d35-89a8-4a66-9b5e-5bf24807e347": {
+          "type": "Benefit",
+          "settings": {
+            "benefit_title": "Anti-inflammatory effect",
+            "benefit_subtitle": "Antioxidants and omega-3 fatty acids are <span>help to<\/span> <span> reduce inflammation in the body<\/span>, potentially easing conditions associated with chronic ones, such as arthritis and digestive issues.",
+            "benefit_arrow": "shopify:\/\/shop_images\/Group_232.svg",
+            "arrow_first": false,
+            "top": 0,
+            "left": 0
+          }
+        },
+        "c480a17e-eee1-49d9-a68e-ee58abeec326": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/moss1232.svg",
+            "style": "left: 0px;\nbottom: -150px;",
+            "style_mobile": "display:none;"
+          }
+        },
+        "680fa146-cfaa-4355-b729-3187ab4c88db": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/moss2.svg",
+            "style": "top: 0;\nright:0px;",
+            "style_mobile": "display:none;"
+          }
+        },
+        "5886a33f-4221-4ddd-a377-111581992ce5": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/moss_f1993b5c-2a3b-467a-87c6-a726418dfd49.svg",
+            "style": "display:none;",
+            "style_mobile": "display:block;\ntop: 0;\nright:0;"
+          }
+        }
+      },
+      "block_order": [
+        "ba0aa796-44f2-4493-b5c1-a2aa1ca576c2",
+        "62135c12-cf09-4e7e-b352-d8a12da9dbfa",
+        "fe4567ee-0684-43f5-bb25-126fe4a0fd7b",
+        "71caac8d-ec29-4dfb-987b-d72ae506e8bc",
+        "9a85b24f-d562-4b2e-9667-f1711d842276",
+        "6c848a31-167e-4cb6-8bfb-f5807305a09c",
+        "67ed52f7-4c22-4f2d-89e3-9f8bb040e928",
+        "7dc56d35-89a8-4a66-9b5e-5bf24807e347",
+        "c480a17e-eee1-49d9-a68e-ee58abeec326",
+        "680fa146-cfaa-4355-b729-3187ab4c88db",
+        "5886a33f-4221-4ddd-a377-111581992ce5"
+      ],
+      "custom_css": [
+        "@media (max-width: 768px) {.benefits_footer_text {margin-bottom: 0px; }}"
+      ],
+      "settings": {
+        "benefits_title": "Benefits",
+        "benefits_sub_title": "BRAIN • ENERGY • DIGESTION • SKIN • HAIR • IMMUNITY • EASY BREATH • FOCUS",
+        "benefits_background_color": "#faf9ef",
+        "benefit_center_image": "shopify:\/\/shop_images\/strawberry.png",
+        "footer_text": "",
+        "left_arrow": "shopify:\/\/shop_images\/arrow.svg",
+        "center_arrow": "shopify:\/\/shop_images\/Group_232_1.svg",
+        "right_arrow": "shopify:\/\/shop_images\/arrow_1.svg",
+        "mb_button": "choose my package",
+        "mb_button_url": "shopify:\/\/products\/sea-moss-gel-trueseamoss",
+        "padding_top": 20,
+        "padding_bottom": 83,
+        "padding_top_mb": 35,
+        "padding_bottom_mb": 10
+      }
+    },
+    "b7453d22-d2e3-4eae-a0c5-c4d0cedcab69": {
+      "type": "why-true-sea-moss",
+      "blocks": {
+        "85fd44fa-1ed7-4671-909c-0d0e09d04cdd": {
+          "type": "text",
+          "settings": {
+            "bg_img": "shopify:\/\/shop_images\/bg1.png",
+            "top_p": -15,
+            "left_p": -20,
+            "top_p_m": 0,
+            "left_p_m": 17,
+            "text": "Carefully created and manufactured locally  <span> in LA, California<\/span>"
+          }
+        },
+        "f9046d8c-0b2d-484e-b90c-66f619a29602": {
+          "type": "text",
+          "settings": {
+            "bg_img": "shopify:\/\/shop_images\/bg2.png",
+            "top_p": 0,
+            "left_p": 0,
+            "top_p_m": 0,
+            "left_p_m": 16,
+            "text": "Over 4 years on the market with 10.000 + of positive reviews and sea moss stories"
+          }
+        },
+        "1695331e-5d78-40c8-98e2-4751e9e17f2a": {
+          "type": "text",
+          "settings": {
+            "bg_img": "shopify:\/\/shop_images\/bg3.png",
+            "top_p": -10,
+            "left_p": 0,
+            "top_p_m": 2,
+            "left_p_m": 15,
+            "text": "Using only farm-fresh fruits and natural ingredients for our True gels."
+          }
+        },
+        "c0e71a9a-a784-4728-b018-8b6e72b15f61": {
+          "type": "text",
+          "settings": {
+            "bg_img": "shopify:\/\/shop_images\/bg4.png",
+            "top_p": -5,
+            "left_p": 0,
+            "top_p_m": 8,
+            "left_p_m": 11,
+            "text": "A special approach to developing the taste and texture of our products, together with top food developers in California."
+          }
+        },
+        "23773abb-e9af-4125-85ee-2031fc67549a": {
+          "type": "decor",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/Vector_a36172ba-f668-43a2-8eb2-6d8849bfef11.svg",
+            "icon_position": "display:none;",
+            "icon_position_mobile": "display:block;\ntop:30px;\nleft:0:"
+          }
+        },
+        "2dadb371-d5c4-4dea-bf8e-8b263db10fbe": {
+          "type": "decor",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/d2.svg",
+            "icon_position": "right:0;\nbottom:40px;",
+            "icon_position_mobile": "display:none"
+          }
+        },
+        "04e067cf-e10d-4178-95e3-4e946db23e17": {
+          "type": "decor",
+          "settings": {
+            "background_icon": "shopify:\/\/shop_images\/d1.svg",
+            "icon_position": "top:150px;\nleft: 40px;",
+            "icon_position_mobile": "display:nonel"
+          }
+        }
+      },
+      "block_order": [
+        "85fd44fa-1ed7-4671-909c-0d0e09d04cdd",
+        "f9046d8c-0b2d-484e-b90c-66f619a29602",
+        "1695331e-5d78-40c8-98e2-4751e9e17f2a",
+        "c0e71a9a-a784-4728-b018-8b6e72b15f61",
+        "23773abb-e9af-4125-85ee-2031fc67549a",
+        "2dadb371-d5c4-4dea-bf8e-8b263db10fbe",
+        "04e067cf-e10d-4178-95e3-4e946db23e17"
+      ],
+      "settings": {
+        "st": 120,
+        "sb": 60,
+        "stm": 66,
+        "sbm": 0,
+        "heading": "Why True Sea Moss?",
+        "img": "shopify:\/\/shop_images\/DSC02483_2.png",
+        "name_btn": "VIEW ALL TRUE PRODUCTS",
+        "link_btn": "shopify:\/\/collections\/best-sea-moss"
+      }
+    },
+    "4e8a07e1-a55e-48b9-8a0e-41b17bf30b3c": {
+      "type": "selection-product-grid-21-04-23",
+      "custom_css": [
+        ".grid .grid__item {width: 100%; padding: 10%;}",
+        ".product-grid-item__info--left {text-align: center;}",
+        ".product__media,.search-results__item__image {background-size: 90%;}",
+        ".section__heading {color: #285234;}",
+        "@media (max-width: 768px) {.featured-collection {padding-top: 40px; } .section__heading {margin-bottom: 0px; }}"
+      ],
+      "settings": {
+        "show_products": true,
+        "collection": "best-sea-moss",
+        "title": "Customers True Favs",
+        "products_rows": 2,
+        "products_layout": "grid",
+        "show_collection_button": true,
+        "show_fake_price": true,
+        "button_style": "primary",
+        "bg_color": "",
+        "enable_slider_mobile": false
+      }
+    },
+    "98e870ea-824b-4d91-a47f-df96c38fba5c": {
+      "type": "home-quote",
+      "blocks": {
+        "f87f03dc-5af8-4b62-82de-28960e71b6a0": {
+          "type": "text",
+          "settings": {
+            "text": "True Sea Moss is a <span>  natural superfood<\/span>",
+            "text_right": false
+          }
+        },
+        "0d10d4ac-202b-494e-b9d2-7a638e6e92d5": {
+          "type": "text",
+          "settings": {
+            "text": "<span>...but only<\/span>",
+            "text_right": true
+          }
+        },
+        "d3d68dae-aad9-47d4-8bf6-4559e3a96af3": {
+          "type": "text",
+          "settings": {
+            "text": "<span> Consistency is Key <\/span>  to unlock all the",
+            "text_right": false
+          }
+        },
+        "f33884cb-5432-4fdd-abde-bccb4f96676c": {
+          "type": "text",
+          "settings": {
+            "text": "benefits of it.",
+            "text_right": false
+          }
+        }
+      },
+      "block_order": [
+        "f87f03dc-5af8-4b62-82de-28960e71b6a0",
+        "0d10d4ac-202b-494e-b9d2-7a638e6e92d5",
+        "d3d68dae-aad9-47d4-8bf6-4559e3a96af3",
+        "f33884cb-5432-4fdd-abde-bccb4f96676c"
+      ],
+      "settings": {
+        "st": 60,
+        "sb": 120,
+        "stm": 0,
+        "sbm": 60,
+        "bg_img": "shopify:\/\/shop_images\/Vector_529fad8a-6050-4f4e-9b50-4ef3567509a5.png",
+        "bg_img_mobile": "shopify:\/\/shop_images\/Vector_8dd10f81-e703-4579-945d-cab0dd412d28.svg"
+      }
+    },
+    "ac84c194-7f19-4043-9103-ad5e4ab67398": {
+      "type": "consistency-important",
+      "blocks": {
+        "c97918c3-9ea9-4c69-ae53-09813d9c25bf": {
+          "type": "main_text",
+          "settings": {
+            "main_text": "<p>Some of our customers feel the effects within the first week, while others may need more time. It all depends on the differences in our bodies and individual biochemistry, as well as varying levels of vitamin deficiency and personal health history.<br\/><br\/>Give your body time and patience to discover sea moss benefits on the long distance.<\/p>"
+          }
+        },
+        "1e7ea9c4-0225-4882-96c9-ce4cbdf129fc": {
+          "type": "text_decor",
+          "settings": {
+            "sub_text": "<br>\nThink of it as a gradual process, where your body slowly absorbs and utilizes these nutrients, ultimately leading to improved health and well-being.",
+            "decor": "shopify:\/\/shop_images\/Vector_4acde814-c550-452f-a721-1bc439095ab1.png"
+          }
+        },
+        "3f350fb4-14d6-4fcf-a900-f484e892104f": {
+          "type": "text_extra",
+          "settings": {
+            "extra_text": "<p>That’s why we have created a <strong>really great and useful subscription offer:<\/strong><\/p>",
+            "position": "left"
+          }
+        },
+        "58088c32-8bb7-4a17-a614-84d97dfde4c1": {
+          "type": "text_extra",
+          "settings": {
+            "extra_text": "<p><strong>just to keep you on track<\/strong> in your journey towards overall well-being and strong immunity.<\/p>",
+            "position": "right"
+          }
+        }
+      },
+      "block_order": [
+        "c97918c3-9ea9-4c69-ae53-09813d9c25bf",
+        "1e7ea9c4-0225-4882-96c9-ce4cbdf129fc",
+        "3f350fb4-14d6-4fcf-a900-f484e892104f",
+        "58088c32-8bb7-4a17-a614-84d97dfde4c1"
+      ],
+      "settings": {
+        "st": 0,
+        "sb": 50,
+        "stm": 0,
+        "sbm": 30,
+        "heading": "Why is consistency so important?",
+        "decor_line": "shopify:\/\/shop_images\/line_1_726be885-c61e-41d8-8183-8ebcf34fe076.svg"
+      }
+    },
+    "7586c278-f0d0-4537-a504-85d763c452df": {
+      "type": "subscription-benefits",
+      "blocks": {
+        "914446fc-f10f-4bbb-8e73-9e287640a468": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Save $$$ every months",
+            "bg_title": "#e7ddd7",
+            "pr_title": 37,
+            "pl_title": 6,
+            "pr_title_m": 40,
+            "pl_title_m": 4,
+            "text": "you’ve committed on the long run, we’ve committed to provide you the best and affordable price"
+          }
+        },
+        "9aadb5b2-a81c-472b-8811-0328de2c0d1a": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Get exclusively prepared for you",
+            "bg_title": "#e5eeda",
+            "pr_title": 27,
+            "pl_title": 6,
+            "pr_title_m": 15,
+            "pl_title_m": 6,
+            "text": "knowing your next delivery date giving us opportunity to prepare fresh products by your delivery day."
+          }
+        },
+        "387e5f24-8d45-431d-94ac-66967c0e8495": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Delivery up to 3 days",
+            "bg_title": "#d5ece0",
+            "pr_title": 100,
+            "pl_title": 6,
+            "pr_title_m": 28,
+            "pl_title_m": 6,
+            "text": ""
+          }
+        },
+        "dba17aba-8767-43ab-a026-4e1d35782343": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Extra gifts for every True Subscriber",
+            "bg_title": "#e7ddd7",
+            "pr_title": 10,
+            "pl_title": 5,
+            "pr_title_m": 7,
+            "pl_title_m": 6,
+            "text": "get a special sea moss gift with your first order"
+          }
+        },
+        "e0dcf112-b439-454b-953a-bbff0fc2ee77": {
+          "type": "checkmark",
+          "settings": {
+            "icon": "checkmark",
+            "title": "Pause, cancel or skip orders",
+            "bg_title": "#e5eeda",
+            "pr_title": 8,
+            "pl_title": 7,
+            "pr_title_m": 12,
+            "pl_title_m": 6,
+            "text": "Don’t feel bound: feel free to manage your account for any changes."
+          }
+        }
+      },
+      "block_order": [
+        "914446fc-f10f-4bbb-8e73-9e287640a468",
+        "9aadb5b2-a81c-472b-8811-0328de2c0d1a",
+        "387e5f24-8d45-431d-94ac-66967c0e8495",
+        "dba17aba-8767-43ab-a026-4e1d35782343",
+        "e0dcf112-b439-454b-953a-bbff0fc2ee77"
+      ],
+      "settings": {
+        "st": 0,
+        "sb": 0,
+        "stm": 0,
+        "sbm": 110,
+        "title": "Subscription benefits",
+        "img": "shopify:\/\/shop_images\/DSC02652_1.png",
+        "max_width": 660,
+        "height_img": 76,
+        "height_img_mobile": 280,
+        "type_of": "link",
+        "name": "I’M READY TO SUBSCRIBE",
+        "url": "shopify:\/\/products\/sea-moss-gel-trueseamoss"
+      }
+    },
+    "16589164600ec5446b": {
+      "type": "section-marquee",
+      "blocks": {
+        "237a1a42-d222-484a-9a64-1a33c675dfc9": {
+          "type": "text",
+          "settings": {
+            "text": "<p>STAY TRUE<\/p>",
+            "icon_name": "point",
+            "icon_color": "",
+            "icon_width": 10,
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        },
+        "bb7c9cf1-78bb-43a7-bdea-8f5193053a7f": {
+          "type": "text",
+          "settings": {
+            "text": "<p>STAY HEALTHY<\/p>",
+            "icon_name": "point",
+            "icon_color": "",
+            "icon_width": 10,
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        },
+        "98452c54-bd42-478e-a812-080fd36d40bb": {
+          "type": "text",
+          "settings": {
+            "text": "<p>STAY NATURAL<\/p>",
+            "icon_name": "point",
+            "icon_color": "",
+            "icon_width": 10,
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        },
+        "cafefa63-4d3f-4729-8158-46d2dad77e59": {
+          "type": "text",
+          "settings": {
+            "text": "<p>STAY NATURAL<\/p>",
+            "icon_name": "point",
+            "icon_color": "",
+            "icon_width": 10,
+            "target_device_enabled": false,
+            "target_device": "mobile"
+          }
+        }
+      },
+      "block_order": [
+        "237a1a42-d222-484a-9a64-1a33c675dfc9",
+        "bb7c9cf1-78bb-43a7-bdea-8f5193053a7f",
+        "98452c54-bd42-478e-a812-080fd36d40bb",
+        "cafefa63-4d3f-4729-8158-46d2dad77e59"
+      ],
+      "custom_css": [
+        ".top-bar__icon {display: flex;}"
+      ],
+      "settings": {
+        "st": 120,
+        "sb": 60,
+        "stm": 60,
+        "sbm": 0,
+        "bg_color": "#222222",
+        "color": "#222222",
+        "gradient": true,
+        "background": "linear-gradient(86deg, rgba(255, 145, 79, 1) 2.38%, rgba(246, 231, 93, 0.75) 23.92%, rgba(200, 183, 225, 1) 45.83%, rgba(96, 198, 255, 0.49) 75.98%, rgba(163, 219, 124, 1) 96.35%)",
+        "layout": "marquee",
+        "padding": 30,
+        "slider_speed": 20,
+        "marquee_speed": 50,
+        "text_size": 150,
+        "text_size_mobile": 110,
+        "message_spacing": 10
+      }
+    },
+    "904fdfe9-54f6-43e1-9722-41debed1c92f": {
+      "type": "section-blog",
+      "settings": {
+        "heading": "<strong>Blog<\/strong>",
+        "blog": "all-about-sea-moss",
+        "cta": "",
+        "button_style": "primary",
+        "tags": false,
+        "author": true,
+        "date": true,
+        "show_comments": false,
+        "image_aspect_ratio": 0.5,
+        "rows": 1,
+        "columns": 4,
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    },
+    "147995ac-0671-4b72-9202-8bf7102cd2fa": {
+      "type": "product-faq",
+      "blocks": {
+        "a06ad360-701f-4b91-905b-cbd18f435193": {
+          "type": "faq",
+          "settings": {
+            "question": "What is Sea Moss?",
+            "answer": "<p>Chondrus Crispus or Irish Sea Moss is a type of red seaweed that grows on the rocky Atlantic coasts of North America, Europe, and the Caribbean. It has been known for centuries as a rich source of vitamins and minerals, as it contains over 90% of the essential nutrients the human body needs daily to stay healthy, productive, and avoid vitamin deficiency. Sea moss is also rich of antioxidants, which help protect the body against inflammation and oxidative stress. Additionally, it is rich in fiber, making it a nutritious addition to the diets of those who adhere to dietary restrictions.<\/p>"
+          }
+        },
+        "d884fb95-8e98-452b-b7a0-554f28e14048": {
+          "type": "faq",
+          "settings": {
+            "question": "Where do you source your Sea Moss?",
+            "answer": "<p>True Sea Moss is sourced from a Marine-Protected Area off the coast of Nha Trang Bay, Vietnam. This bay is renowned for its pristine and unspoiled environment. Our dedicated local team responsibly collects the wildcrafted sea moss in its natural habitat, and it's then sun-dried right on the shore to maintain its quality and sustainability.<br\/><br\/>\u2028We take pride in controlling every aspect of the sourcing and drying processes to ensure the highest quality standards. Our commitment to excellence is reflected in our products, which undergo thorough checks by the FDA at customs to uphold the highest standards.<\/p>"
+          }
+        },
+        "980cc825-4a6d-4a23-9b14-de98fae802d8": {
+          "type": "faq",
+          "disabled": true,
+          "settings": {
+            "question": "Are your products FDA approved?",
+            "answer": "<p>Sure! Our products are checked and approved by the FDA, before they enter the United States.<\/p>"
+          }
+        },
+        "a578e3be-2687-46bc-b38d-e2374d99b084": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does it take to see the first sea moss effect?",
+            "answer": "<p>Everybody is different and responds to nutrients in it’s own way. Some people might notice changes sooner, while others may take a bit longer.\u2028We generally recommend giving your body time to adjust and absorb the multitude of vitamins and minerals that sea moss provides. It's also in line with the idea that consistency is key to experiencing the full range of benefits.<br\/><br\/>\u2028it's important to note that some individuals have reported feeling positive effects within the first week. It really is a highly individual experience, which makes it all the more fascinating.\u2028If you're curious to hear firsthand accounts, we’ve made a special interview project with real sea moss users and their sea moss experience and how they first felt the effects of sea moss on their way. It offers a great perspective on the varying timelines and benefits.<\/p>"
+          }
+        },
+        "54a606a5-7162-4932-b783-193007b25fe2": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Sea Moss natural and GMO-free?",
+            "answer": "<p>All True Sea Moss products are 100% natural, free of any preservatives or chemicals.<\/p>"
+          }
+        },
+        "f623b13b-033e-4c81-b5a9-5ed541d2d75a": {
+          "type": "faq",
+          "settings": {
+            "question": "Is Sea Moss vegan?",
+            "answer": "<p>Absolutely! Our True Sea Moss Gel is 100% vegan. We're committed to providing products that are not only healthy and natural but also aligned with various dietary preferences. Our sea moss gel is crafted from wildcrafted sea moss and real fruits, making it a fantastic option for anyone following a vegan lifestyle. If you have any more questions or if you're ready to try it out, feel free to let us know!<\/p>"
+          }
+        },
+        "47a8abed-74d4-4483-8c30-0f39378cac00": {
+          "type": "faq",
+          "settings": {
+            "question": "What is the difference between gels and capsules?",
+            "answer": "<p>The gels and capsules offer the same benefits when consumed in the recommended servings. The only distinction lies in their form, allowing you to choose based on your preferred method of consumption. From our perspective, we recommend using Sea Moss gels daily as a more convenient and tasty way to get not only sea moss nutrients but also farm-fresh fruit. You can easily eat it by the spoonful or add it to your meals. Meanwhile, Sea Moss capsules are more designed for use on the go and while traveling.<\/p>"
+          }
+        },
+        "4d2ecaee-3ec1-44f5-8009-16cceb29b963": {
+          "type": "faq",
+          "disabled": true,
+          "settings": {
+            "question": "From what age can Sea Moss be consumed?",
+            "answer": "<p>The gels and capsules offer the same benefits when consumed in the recommended servings. The only distinction lies in their form, allowing you to choose based on your preferred method of consumption. From our perspective, we recommend using Sea Moss gels daily as a more convenient and tasty way to get not only sea moss nutrients but also farm-fresh fruit. You can easily eat it by the spoonful or add it to your meals. Meanwhile, Sea Moss capsules are more designed for use on the go and while traveling.<\/p>"
+          }
+        },
+        "7b1b1d79-ebad-4ae0-b6a9-614a7d8cd345": {
+          "type": "decor",
+          "settings": {
+            "img_decor": "shopify:\/\/shop_images\/Group_7.svg",
+            "style": "display:none;",
+            "style_mobile": "right: 0;\nbottom: 10px;\ndisplay:block;"
+          }
+        }
+      },
+      "block_order": [
+        "a06ad360-701f-4b91-905b-cbd18f435193",
+        "d884fb95-8e98-452b-b7a0-554f28e14048",
+        "980cc825-4a6d-4a23-9b14-de98fae802d8",
+        "a578e3be-2687-46bc-b38d-e2374d99b084",
+        "54a606a5-7162-4932-b783-193007b25fe2",
+        "f623b13b-033e-4c81-b5a9-5ed541d2d75a",
+        "47a8abed-74d4-4483-8c30-0f39378cac00",
+        "4d2ecaee-3ec1-44f5-8009-16cceb29b963",
+        "7b1b1d79-ebad-4ae0-b6a9-614a7d8cd345"
+      ],
+      "settings": {
+        "bg_color": "",
+        "st": 60,
+        "sb": 60,
+        "stm": 60,
+        "sbm": 0,
+        "title": "FAQ",
+        "img": "shopify:\/\/shop_images\/Component_1_3e9e637e-5efa-42d4-8fd0-62cd3f0b795b.png",
+        "img_mobile": "shopify:\/\/shop_images\/moss.svg",
+        "type_of": "link",
+        "name": "START YOUR HEALTHY JOURNEY",
+        "url": "shopify:\/\/products\/sea-moss-gel-trueseamoss"
+      }
+    },
+    "039fd2b5-dc16-40ed-a790-f8ecca3b3dbe": {
+      "type": "section-custom-html",
+      "disabled": true,
+      "custom_css": [
+        ".custom-html__code h2 {color: #285234; text-align: center; font-family: var(--FONT-STACK-HEADING); font-size: 60px; font-style: normal; font-weight: 700; line-height: normal; text-transform: capitalize; margin: 0px;}",
+        "@media (max-width: 768px) {.custom-html__code h2 {font-size: 34px; }}"
+      ],
+      "settings": {
+        "title": "",
+        "html": "<h2>Reviews<\/h2>",
+        "wrapper": "normal",
+        "bg_color": "#faf9ef"
+      }
+    },
+    "6d1b3285-d135-479b-b509-266639bcebc3": {
+      "type": "section-custom-html",
+      "settings": {
+        "title": "",
+        "html": "<p><\/p>",
+        "wrapper": "normal",
+        "bg_color": ""
+      }
+    }
+  },
+  "order": [
+    "6548fa05-815d-431d-9228-64628dc68e6f",
+    "69c7a6f5-e4cd-41be-8690-8e93e56799ea",
+    "ef9bd88a-f9b6-45dc-97f1-61b6f3e4b1f4",
+    "16953868276a78d859",
+    "ab9fc12d-7602-4217-99ea-84a6340cee66",
+    "bb5e6775-5854-40c2-bbad-63672a7bf2b4",
+    "4b948200-4741-4f34-a7d9-1eb6b672034c",
+    "b7453d22-d2e3-4eae-a0c5-c4d0cedcab69",
+    "4e8a07e1-a55e-48b9-8a0e-41b17bf30b3c",
+    "98e870ea-824b-4d91-a47f-df96c38fba5c",
+    "ac84c194-7f19-4043-9103-ad5e4ab67398",
+    "7586c278-f0d0-4537-a504-85d763c452df",
+    "16589164600ec5446b",
+    "904fdfe9-54f6-43e1-9722-41debed1c92f",
+    "147995ac-0671-4b72-9202-8bf7102cd2fa",
+    "039fd2b5-dc16-40ed-a790-f8ecca3b3dbe",
+    "6d1b3285-d135-479b-b509-266639bcebc3"
+  ]
+}

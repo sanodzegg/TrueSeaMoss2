@@ -1,0 +1,195 @@
+.why-moss {
+  position: relative;
+}
+
+.why-moss-icon {
+  position: absolute;
+}
+
+.why-moss__container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  column-gap: 62px;
+}
+
+.why-moss__item {}
+
+.why-moss__title {
+  color: #285234;
+  font-family: var(--FONT-STACK-HEADING);
+  font-size: 65px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin: 0 auto 81px auto;
+  padding: 0 15px;
+  text-align: center;
+}
+
+.moss-item__img {
+  --aspect-ratio: var(--preview-ratio);
+  --ratio-percent: calc(1 / var(--aspect-ratio) * 100%);
+  position: relative;
+  width: 100%;
+  height: auto;
+  text-align: center;
+  position: relative;
+  padding-top: calc(var(--ratio-percent) / 2);
+  max-width: 610px;
+}
+
+.moss-item__img-decor {
+  position: absolute;
+  top: -34%;
+  left: -24px;
+}
+
+.moss-item__img img.moss-item__img-main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.moss-item__content {}
+
+.item-content {}
+
+.item-content__element {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.item-content__element svg {
+  min-width: 20px;
+  margin-right: 8px;
+  position: relative;
+  z-index: 2;
+}
+
+.item-content__element p {
+  margin: 0;
+  color: #222;
+  font-family: var(--FONT-STACK-BODY);
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  position: relative;
+  z-index: 2;
+  letter-spacing: 0px;
+}
+
+.item-content__blocks {
+  display: flex;
+  flex-direction: column;
+  row-gap: 15px;
+}
+
+.item-content__link {
+  display: block;
+  padding: 20px 30px;
+  cursor: pointer;
+  text-decoration: none;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+  border-radius: 10px;
+  border: 1px solid #285234;
+  background-color: #285234;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  overflow: hidden;
+  font-weight: 700;
+  text-transform: uppercase;
+  max-width: 100%;
+  margin: 40px auto 0 auto;
+  line-height: 14px;
+}
+
+.item-content__link span {
+  position: relative;
+  z-index: 2
+}
+
+.item-content__link:before {
+  border-radius: 10px;
+  content: "";
+  position: absolute;
+  display: flex;
+  left: -1px;
+  top: 0;
+  right: -1px;
+  bottom: 0;
+  background: #fff;
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+  z-index: -1;
+  transition: transform .3s
+}
+
+.item-content__link:hover {
+  color: #000;
+  background-color: #fff;
+  border-color: #000;
+  transition: color .3s, border .3s, background 0s linear .3s;
+  box-shadow: 0 0 10px 0 #00000026
+}
+
+.item-content__link:hover::before {
+  transform-origin: bottom center;
+  transform: none;
+  border: 1px solid #000;
+  color: #000;
+  z-index: 1;
+  transition: transform .3s
+}
+
+@media(max-width: 998px) {
+  .why-moss__container {
+    display: flex;
+    flex-direction: column;
+    column-gap: 0px;
+    row-gap: 30px;
+  }
+  .why-moss__item {
+    max-width: 100%;
+    width: 100%;
+  }
+  .moss-item__img {
+    padding-top: calc(var(--ratio-percent) / 1);
+  }
+  .moss-item__img-decor {
+    display: none;
+  }
+  .why-moss__title {
+    font-size: 34px;
+    margin-bottom: 40px;
+  }
+  .item-content__element p {
+    font-size: 14px;
+  }
+  .item-content__blocks {
+    row-gap: 15px;
+  }
+  .item-content__link {
+    margin-top: 50px;
+  }
+  .item-content__element svg {
+    width: 10px;
+    height: 10px;
+  }
+}
+
+@media(max-width: 376px) {
+  .item-content__element p span {
+    display: block;
+  }
+}

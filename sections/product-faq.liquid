@@ -1,0 +1,302 @@
+{% liquid 
+  assign title = section.settings.title
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign stb = section.settings.sbm | append: 'px'
+
+  assign img = section.settings.img
+  assign btn_type = section.settings.type_of
+  assign btn_name = section.settings.name
+  assign btn_url = section.settings.url
+
+  assign img = section.settings.img
+  assign img_mobile = section.settings.img_mobile
+%}
+<style>
+  .product-faq__{{section.id}}{
+    background: {{ section.settings.bg_color }};
+  }
+  .faq_decor{
+    position: absolute;
+  }
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {%- when "decor" -%}
+  .faq_decor-{{forloop.index}} {
+  {{block.settings.style}}
+  }
+  {%- endcase -%}
+  {% endfor %}
+
+  @media(max-width: 998px) {
+  {% for block in section.blocks %}
+  {% case block.type %}
+  {%- when "decor" -%}
+    .faq_decor-{{forloop.index}} {
+    {{block.settings.style_mobile}}
+    }
+  {%- endcase -%}
+  {% endfor %}
+  }
+</style>
+{%- style -%}
+.product-faq__{{section.id}} {
+  padding-top: {{st}};
+  padding-bottom: {{sb}};
+  position: relative;
+}
+@media(max-width: 998px) {
+  .product-faq__{{section.id}} {
+    padding-top: {{stm}};
+    padding-bottom: {{stb}};
+  }
+
+
+}
+{%- endstyle -%}
+{%- capture plus -%}
+  <svg class="faq-icon faq-plus" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+    <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+    <line y1="10.5088" x2="20" y2="10.5088" stroke="#222222"/>
+  </svg>
+</label>
+{%- endcapture -%}
+{%- capture minus -%}
+  <svg  class="faq-icon faq-minus" xmlns="http://www.w3.org/2000/svg" width="20" height="1" viewBox="0 0 20 1" fill="none">
+    <line y1="-0.5" x2="20" y2="-0.5" transform="matrix(-1 0 0 1 20 1)" stroke="#222222"/>
+  </svg>
+{%- endcapture -%}
+
+{% if img == blank %}
+  {% assign className = "without_image" %}
+{% endif %}
+
+{{"product-faq.css" | asset_url | stylesheet_tag }}
+<div class="{{className}} product-faq product-faq__{{section.id}} ">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {%- when "decor" -%}
+        {% if block.settings.img_decor != blank %}
+          <img class="faq_decor faq_decor-{{forloop.index}}"
+               src="{{block.settings.img_decor | img_url: 'master'}}"
+               alt="{{block.settings.img_decor.alt }}"
+               loading="lazy">
+        {% endif %}
+    {%- endcase -%}
+  {% endfor %}
+  {% if img_mobile != blank %}
+  <img class="product-faq_decor" src="{{img_mobile | img_url: 'master'}}" alt="{{img_mobile.alt}}" loading="lazy">
+  {% endif %}
+  <div class="product-faq__container wrapper">
+    <h2 class="product-faq__title">{{title}}</h2>
+    <div class="product-faq__grid faq-grid">
+      {% if img != blank %}
+      <div class=" faq-grid__img">
+        {%- assign img_url = img | img_url: '1x1' | replace: '_1x1.', '_{width}x.' -%}
+
+          <picture>
+            <source media="(max-width: 767px)" srcset="{{img | img_url: '600x'}}">
+            <img src="{{img | img_url: '800x'}}" alt="{{img.alt}}" loading="lazy">
+          </picture>
+      </div>
+      {% endif %}
+      <div class=" faq-grid__content">
+        {% for block in section.blocks %}
+          {%- assign question = block.settings.question -%}
+          {%- assign answer = block.settings.answer -%}
+          {% if question != blank and answer != blank  %}
+          <div class="faq-grid__details">
+            <details class="faq-grid__item">
+              <summary class="faq-grid__question"> <span>{{question}}</span></summary>
+              <div>
+                <div class="faq-grid__answer">{{answer}}</div>
+              </div>
+            </details>
+            {{plus}}
+            {{minus}}
+          </div> 
+          {% endif %}
+        {% endfor %}
+        <div class="faq-grid__button">
+          {% if btn_type == "scroll" and btn_name != blank  %}
+            <button class="faq-grid__btn faq-grid-item__btn"><span>{{btn_name}}</span></button>
+          {%- elsif btn_name != blank  -%}
+            <a class="faq-grid__btn" href="{{btn_url}}"><span>{{btn_name}}</span></a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const buttons = document.querySelectorAll(".faq-grid-item__btn");
+    if (buttons.length != 0) {
+      buttons.forEach(el => el.addEventListener("click",scrollToPack))
+      const el = document.querySelector("#product__selectors_scroll");
+      function scrollToPack() {
+        if (!el) return;
+        const y = el.getBoundingClientRect().top + window.pageYOffset - 150;
+        window.scrollTo({ top: y, behavior: "smooth" });
+      }
+    }
+  })
+</script>
+
+{% schema %}
+{
+  "name": "Product FAQ",
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer"
+        }
+      ]
+    },
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img_decor",
+          "label": "Image"
+        },
+        {
+          "type": "html",
+          "id": "style",
+          "label": "Style for image"
+        },
+        {
+          "type": "html",
+          "id": "style_mobile",
+          "label": "Style for image mobile"
+        }
+      ]
+    }
+  ],
+
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 90
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 70
+    },
+    {
+      "type": "header",
+      "content": "Text"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "FAQ"
+    },
+    {
+      "type": "image_picker",
+      "id": "img",
+      "label": "Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "img_mobile",
+      "label": "Mobile decor"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "select",
+      "id": "type_of",
+      "label": "Type of button",
+      "default": "scroll",
+      "options": [
+        {
+          "value": "link",
+          "label": "Link"
+        },
+        {
+          "value": "scroll",
+          "label": "Scroll"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "id": "name",
+      "label": "Name button",
+      "default": "START YOUR HEALTHY JOURNEY"
+    },
+    {
+      "type": "url",
+      "id": "url",
+      "label": "Url button"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product FAQ"
+    }
+  ]
+}
+{% endschema %}

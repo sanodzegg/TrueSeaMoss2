@@ -1,0 +1,129 @@
+{%- capture product_list_id -%}
+
+[
+  {% for product in collections['all'].products %}
+    {%- assign free_product = product.metafields.custom.free_product_on_product_page.value -%}
+    {%- assign product_list = product.metafields.custom.product_list_for_tastes.value-%}
+    {% if free_product != blank and product_list != blank  %}
+      {% for item in product_list %}
+      {
+        "main": "{{item.product.id}}",
+        "free": "{{free_product.id}}",
+        "handle":"{{product.title | downcase | prepend: 'Product '}}"
+      }{% unless forloop.last %},{% endunless %}
+      {% endfor %}
+    {%- else -%}
+    {
+      "main": "{{product.id}}",
+      "free": "",
+      "handle":"{{product.title | downcase | prepend: 'Product '}}"
+    }
+    {% endif %}
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{%- endcapture -%}
+
+{%- capture free_json -%}
+[
+  {% for product in collections['all'].products %}
+    {%- assign variant_id = "all" -%}
+    {%- assign free_id = "" -%}
+    {% if product.metafields.custom.free_product_on_product_page.value != blank %}
+      {%- assign free_id = product.metafields.custom.free_product_on_product_page.value.id -%}
+      { 
+        "main":"{{product.id}}",
+        "variant":"{{variant_id}}",
+        "free":"{{free_id}}",
+        "handle":"{{product.title | downcase  | prepend: 'Product '}}"
+      },
+    {% endif %}
+    { 
+      "main":"{{product.id}}",
+      "variant":"{{variant_id}}",
+      "free":"",
+      "handle":"{{product.title | downcase | prepend: 'Product '}}"
+    }
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{%- endcapture -%}
+<script type="application/json" id="gift__products" >
+{{ free_json | strip_newlines  }}
+</script>
+{%- capture free_variant_json -%}
+[
+  {% for product in collections['all'].products %}
+    {% for variant in product.variants %}
+      {% if variant.metafields.custom.enable_free_product == true %}
+        {%- assign variant_id = variant.id -%}
+        {% break %}
+        {%- else -%}
+        {%- assign variant_id = "all" -%}
+      {% endif %}        
+    {% endfor %}
+
+    {%- assign free_id = "" -%}
+    {% if product.metafields.custom.free_product_variant_.value != blank %}
+      {%- assign free_id = product.metafields.custom.free_product_variant_.value.id -%}
+      { 
+        "main":"{{product.id}}",
+        "variant":"{{variant_id}}",
+        "free":"{{free_id}}",
+        "handle":"{{product.title | downcase | prepend: 'Main '}}"
+      },
+    {% endif %}
+    { 
+      "main":"{{product.id}}",
+      "variant":"{{variant_id}}",
+      "free":"",
+      "handle":"{{product.title | downcase | prepend: 'Main '}}"
+    }
+    {% unless forloop.last %},{% endunless %}
+  {% endfor %}
+]
+{%- endcapture -%}
+<script type="application/json" id="gift__products_variant" >
+  {{ free_variant_json | strip_newlines }}
+</script>
+<script type="application/json" id="product-list_variant" >
+  {{ product_list_id | strip_newlines }}
+</script>
+
+
+{% for product in settings.product_list_gel %}
+  {% for variant in product.variants %}
+    {%- assign id_variant = id_variant | append: variant.id   -%}
+  {% endfor %}
+{% endfor %}
+
+{%- comment -%}
+{%- assign cart_quantity_sub = 0 -%}
+{%- assign cart_quantity = 0 -%}
+{%- assign line_quantity = 0 -%}
+{% for line_item in cart.items %}
+  {% if id_variant contains line_item.id %}
+    {% if line_item.selling_plan_allocation != blank %}
+     {%- assign cart_quantity_sub = cart_quantity_sub | plus: line_item.quantity  -%}
+    {%- else -%}
+      {%- assign cart_quantity = cart_quantity | plus: line_item.quantity  -%}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+
+{% for line_item in cart.items %}
+  {% if id_variant contains line_item.id %}
+    {% if cart_quantity <= 4 %}
+      {% for option in line_item.options_with_values %}
+        {%- assign optin_value = option.value | replace: ' ', ',' | split: ','-%}
+        {%- assign optin_number = optin_value | first | times: 1 -%}
+        {%- assign line_quantity = line_quantity | plus: optin_number -%}
+      {% endfor %}   
+    {%- else -%}
+      {%- assign line_quantity = line_quantity | plus: line_item.quantity  -%}
+    {% endif %}
+  {% endif %}
+{% endfor %}
+{{cart_quantity}}/{{cart_quantity_sub}}
+{%- endcomment -%}
+

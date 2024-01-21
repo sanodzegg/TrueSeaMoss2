@@ -1,0 +1,78 @@
+
+{%- liquid 
+    for selling_plan_group in product.selling_plan_groups
+        for selling_plan in selling_plan_group.selling_plans limit: 1
+            assign value_discount = selling_plan.price_adjustments[0].value | divided_by: 100.00
+        endfor
+    endfor
+
+    assign origin_price = variant.price
+    assign compare_price = variant.compare_at_price
+    assign profit = compare_price | minus: origin_price | divided_by: 100 | round: 0
+
+    assign price_discount = variant.price | times: value_discount
+    assign value_discount = origin_price | minus: price_discount | round: 0
+    assign profit_discount = compare_price | minus: value_discount | divided_by: 100.0 | round: 0
+
+
+    if compare_price > origin_price
+    assign is_compare = true
+    else
+    assign is_compare = false
+    endif
+    assign free_flag = variant.metafields.custom.enable_free_product.value
+    assign free_product = variant.product.metafields.custom.free_product_variant_.value
+    assign free_product_avalible = variant.product.metafields.custom.free_product_variant_.value.available
+
+    assign handle_title = variant.product.title
+
+    assign block = block.settings
+
+    assign name_variant = variant.title | downcase | strip_html
+    assign name_first = block.name_q_1 | downcase | strip_html
+    assign name_second = block.name_q_2 | downcase | strip_html
+    assign name_third = block.name_q_3 | downcase | strip_html
+
+    if name_variant contains name_first
+        assign img_setting = block.image_q_1
+        assign text_image = block.text_image_1
+    endif
+    if name_variant contains name_second
+        assign img_setting = block.image_q_2
+        assign text_image = block.text_image_2
+    endif
+    if name_variant contains name_third
+        assign img_setting = block.image_q_3
+        assign text_image = block.text_image_3
+    endif
+
+-%}
+
+{%- case type -%}
+    {%- when "badge" -%}
+
+    {% if is_compare and profit > 4 %}
+        <div data-price="{{profit}}" data-discount="{{profit_discount}}" class="label-badge {% if free_product %}label-badge-left {% endif %}">Save {{cart.currency.symbol}}<span>{{profit_discount}}</span></div>
+    {% endif %}
+    
+    {%- when "free_product" -%}
+    {% if img_setting != blank and text_image != blank %}
+        <div class="radio__label-plus"> + </div>
+        <div class="radio__label-sub">
+            <input 
+                data-handle="{{handle_title}}"
+                type="hidden" 
+                value="{{free_product.selected_or_first_available_variant.id}}" 
+                data-quntity="0
+            ">
+            <div class="label-badge {% if free_product %}label-badge-right {% endif %}">{{ 'general.custom.free' | t  | upcase }}</div>
+            {{
+                img_setting | image_url: width: master | image_tag: widths: '500 700 800 900 1000 1100 1200 1300 1400 1500 1600 1800 2200',
+                alt: img_setting.alt,
+                loading: 'lazy'
+            }}
+            <span class="label-badge-text" >{{- text_image -}}</span> 
+        </div>
+    {% endif %}
+        
+{%- endcase -%}

@@ -1,0 +1,106 @@
+{% schema %}
+ 
+  {
+    "name": "Author Information",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "author_image",
+        "label": "Author's Image"
+      },
+      {
+        "type": "range",
+        "id": "image_size",
+        "label": "Image Size",
+        "min": 50,
+        "max": 150,
+        "step": 5,
+        "default": 75
+      },
+      {
+        "type": "font_picker",
+        "id": "text_font",
+        "label": "Text Font",
+        "default": "helvetica_n4"
+      }
+    ]
+  }
+
+{% endschema %}
+
+{% stylesheet %}
+   .container {
+      font-size: 18px;
+      font-family: {{ settings.text_font.family }};
+      overflow: hidden;
+    }
+    
+    .fact-check {
+      text-align: right;
+      margin-bottom: 10px;
+      float: right;
+    }
+
+    .fact-check-border {
+      border: 2px solid #000;
+      border-radius: 15px;
+      padding: 10px 15px;
+      background-color: #fff;
+      display: inline-block;
+      font-weight: bold;
+    }
+    
+    .image-container {
+      clear: both;
+      margin-top: 20px;
+    }
+
+    .image {
+      width: {{ settings.image_size }}px;
+      height: {{ settings.image_size }}px;
+      border-radius: 50%;
+      overflow: hidden;
+      float: left;
+      margin-right: 20px;
+      border: 1px solid #000;
+    }
+
+    .image img {
+      width: 100%;  
+      height: 100%; 
+    }
+    
+    .written-by-container {
+      clear: left;
+      float: left;
+    }
+    
+    .review-info {
+      float: left;
+    }
+
+    .date-info {
+      float: left;
+      margin-bottom: 10px;
+    }
+{% endstylesheet %}
+
+   <div class="container">
+    <div class="date-info">Updated 09 September 2023 | Published 07 March 2019</div>
+    <span class="fact-check">
+      <span class="fact-check-border">FACT CHECKED</span>
+    </span>
+    <div class="image-container">
+      <div class="image">
+        <img src="{{ settings.author_image | img_url: 'col' }}" alt="Author's Photo">
+      </div>
+      <div class="review-info">
+        <p class="reviewed-by">Medically reviewed by Dr. Ruth Arumala, Obstetrician and gynecologist, gynecologic and cosmetic surgeon, Texas, US</p>
+      </div>
+    </div>
+    <div class="written-by-container">
+      <p class="written-by">Written by Olivia Cassano</p>
+    </div>
+  </div>
+{% javascript %}
+{% endjavascript %}

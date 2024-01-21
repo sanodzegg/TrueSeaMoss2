@@ -1,0 +1,263 @@
+{{ "custom-text-with-image.css" | asset_url | stylesheet_tag }}
+{% liquid 
+  assign st = section.settings.st | append: 'px'
+  assign sb = section.settings.sb | append: 'px'
+  assign stm = section.settings.stm | append: 'px'
+  assign sbm = section.settings.sbm | append: 'px'
+  assign heading = section.settings.heading
+  assign text_btn = section.settings.text_btn
+  assign link_btn = section.settings.link_btn
+%}
+
+{%- style -%}
+.custom-twi__{{section.id}} {
+  margin-top: {{st}};
+  margin-bottom: {{sb}};
+}
+{% for block in section.blocks %}
+  {% case block.type %}
+    {%- when "decor" -%}
+    .custom-twi__{{section.id}} .txt_decor-{{forloop.index}} {
+      {{block.settings.style}}
+    }
+  {%- endcase -%}    
+{% endfor %}
+@media(max-width: 768px) {
+  .custom-twi__{{section.id}} {
+    margin-top: {{stm}};
+    margin-bottom: {{sbm}};
+  }
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {%- when "decor" -%}
+      .custom-twi__{{section.id}} .txt_decor-{{forloop.index}} {
+        {{block.settings.style_mobile}}
+      }
+    {%- endcase -%}    
+  {% endfor %}
+}
+
+{%- endstyle -%}
+
+<div class="custom-twi custom-twi__{{section.id}}">
+  {% for block in section.blocks %}
+    {% case block.type %}
+      {%- when "decor" -%}
+        {% if block.settings.img_decor != blank %}
+          <img class="txt_decor txt_decor-{{forloop.index}}" 
+          src="{{block.settings.img_decor | img_url: 'master'}}" 
+          alt="{{block.settings.img_decor.alt }}" 
+          loading="lazy">
+        {% endif %} 
+    {%- endcase -%}
+  {% endfor %}
+  <div class="custom-twi__wrap wrapper">
+    {% if heading %}
+      <h2 class="custom-twi__title">{{heading}}</h2>
+    {% endif %}
+    <div class="custom-twi__content">
+      {% for block in section.blocks %}
+        {% case block.type %}
+          {% when "image" %}
+          {%- liquid
+            assign img = block.settings.image
+            assign ratio = block.settings.image_aspect_ratio
+          -%}
+          <div class="custom-twi__item custom-twi__item-img" style="--ratio: {{ ratio }}%">
+            {% if img %}
+              <picture>
+                <source media="(max-width: 767px)" srcset="{{img | img_url: '320x'}}">
+                <img src="{{img | img_url: '720x'}}" alt="" loading='lazy'>
+              </picture>
+            {% endif %}  
+            
+          </div>
+          {% when "text" %}
+          {%- liquid
+            assign text = block.settings.text
+            assign color_badge = block.settings.badge
+            assign text_badge = block.settings.text_badge
+            if block.settings.left_text
+            assign left_text = "text-left"
+            endif
+
+            assign max_width = block.settings.max_width | append: 'px'
+          -%}
+          <div class="custom-twi__item custom-twi__item-text" style="--color_badge: {{color_badge}}; --max_width: {{max_width}}; --color_text: {{text_badge}};">
+            <div class="custom-twi__item-richtext custom-twi__item-richtext-{{left_text}}">{{text}}</div>
+            {% if text_btn != empty %}
+             <a href="{{link_btn}}" class="custom-twi__item-link custom-twi__item-link-desk" title="{{text_btn}}"> <span>{{text_btn}}</span></a>
+            {% endif %}
+          </div>
+        {% endcase %}
+      {% endfor %}
+    </div>
+    {% if text_btn != empty %}
+      <a href="{{link_btn}}" class="custom-twi__item-link custom-twi__item-link-mobile" title="{{text_btn}}"> <span>{{text_btn}}</span></a>
+    {% endif %}
+  </div>
+</div>
+
+
+{% schema %}
+{
+  "name": "Custom text with image",
+  "presets": [
+    {
+      "name": "Custom text with image"
+    }
+  ],
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "decor",
+      "name": "Decor",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img_decor",
+          "label": "Image"
+        },
+          {
+            "type": "html",
+            "id": "style",
+            "label": "Style for image"
+          },
+          {
+            "type": "html",
+            "id": "style_mobile",
+            "label": "Style for image mobile"
+          }
+        ]
+      },
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Image"
+        },
+        {
+          "type": "range",
+          "id": "image_aspect_ratio",
+          "label": "Image height",
+          "min": 45,
+          "max": 100,
+          "step": 1,
+          "unit": "%",
+          "default": 45
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "info": "Select text in the <b></b> tag to create a badge"
+        },
+        {
+          "type": "color",
+          "id": "badge",
+          "label": "Background color for babge",
+          "default": "#FF914F"
+        },
+        {
+          "type": "color",
+          "id": "text_badge",
+          "label": "Text color for babge",
+          "default": "#FFF"
+        },
+        {
+          "type": "range",
+          "id": "max_width",
+          "label": "Max width for text",
+          "unit": "px",
+          "min": 445,
+          "max": 530,
+          "step": 5,
+          "default": 445
+        },
+        {
+          "type": "checkbox",
+          "id": "left_text",
+          "label": "Enable position for text on the left(only mobile)",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "header",
+      "content": "Space desktop"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 0
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading"
+    },
+    {
+      "type": "text",
+      "id": "text_btn",
+      "label": "Text for the button"
+    },
+    {
+      "type": "url",
+      "id": "link_btn",
+      "label": "Link for the button"
+    }
+  ]
+}
+{% endschema %}

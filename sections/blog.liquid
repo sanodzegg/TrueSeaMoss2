@@ -1,0 +1,440 @@
+<!-- Custom code -->
+
+{%- comment -%} /sections/blog-template.liquid {%- endcomment -%}
+{%- liquid
+  assign enable_infinity_scroll = settings.enable_infinity_scroll
+  assign columns = section.settings.post_columns | plus: 0
+  if columns == 1
+    assign paginator = 5
+  elsif columns == 2
+    assign article_width = 'blog-post--two-col'
+    assign paginator = 10
+  elsif columns == 3
+    assign article_width = 'blog-post--three-col'
+    assign paginator = 9
+  else
+    assign article_width = 'blog-post--four-col'
+    assign paginator = 15
+  endif
+  assign paginator = section.settings.show_article
+-%}
+
+{%- style -%}
+.article__preview-image { padding-top: {{ section.settings.image_aspect_ratio | times: 100 | append: '%' }}; }
+{%- endstyle -%}
+
+<section class="blog-posts" data-section-type="blog-posts" data-section-id="{{ section.id }}">
+  <div class="wrapper wrapper--narrow">
+    <h1 class="section-title text-center">
+    {% if section.settings.title_blog != blank %}
+         {{section.settings.title_blog}}
+    {% elsif current_tags %}
+         <h1 class="section-title text-center">{{ current_tags | first }}</h1> {%- comment -%}Берет первый тег из массива тегов.{%- endcomment -%}
+    {% else %}
+          <h1 class="section-title text-center">{{- blog.title | link_to: blog.url -}}</h1>
+    {% endif %}  
+     
+ {%- comment -%} 
+      {% if section.settings.title_blog %}
+        {{section.settings.title_blog}}
+      {%- else -%}
+      <!-- Custom code -->
+        {{- blog.title | link_to: blog.url -}}
+      {% endif %}
+  {%- endcomment -%}
+      {%- if section.settings.show_rss_icon -%}
+      <a href="{{ shop.url }}{{ blog.url }}.atom" class="rss" target="_blank">
+        {%- render 'icon-rss' -%}
+      </a>
+      {%- endif -%}
+    </h1>
+
+    {%- if blog.all_tags.size > 0 -%}
+      <div class="blog-tag-wrapper">
+        {%- comment -%}
+          Blog tags
+        {%- endcomment -%}
+        <ul class="blog-tags-list">
+
+          {%- for tag in blog.all_tags limit: 15 -%}
+            {% if forloop.index == 1 %}
+            <li class="blog-tag">
+              {% if request.path == blog.url  %}
+              <span class="blog-tag__current">All</span>
+              {% else %}
+              <a href="{{blog.url}}">All</a>
+              {% endif %}
+            </li> 
+            {% endif %}
+              {%- unless tag contains 'time_'-%}
+                <li class="blog-tag">
+                  {%- if current_tags contains tag -%}
+                    <span class="blog-tag__current">{{- tag -}}</span>
+                  {%- else -%}
+                    {{ tag | link_to_tag: tag }}
+                  {%- endif -%}
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
+        </ul>
+      </div>
+      <!-- Custom code -->
+      <div class="blog-tag-sticky" data-show="false">
+        <ul class="blog-tags-list">
+          {%- for tag in blog.all_tags limit: 15 -%}
+            {% if forloop.index == 1 %}
+            <li class="blog-tag">
+              {% if request.path == blog.url  %}
+              <span class="blog-tag__current">All</span>
+              {% else %}
+              <a href="{{blog.url}}">All</a>
+              {% endif %}
+            </li> 
+            {% endif %}
+              {%- unless tag contains 'time_'-%}
+                <li class="blog-tag">
+                  {%- if current_tags contains tag -%}
+                    <span class="blog-tag__current">{{- tag -}}</span>
+                  {%- else -%}
+                    {{ tag | link_to_tag: tag }}
+                  {%- endif -%}
+                </li>
+              {%- endunless -%}
+            {%- endfor -%}
+        </ul>
+        <button class="tag-sticky_button">
+          <span>{{section.settings.tag_button}}</span>
+          <svg width="25" height="13" viewBox="0 0 25 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M19 4.5L12.5 10.5L6 4.5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>  
+        </button>
+      </div>
+      <!-- Custom code -->
+    {%- endif -%}
+  </div>
+    <!-- Custom code -->
+    <div class="blog-wrapper wrapper{% if columns == 1 %} wrapper--narrow{% endif %}">
+    
+      <div class="blog-side blog-side_left">
+        {%- assign featured_article = section.settings.featured_article -%}
+        {% if featured_article != blank %}
+          <a href="{{featured_article.url}}" class="blog-side_featured featured-article">
+            <div class="featured-article_img">
+              <img 
+                src="{{featured_article.image | img_url: 'master' }}" 
+                alt="{{featured_article.image.alt}}" 
+                loading="lazy"
+              >
+            </div>
+            <div class="featured-article_text">
+              <div class="featured-article_badge">
+                <span>{{ 'blogs.article.featured_article' | t }}</span>
+              </div>
+               {%- comment -%}   <h2 class="featured-article_title">{{featured_article.title}}</h2>      {%- endcomment -%}
+               <p class="featured-article_title">{{featured_article.title}}</p>
+              <p class="featured-article_content">{{featured_article.content | strip_html | truncatewords:  40, '...'}}</p>
+              <p class="featured-article_fake-link">
+                <span>{{ 'blogs.article.read_more' | t }}</span>
+                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.58671 8C8.73121 7.63533 8.87091 7.31624 9.00578 7.04274C9.15029 6.76923 9.28998 6.54131 9.42486 6.35897H1V5.64103H9.42486C9.28998 5.44729 9.15029 5.21368 9.00578 4.94017C8.87091 4.66667 8.73121 4.35328 8.58671 4H9.09249C9.69942 4.83191 10.3353 5.44729 11 5.84615V6.15385C10.3353 6.54131 9.69942 7.1567 9.09249 8H8.58671Z" fill="#FF914F"/>
+                </svg>                  
+              </p>
+            </div>
+          </a>
+        {% endif %}
+        {% if section.settings.title_article%}
+        
+        <h2 class="blog-post_heading">{{section.settings.title_article}}</h2>
+        {% endif %}
+        {%- paginate blog.articles by paginator -%}
+        <div class="blog-post {{ article_width }}"{% if enable_infinity_scroll %} id="AjaxinateLoop"{% endif %}>
+          {%- comment -%}
+            Loop through each article.
+          {%- endcomment -%}
+  
+          {%- for article in blog.articles -%}
+              <div class="blog-post__item">
+     
+                {% if section.settings.default_img != blank and article.image == blank  %}
+                  <a href="{{ article.url }}" class="blog-post__item__image-link">
+                    <div class="post-item_badge">
+                      {% assign reading_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 250 | ceil | plus: 20 %}
+                      {%- assign name_blog = blog.title -%}
+                      <span>{{name_blog}} {{ 'blogs.article.time_read' | t: time: reading_time }} </span>
+                    </div>
+                    <div
+                      class="article__preview-image lazyload"
+                      data-bgset="{% render 'bgset', image: section.settings.default_img | strip_newlines %}"
+                      data-sizes="auto"
+                      data-parent-fit="cover">
+                    </div>
+                    <noscript>
+                      <div class="article__preview-image" style="background-image:url('{{ section.settings.default_img | img_url: '2048x' }};')"></div>
+                    </noscript>
+                  </a>
+                {% endif %}
+                {%- if article.image -%}
+                  <a href="{{ article.url }}" class="blog-post__item__image-link">
+                    <div class="post-item_badge ">
+                      {% assign reading_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 250 | ceil | plus: 20 %}
+                      {%- assign name_blog = blog.title -%}
+                      <span>{{name_blog}} {{ 'blogs.article.time_read' | t: time: reading_time }} </span>
+                    </div>
+                    <div
+                      class="article__preview-image lazyload"
+                      data-bgset="{% render 'bgset', image: article.image %}"
+                      data-sizes="auto"
+                      data-parent-fit="cover">
+                    </div>
+                    <noscript>
+                      <div class="article__preview-image" style="background-image:url('{{ article.image | img_url: '2048x' }};')"></div>
+                    </noscript>
+                  </a>
+                {%- endif -%}
+    
+                <h3><a href="{{ article.url }}">{{ article.title }}</a></h3>
+    
+                {%- if section.settings.show_author or section.settings.show_date -%}
+                  <p class="article__meta">
+                    {%- capture author -%}{{ article.author }}{%- endcapture -%}
+                    {%- capture date -%}<time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: format: 'month_day_year' }}</time>{%- endcapture -%}
+    
+                    {%- if section.settings.show_author -%}
+                      <small class="light-gray">{{ 'blogs.article.by_author' | t: author: author }}</small>
+                    {%- endif -%}
+                    {%- if section.settings.show_date -%}
+                      <small class="light-gray">{{ date }}</small>
+                    {%- endif -%}
+                  </p>
+                {%- endif -%}
+                <a href="{{ article.url }}">
+                  <div class="rte">
+                    {%- if article.excerpt.size > 0 -%}
+                      {{- article.excerpt -}}
+                    {%- else -%}
+                      <p class="excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 35 }}</p>
+                    {%- endif -%}
+                    <p class="article_fake-link">
+                      <span>{{ 'blogs.article.read_more' | t }}</span>
+                      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8.58671 8C8.73121 7.63533 8.87091 7.31624 9.00578 7.04274C9.15029 6.76923 9.28998 6.54131 9.42486 6.35897H1V5.64103H9.42486C9.28998 5.44729 9.15029 5.21368 9.00578 4.94017C8.87091 4.66667 8.73121 4.35328 8.58671 4H9.09249C9.69942 4.83191 10.3353 5.44729 11 5.84615V6.15385C10.3353 6.54131 9.69942 7.1567 9.09249 8H8.58671Z" fill="#FF914F"/>
+                      </svg>                  
+                    </p>
+                  </div>
+                </a>
+                {%- if blog.comments_enabled? and article.comments_count > 0 or article.tags.size > 0 -%}
+                  <ul class="inline-list">
+                    {%- if blog.comments_enabled? and article.comments_count > 0 -%}
+                      <li>
+                        <a href="{{ article.url }}#Comments" class="blog-comments-link">
+                          <small class="light-gray">
+                          <i class="custom-icon-comment"></i>
+                          {{ 'blogs.comments.comments_with_count' | t: count: article.comments_count }}
+                          </small>
+                        </a>
+                      </li>
+                    {%- endif -%}
+    
+                    {%- if article.tags.size > 0 and section.settings.show_tags -%}
+                      {%- render 'tags-article', article: article, blog: blog -%}
+                    {%- endif -%}
+                  </ul>
+                {%- endif -%}
+              </div>
+          {%- endfor -%}
+        </div>
+        <div class="blog-post__pagination" style="display: none;">
+          {%- if enable_infinity_scroll -%}
+            <div class="pagination pagination--infinite" id="AjaxinatePagination">
+              {%- if paginate.next -%}
+                <div class="pagination__loading">
+                  <a href="{{ paginate.next.url }}"></a>
+                </div>
+              {%- endif -%}
+            </div>
+  
+            {%- if paginate.pages > 1 -%}
+              <noscript>
+                {%- render 'pagination', paginate: paginate -%}
+              </noscript>
+            {%- endif -%}
+          {%- else -%}
+            {%- if paginate.pages > 1 -%}
+              {%- if settings.show_spacer_lines -%}
+                <hr>
+              {%- endif -%}
+              {%- render 'pagination', paginate: paginate -%}
+            {%- endif -%}
+          {%- endif -%}
+        </div>
+        {%- capture setting_load -%}
+          {{paginate | json }}
+        {%- endcapture -%}
+        <div class="spinner"></div>
+        <button class="blog-post-load" data-settings='{{setting_load}}'>
+          {{ 'blogs.article.load_more' | t}}
+        </button>
+        {%- endpaginate -%}
+      </div>
+                          
+      {% if section.blocks.size != 0 %}
+        <div class="blog-side blog-side_right ">
+          <div class="blog-table">
+            <h2 class="blog-table_title">{{section.settings.title_our}}</h2>
+                <div class="blog-table_wrapper">
+                  {% for block in section.blocks %}
+                    <a href="{{block.settings.article.url}}" class="blog-table_item">
+                      <div class="blog-table_img" style="object-fit: contain !important;">
+                          {% if block.settings.block_image != blank %}
+                            <img 
+                                src="{{ block.settings.block_image | img_url: 'master' }}" 
+                                alt="{{ block.settings.article.title }}"
+                                loading="lazy"
+                            >
+                                {% elsif block.settings.article.image != blank %}
+                            <img 
+                                src="{{ block.settings.article.image | img_url: 'master' }}" 
+                                alt="{{ block.settings.article.title }}"
+                                loading="lazy"
+                            >
+                          {% else %}
+                            <img 
+                                src="{{ section.settings.default_img | img_url: 'master' }}" 
+                                alt="standart image"
+                                loading="lazy"
+                            >
+                            {% endif %}
+                        </div>
+                      <div class="blog-table_text">
+                        <span class="blog-table_position">#{{forloop.index}}</span>
+                        <p class="blog-table_content">{{block.settings.article.content | strip_html | truncatewords: 10, '.'}}</p>
+                      </div>
+                    </a>
+                  {% endfor %}
+                </div>
+          </div>
+        </div> 
+      {% endif %}
+    </div>
+    <!-- Custom code -->
+</section>
+
+{%- if blog.all_tags.size > 0 -%}
+<script src="{{'sticky-btn-blog.js' | asset_url }}"></script>
+{% endif %}
+
+<script src="{{'load-more-blog.js' | asset_url }}" defer="defer"></script>
+<!-- Custom code -->
+{% schema %}
+  {
+    "name": "Blog",
+   "blocks": [
+    {
+      "type": "top_article",
+      "name": "Article",
+      "settings": [
+        {
+          "type": "article",
+          "id": "article",
+          "label": "Статья"
+        },
+        {
+          "type": "image_picker",
+          "id": "block_image",
+          "label": "Select image"
+        }
+      ]
+    }
+  ],
+    
+    "settings": [
+      {
+        "type": "text",
+        "id": "title_blog",
+        "label": "Title blog page",
+        "default": "Blogs & Articles"
+      },
+      {
+        "type": "text",
+        "id": "title_our",
+        "label": "Title Our Top Picks",
+        "default": "Our Top Picks"
+      },
+      {
+        "type": "text",
+        "id": "tag_button",
+        "label": "Name button for sticky tag",
+        "default": "View categories"
+      },
+      {
+        "type": "article",
+        "id": "featured_article",
+        "label": "Featured article"
+      },
+      {
+        "type": "image_picker",
+        "id": "default_img",
+        "label": "Default img for article"
+      },
+      {
+        "type": "range",
+        "id": "show_article",
+        "label": "How many articles to show on a page",
+        "unit": "art",
+        "min": 2,
+        "max": 6,
+        "step": 2,
+        "default": 6
+      },
+      {
+        "type": "text",
+        "id": "title_article",
+        "label": "Title for an article from the list",
+        "default": "The Latest"
+      },
+      {
+        "type": "range",
+        "id": "post_columns",
+        "label": "Posts per row",
+        "info": "Desktop only",
+        "min": 1,
+        "max": 4,
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "image_aspect_ratio",
+        "label": "Image aspect ratio",
+        "min": 0.5,
+        "max": 1.5,
+        "step": 0.1,
+        "unit": ":1",
+        "default": 0.6
+      },
+      {
+        "type": "checkbox",
+        "id": "show_rss_icon",
+        "label": "Show RSS icon",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_date",
+        "label": "Show date",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_author",
+        "label": "Show author",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_tags",
+        "label": "Show tags",
+        "default": true
+      }
+    ]
+  }
+{% endschema %}

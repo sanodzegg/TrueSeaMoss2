@@ -1,0 +1,22 @@
+<button>{{section.settings.title}}</button>
+<script src="{{'sticky-btn-product.js' | asset_url }}"></script>
+
+{% schema %}
+    {
+        "name":"Sticky button",
+        "class": "sticky-section hide",
+        "settings": [
+            {
+            "type": "text",
+            "id": "title",
+            "label": "Title",
+            "default": "Scroll"
+            }
+        ],
+        "presets": [
+            {
+                "name":"Sticky button"
+            }
+        ]
+    }
+{% endschema %}

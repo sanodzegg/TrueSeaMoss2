@@ -1,0 +1,591 @@
+<style>
+  .ingredients {
+      position: relative;
+      padding: 0 8px;
+    padding-top: {{section.settings.padding_top}}px;
+    padding-bottom: {{section.settings.padding_bottom}}px;
+  }
+
+  .ingredients_wrapper {
+      max-width: 1096px;
+      margin: 0 auto;
+    background: #F8F8F8;
+    padding: 50px;
+    border-radius: 10px;
+    border: 1px solid #9B9A9A;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    position: relative;
+  }
+
+  .ingredients_title {
+      color: #285234;
+      font-family: var(--FONT-STACK-HEADING);
+      font-size: 60px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      text-transform: capitalize;
+      text-align: center;
+      margin-bottom: 79px;
+
+  }
+
+  .ingredients_sub-title {
+      color: #222;
+      font-family: var(--FONT-STACK-HEADING);
+      font-size: 35px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: normal;
+      margin-bottom: 51px;
+      text-align: center;
+  }
+  .ingredients-list{
+    margin-bottom: 50px;
+
+  }
+  .ingredients-list-wrapper{
+    display: flex; 
+  }
+  @media(min-width: 769px) {
+    .ingredients-list-wrapper{
+      /* justify-content: center; */
+    }
+  }
+  .ingredient{
+    max-width: 92px;
+    border-radius: 5px;
+    border: 1px solid #E1E1E1;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+      cursor: pointer;
+    background: #fff;
+    height: auto;
+
+  }
+  .ingredient-icon{
+    width: 27px;
+    height: 32px;
+      margin: 0 auto;
+
+  }
+  .ingredient-icon img,
+  .ingredient-icon svg{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .ingredient-short_title{
+    color: #222222;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-top: 10px;
+      text-align: center;
+  }
+  .ingredient_card{
+    max-width: 423px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
+    padding: 57px 30px 58px 30px;
+      min-height: 313px;
+  }
+  .ingredient_card-title{
+    color: #222222;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 30px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    margin-bottom: 40px;
+  }
+  .ingredient_card-content{
+    max-width: 342px;
+  }
+  .ingredient.active{
+    background: #E9F3F9;
+  }
+  .all_ingredients{
+    max-width: 690px;
+    margin: 0 auto;
+    padding: 16px 0;
+    margin-top: 50px;
+    border-top: 1px solid #222222;
+    border-bottom: 1px solid #222222;
+  }
+  .all_ingredients-title{
+    cursor: pointer;
+    color: #222222;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .all_ingredients-list{
+      max-width: 538px;
+    color: #222222;
+    font-family: var(--FONT-STACK-BODY);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 125% */
+    max-height: 0;
+    overflow: hidden;
+    transition-duration: 200ms;
+  }
+  .all_ingredients .iconsDrop{
+    display: block;
+  }
+  .all_ingredients-title.active .plus,
+  .all_ingredients-title .minus{
+    display: none;
+  }
+  .all_ingredients-title .plus,
+  .all_ingredients-title.active .minus{
+    display: block;
+  }
+  .iconsDrop svg {
+    height: 20px;
+    width: 20px;
+  }
+  .ingredients .swiper-button-next::after,
+  .ingredients .swiper-button-prev::after{
+    content: none;
+  }
+  .ingredients .swiper-button-next,
+  .ingredients .swiper-button-prev{
+    position: initial;
+    width: 20px;
+    height: 20px;
+    margin-top: 0;
+  }
+  .ingredients .swiper-button-prev{
+    transform: rotate(180deg);
+  }
+  .ingredients .swiper_navigation{
+    justify-content: end;
+    gap: 10px;
+    margin-bottom: 15px;
+  }
+  .ingredients .swiper-pagination{
+    position: initial;
+    padding-top: 15px;
+    padding-bottom: 30px;
+  }
+  .ingredients .span.swiper-pagination-bullet.swiper-pagination-bullet{
+    width: 6px;
+    height: 6px;
+    background: #E1E1E1;
+  }
+  .ingredients span.swiper-pagination-bullet.swiper-pagination-bullet-active{
+    background: #285234;
+  }
+  .ingredients .swiper{
+    overflow-x: clip;
+    overflow-y: visible;
+  }
+  .swiper_navigation{
+      display: none;
+  }
+  .ingredients .swiper-pagination{
+      display: none;
+  }
+  .bg_1, .bg_2{
+      position: absolute;
+  }
+  .bg_1{
+      left: 0;
+      top: 230px;
+    width: 272px;
+    opacity: 0.3;
+  }
+  .bg_2{
+      bottom: 111px;
+      right: 0;
+  }
+  @media screen and (max-width: 768px) {
+      .bg_1, .bg_2{
+          display: none;
+      }
+      .ingredients .swiper-pagination{
+          display: block;
+      }
+      .swiper_navigation{
+          display: flex;
+      }
+    .ingredients {
+      background: #f8f8f8;
+      padding-top: {{section.settings.padding_top_mb}}px;
+      padding-bottom: {{section.settings.padding_bottom_mb}}px;
+    }
+
+    .ingredients_wrapper {
+      border: none;
+      padding: 0;
+      box-shadow: none;
+    }
+
+    .ingredients_title {
+      font-size: 34px;
+      margin-bottom: 31px;
+    }
+
+    .ingredients_sub-title {
+      font-size: 20px;
+      margin-bottom: 37px;
+    }
+
+    .ingredients-list {
+      margin-bottom: 0;
+    }
+    .ingredient_card{
+      padding: 20px 40px 20px 13px;
+      max-width: 100%;
+        min-height: 205px;
+        position: relative;
+        z-index: 2;
+    }
+    .ingredients .swiper_navigation,
+    .ingredients .swiper{
+      margin-left: 7px;
+      margin-right: 7px;
+    }
+    .ingredient_card-content{
+      max-width: 100%;
+    }
+    .ingredient_card-title{
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .ingredient_card-content{
+      font-size: 14px;
+    }
+    .all_ingredients{
+      display: none;
+    }
+  }
+</style>
+
+<div class="ingredients">
+  <img class="bg_1" src="{{ section.settings.bg_1 | img_url }}" alt="{{ section.settings.bg_1.alt }}" loading='lazy'>
+  <img class="bg_2" src="{{ section.settings.bg_2 | img_url }}" alt="{{ section.settings.bg_2.alt }}" loading='lazy'>
+  <div class="ingredients_wrapper">
+      {% if section.settings.title != blank %}
+          <div class="ingredients_title">
+              {{ section.settings.title }}
+          </div>
+      {% endif %}
+      {% if section.settings.sub_title != blank %}
+          <div class="ingredients_sub-title">
+              {{ section.settings.sub_title }}
+          </div>
+      {% endif %}
+    <div class="swiper_navigation">
+      <div class="swiper-button-prev swiper-button-prev-ingredient">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_89_223)">
+            <path d="M9.99993 0C4.47712 0 0 4.47712 0 9.99993C0 15.5227 4.47712 20 9.99993 20C15.5227 20 20 15.5227 20 9.99993C19.9938 4.47965 15.5204 0.0061875 9.99993 0ZM9.99993 18.9999C5.02936 18.9999 0.999937 14.9706 0.999937 9.99993C0.999937 5.02936 5.02936 0.999937 9.99993 0.999937C14.9706 0.999937 18.9999 5.02936 18.9999 9.99993C18.9943 14.9681 14.9681 18.9943 9.99993 18.9999Z" fill="#222222"/>
+            <path d="M8.82938 6.12365C8.62139 5.94177 8.30555 5.96305 8.12372 6.1709C7.94208 6.37888 7.96332 6.69473 8.17116 6.87655L11.741 9.99997L8.17097 13.1236C7.96294 13.3054 7.94189 13.6213 8.12353 13.829C8.30536 14.0371 8.62121 14.0583 8.82924 13.8765L12.8292 10.3764C12.8828 10.3295 12.9259 10.2716 12.9553 10.2067C12.9848 10.1417 13.0001 10.0713 13.0001 9.99995C13.0001 9.92864 12.9848 9.85816 12.9553 9.79323C12.9259 9.7283 12.8828 9.67042 12.8292 9.62347L8.82938 6.12365Z" fill="#222222"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_89_223">
+              <rect width="20" height="20" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+      <div class="swiper-button-next swiper-button-next-ingredient">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <g clip-path="url(#clip0_89_223)">
+            <path d="M9.99993 0C4.47712 0 0 4.47712 0 9.99993C0 15.5227 4.47712 20 9.99993 20C15.5227 20 20 15.5227 20 9.99993C19.9938 4.47965 15.5204 0.0061875 9.99993 0ZM9.99993 18.9999C5.02936 18.9999 0.999937 14.9706 0.999937 9.99993C0.999937 5.02936 5.02936 0.999937 9.99993 0.999937C14.9706 0.999937 18.9999 5.02936 18.9999 9.99993C18.9943 14.9681 14.9681 18.9943 9.99993 18.9999Z" fill="#222222"/>
+            <path d="M8.82938 6.12365C8.62139 5.94177 8.30555 5.96305 8.12372 6.1709C7.94208 6.37888 7.96332 6.69473 8.17116 6.87655L11.741 9.99997L8.17097 13.1236C7.96294 13.3054 7.94189 13.6213 8.12353 13.829C8.30536 14.0371 8.62121 14.0583 8.82924 13.8765L12.8292 10.3764C12.8828 10.3295 12.9259 10.2716 12.9553 10.2067C12.9848 10.1417 13.0001 10.0713 13.0001 9.99995C13.0001 9.92864 12.9848 9.85816 12.9553 9.79323C12.9259 9.7283 12.8828 9.67042 12.8292 9.62347L8.82938 6.12365Z" fill="#222222"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_89_223">
+              <rect width="20" height="20" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+      </div>
+    </div>
+
+      <div class="ingredients-list swiper">
+
+        <div class="ingredients-list-wrapper swiper-wrapper">
+              {% for block in section.blocks %}
+            {% if block.settings.short_title != blank and block.settings.title != blank and block.settings.content != blank %}
+                  <div data-id="{{ forloop.index }}" class="ingredient swiper-slide {%  if forloop.index == 1 %}active{% endif %}">
+
+                    {% if block.settings.icon %}
+                      <div class="ingredient-icon">
+
+                              <img src="{{ block.settings.icon | img_url }}" alt="{{ block.settings.icon.alt }}" loading='lazy'>
+                      </div>
+                    {% endif %}
+                    
+
+                      {% if block.settings.short_title != blank %}
+                          <div class="ingredient-short_title">
+                              {{ block.settings.short_title }}
+                          </div>
+                      {% endif %}
+                  </div>
+            {% endif %}
+
+              {% endfor %}
+          </div>
+      </div>
+    <div class="swiper-pagination swiper-pagination-ingredient"> </div>
+      {% for block in section.blocks %}
+          <div data-id="{{ forloop.index }}" class="ingredient_card {%  if forloop.index != 1 %}hidden{% endif %}" style="background: {{ block.settings.bg_color }}">
+              {% if block.settings.title != blank %}
+                  <div class="ingredient_card-title">
+                      {{ block.settings.title }}
+                  </div>
+              {% endif %}
+              {% if block.settings.content != blank %}
+                  <div class="ingredient_card-content">
+                      {{ block.settings.content }}
+                  </div>
+              {% endif %}
+          </div>
+      {% endfor %}
+      {% if section.settings.list_ingredients != blank %}
+
+      <div class="all_ingredients">
+        <div class="all_ingredients-title">
+          {{ section.settings.footer_text }}
+          <div class="iconsDrop">
+            <div class="plus">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                   viewBox="0 0 20 20" fill="none">
+                <line x1="9.5" x2="9.5" y2="20" stroke="#222222"/>
+                <line y1="10.5088" x2="20" y2="10.5088" stroke="#222222"/>
+              </svg>
+            </div>
+            <div class="minus">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="2"
+                   viewBox="0 0 20 2" fill="none">
+                <line y1="0.508789" x2="20" y2="0.508789" stroke="#222222"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div class="all_ingredients-list">
+          {{ section.settings.list_ingredients }}
+        </div>
+      </div>
+      {% endif %}
+  </div>
+</div>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const all_ingredients_title = document.querySelector(".all_ingredients-title")
+    if(all_ingredients_title) {
+        all_ingredients_title.addEventListener("click", () => {
+            let content = all_ingredients_title.nextElementSibling
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                content.style.marginTop = "0px"
+
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                content.style.marginTop = "22px"
+
+            }
+            all_ingredients_title.classList.toggle('active');
+        })
+    }
+
+
+  let ingredients = document.querySelectorAll(".ingredient")
+  let ingredient_carts = document.querySelectorAll(".ingredient_card")
+
+  ingredients.forEach(ingredient => {
+    ingredient.addEventListener("click", ()=>{
+      if(!ingredient.classList.contains("active")){
+        ingredients.forEach(sub_ingredient => {
+          sub_ingredient.classList.remove("active")
+        })
+        ingredient.classList.add("active")
+        let ingredientId = ingredient.getAttribute("data-id")
+        ingredient_carts.forEach(ingredient_cart => {
+          if(ingredient_cart.getAttribute("data-id") === ingredientId){
+            ingredient_cart.classList.remove("hidden")
+          }
+          else {
+            ingredient_cart.classList.add("hidden")
+          }
+        })
+      }
+    })
+  })
+
+
+  let ingredientsList = new Swiper('.ingredients-list', {
+    // Optional parameters
+    direction: 'horizontal',
+    slidesPerView: "auto",
+    // If we need pagination
+    pagination: {
+      el: '.swiper-pagination-ingredient',
+      clickable: true
+    },
+    spaceBetween: "20",
+    // Navigation arrows
+    navigation: {
+      nextEl: '.swiper-button-next-ingredient',
+      prevEl: '.swiper-button-prev-ingredient',
+    }
+
+    // And if we need scrollbar
+    // scrollbar: {
+    //   el: '.swiper-scrollbar',
+    // },
+  });
+
+})
+</script>
+
+{% schema %}
+{
+"name": "Key ingredients",
+"blocks": [
+  {
+    "name": "Ingredient",
+    "type": "ingredient",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "icon",
+        "label": "ingredient icon"
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "ingredient name",
+        "default": "Iron"
+      },
+      {
+        "type": "text",
+        "id": "short_title",
+        "label": "ingredient short title",
+        "default": "Fe"
+      },
+      {
+        "type": "color",
+        "id": "bg_color",
+        "label": "ingredient background",
+        "default": "#EEEBF3"
+      },
+      {
+        "type": "richtext",
+        "id": "content",
+        "label": "ingredient text",
+        "default": "<p>Some text</p>"
+      }
+    ]
+  }
+],
+"settings": [
+  {
+    "type": "text",
+    "id": "title",
+    "label": "Title",
+    "default": "Key Ingredients"
+  },
+  {
+    "type": "inline_richtext",
+    "id": "sub_title",
+    "label": "Sub-title",
+    "default": "Feel the vitamin power and choose your gel"
+  },
+  {
+    "type": "text",
+    "id": "footer_text",
+    "label": "Footer text",
+    "default": "Full ingredients"
+  },
+  {
+    "type": "text",
+    "id": "list_ingredients",
+    "label": "List ingredients"
+  },
+  {
+    "type": "image_picker",
+    "id": "bg_1",
+    "label": "Background icon"
+  },
+  {
+    "type": "image_picker",
+    "id": "bg_2",
+    "label": "Background icon 2"
+  },
+  {
+    "type": "range",
+    "id": "padding_top",
+    "min": 20,
+    "max": 120,
+    "step": 1,
+    "unit": "px",
+    "label": "Space top",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space bottom",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_top_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space top for mobile",
+    "default": 36
+  },
+  {
+    "type": "range",
+    "id": "padding_bottom_mb",
+    "min": 0,
+    "max": 100,
+    "step": 1,
+    "unit": "px",
+    "label": "Space bottom for mobile",
+    "default": 1
+  }
+],
+"presets": [
+  {
+    "name": "Key ingredients",
+    "blocks": [
+      {
+        "type": "ingredient"
+      }
+    ]
+  }
+]
+}
+{% endschema %}

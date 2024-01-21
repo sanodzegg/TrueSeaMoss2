@@ -1,0 +1,391 @@
+<style>
+    .section-{{ section.id }}{
+        background: {{ Section.settings.bg_color }};
+    }
+    .products_effects p {
+        margin: 0;
+    }
+    .products_effects{
+        padding-top: {{section.settings.padding_top}}px;
+        padding-bottom: {{section.settings.padding_bottom}}px;
+        position: relative;
+    }
+    .products_effects-title {
+        color: #285234;
+        text-align: center;
+        font-family: var(--FONT-STACK-HEADING);
+        font-size: 60px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        text-transform: capitalize;
+        margin-bottom: 70px;
+    }
+
+    .products_effects-wrapper {
+        max-width: 1220px;
+        margin: 0 auto;
+        padding: 0 60px;
+    }
+
+    .products_effects-list-wrapper {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(315px, 1fr));
+        row-gap: 50px;
+        column-gap: 76px;
+    }
+
+    .products_effects-item {
+        border-radius: 5px;
+        border: 1px solid #E1E1E1;
+        background: rgba(255, 255, 255, 0.10);
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        min-height: 238px;
+        background: #fff;
+    }
+
+    .products_effects-item-img {
+        width: 80px;
+        height: 80px;
+        margin: 0 auto;
+        margin-bottom: 15px;
+    }
+
+    .products_effects-item-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
+    .products_effects-item-title {
+        color: var(--black, #222);
+        text-align: center;
+        font-family: var(--FONT-STACK-HEADING);
+        font-size: 25px;
+        font-style: normal;
+        font-weight: 700;
+        line-height: normal;
+        margin-bottom: 15px;
+
+    }
+    .products_effects .swiper-button-next::after, .products_effects .swiper-button-prev::after{
+        content: none;
+    }
+    .products_effects .swiper-button-next, .products_effects .swiper-button-prev{
+        top: 50%;
+        transform: translateY(-0%);
+    }
+
+    .products_effects-item-content {
+        color: var(--black, #222);
+        text-align: center;
+        font-family: var(--FONT-STACK-BODY);
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        max-width: 227px;
+        margin: 0 auto;
+    }
+    .products_effects-list{
+        overflow: visible !important;
+    }
+    .bg_img{
+        position: absolute;
+    }
+    .products_effects_bg_1{
+        right: 0;
+        top: 100px;
+        max-width: 172px;
+        width: 100%;
+    }
+    .products_effects_bg_2{
+        right: 0;
+        bottom: 235px;
+        max-width: 172px;
+        width: 100%;
+    }
+    .products_effects_bg_3{
+        left: 0;
+        bottom: 315px;
+        max-width: 172px;
+        width: 100%;
+    }
+    .products_effects .swiper-button-next, .products_effects .swiper-button-prev{
+        display: none;
+    }
+    @media screen and (max-width: 825px) {
+        .products_effects {
+            padding-top: {{section.settings.padding_top_mb}}px;
+            padding-bottom: {{section.settings.padding_bottom_mb}}px;
+        }
+        .products_effects_bg_3{
+            left: 0;
+            bottom: 236px;
+            max-width: 68px;
+            width: 100%;
+        }
+        .products_effects_bg_2{
+            display: none;
+        }
+        .products_effects_bg_1{
+            right: 0;
+            top: 236px;
+            max-width: 106px;
+            width: 100%;
+            z-index: 1;
+        }
+        .products_effects .swiper-button-next, .products_effects .swiper-button-prev{
+            display: block;
+        }
+        .products_effects-list{
+            overflow: hidden !important;
+        }
+        .products_effects-list-box{
+            padding: 0 42px;
+            position: relative;
+        }
+        .products_effects-item-content {
+            max-width: none;
+
+        }
+
+        .products_effects-list-wrapper {
+            gap: 0;
+            display: flex !important;
+        }
+
+        .products_effects-item {
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+            padding: 15px;
+        }
+
+        .products_effects-list {
+            padding: 10px !important;
+        }
+
+        .products_effects-title {
+            font-size: 34px;
+            margin-bottom: 67px;
+        }
+
+        .products_effects-item {
+            min-height: 181px;
+            height: auto;
+        }
+
+        .products_effects-item-img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .products_effects-item-title {
+            font-size: 18px;
+        }
+
+        .products_effects-item-content {
+            font-size: 14px;
+        }
+
+        .products_effects-wrapper {
+            padding: 0 16px;
+        }
+    }
+</style>
+<div class="products_effects section-{{ section.id }}">
+    {% if section.settings.bg_1 != blank %}
+        <img src="{{ section.settings.bg_1 | img_url }}" alt="{{ section.settings.bg_1.alt }}" class="products_effects_bg_1 bg_img" loading='lazy'>
+    {% endif %}
+    {% if section.settings.bg_2 != blank %}
+        <img src="{{ section.settings.bg_2 | img_url }}" alt="{{ section.settings.bg_2.alt }}" class="products_effects_bg_2 bg_img" loading='lazy'>
+    {% endif %}
+    {% if section.settings.bg_3 != blank %}
+        <img src="{{ section.settings.bg_3 | img_url }}" alt="{{ section.settings.bg_3.alt }}" class="products_effects_bg_3 bg_img" loading='lazy'>
+    {% endif %}
+    <div class="products_effects-wrapper">
+        {% if section.settings.title != blank %}
+            <h2 class="products_effects-title">
+                {{ section.settings.title }}
+            </h2>
+        {% endif %}
+        <div class="products_effects-list-box">
+            {% if section.blocks.size > 1 %}
+                <div class="swiper-button-prev swiper-button-prev-effect">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M10.0001 0C15.5229 0 20 4.6402 20 10.3642C20 16.0882 15.5229 20.7286 10.0001 20.7286C4.47726 20.7286 -4.76837e-05 16.0882 -4.76837e-05 10.3642C0.00618553 4.64283 4.4796 0.00641288 10.0001 0ZM10.0001 19.692C14.9706 19.692 19.0001 15.5159 19.0001 10.3642C19.0001 5.21255 14.9706 1.03636 10.0001 1.03636C5.02945 1.03636 1.00008 5.21255 1.00008 10.3642C1.00575 15.5133 5.03189 19.6861 10.0001 19.692Z" fill="#222222"/>
+                        <path d="M11.1706 6.3469C11.3786 6.1584 11.6944 6.18046 11.8763 6.39587C12.0579 6.61143 12.0367 6.93878 11.8288 7.12723L8.25903 10.3644L11.829 13.6018C12.0371 13.7903 12.0581 14.1176 11.8765 14.333C11.6946 14.5486 11.3788 14.5706 11.1708 14.3821L7.17083 10.7546C7.11715 10.7059 7.07414 10.6459 7.04467 10.5787C7.01519 10.5114 6.99995 10.4383 6.99995 10.3644C6.99995 10.2905 7.01519 10.2174 7.04467 10.1501C7.07414 10.0829 7.11715 10.0229 7.17083 9.97421L11.1706 6.3469Z" fill="#222222"/>
+                    </svg>
+                </div>
+                <div class="swiper-button-next swiper-button-next-effect">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="21" viewBox="0 0 20 21" fill="none">
+                        <path d="M9.99993 0C4.47712 0 0 4.6402 0 10.3642C0 16.0882 4.47712 20.7286 9.99993 20.7286C15.5227 20.7286 20 16.0882 20 10.3642C19.9938 4.64283 15.5204 0.00641288 9.99993 0ZM9.99993 19.692C5.02936 19.692 0.999937 15.5159 0.999937 10.3642C0.999937 5.21255 5.02936 1.03636 9.99993 1.03636C14.9706 1.03636 18.9999 5.21255 18.9999 10.3642C18.9943 15.5133 14.9681 19.6861 9.99993 19.692Z" fill="#222222"/>
+                        <path d="M8.82938 6.3469C8.62139 6.1584 8.30555 6.18046 8.12372 6.39587C7.94208 6.61143 7.96332 6.93878 8.17116 7.12723L11.741 10.3644L8.17097 13.6018C7.96294 13.7903 7.94189 14.1176 8.12353 14.333C8.30536 14.5486 8.62121 14.5706 8.82924 14.3821L12.8292 10.7546C12.8828 10.7059 12.9259 10.6459 12.9553 10.5787C12.9848 10.5114 13.0001 10.4383 13.0001 10.3644C13.0001 10.2905 12.9848 10.2174 12.9553 10.1501C12.9259 10.0829 12.8828 10.0229 12.8292 9.97421L8.82938 6.3469Z" fill="#222222"/>
+                    </svg>
+                </div>
+            {% endif %}
+
+            <div class="products_effects-list swiper">
+
+                <div class="products_effects-list-wrapper swiper-wrapper">
+                    {% for block in section.blocks %}
+                        {% if block.settings.title != blank and block.settings.img != blank and block.settings.content != blank %}
+                            <div class="products_effects-item swiper-slide">
+                                <div class="products_effects-item-img">
+                                    <img src="{{ block.settings.img | img_url }}" alt="{{ block.settings.img.alt }}" loading='lazy'>
+                                </div>
+                                <h3 class="products_effects-item-title">
+                                    {{ block.settings.title }}
+                                </h3>
+                                <div class="products_effects-item-content">
+                                    {{ block.settings.content }}
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if(window.innerWidth < 825) {
+            let productsEffects = new Swiper('.products_effects-list', {
+                // Optional parameters
+                direction: 'horizontal',
+                slidesPerView: 'auto',
+                // If we need pagination
+                spaceBetween: "20",
+                // Navigation arrows
+                navigation: {
+                    nextEl: '.swiper-button-next-effect',
+                    prevEl: '.swiper-button-prev-effect',
+                },
+
+                // And if we need scrollbar
+                scrollbar: {
+                    el: '.swiper-scrollbar',
+                },
+            });
+        }
+
+    })
+</script>
+
+{% schema %}
+{
+  "name": "Products effects",
+  "blocks": [
+    {
+      "name": "Effect",
+      "type": "effect",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "img",
+          "label": "Effect image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Title"
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "Effect text",
+          "default": "<p>Some text</p>"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Key Ingredients"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_1",
+      "label": "Background img"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_2",
+      "label": "Background img 2"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_3",
+      "label": "Background img 3"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 2,
+      "unit": "px",
+      "label": "Space top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space bottom",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_top_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space top for mobile",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom_mb",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "label": "Space bottom for mobile",
+      "default": 1
+    }
+  ],
+  "presets": [
+    {
+      "name": "Products effects",
+      "blocks": [
+        {
+          "type": "effect"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

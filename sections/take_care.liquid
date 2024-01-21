@@ -1,0 +1,293 @@
+<style>
+  .section-{{ section.id }} {
+    padding-top: {{ section.settings.st }}px;
+    padding-bottom: {{ section.settings.sb }}px;
+    position: relative;
+  }
+  .take_care-title {
+    color: {{ section.settings.title_color }}
+  }
+  @media (max-width: 998px) {
+    .section-{{ section.id }} {
+      padding-top: {{ section.settings.stm }}px;
+      padding-bottom: {{ section.settings.sbm }}px;
+    }
+  }
+
+</style>
+<style>
+  .take_care p{
+    margin: 0;
+  }
+  .take_care{
+    background: {{section.settings.bg_color}}
+  }
+  .take_care-title{
+    color: #285234;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: Bolkit;
+    font-size: 60px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    font-family: var(--FONT-STACK-HEADING);
+    text-align: center;
+    margin-bottom: 100px;
+  }
+  .take_care-block{
+    width: calc(50% - 10px);
+    padding: 40px 30px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    height: auto
+  
+  }
+  .take_care-block-title{
+    color: #222;
+    leading-trim: both;
+    text-edge: cap;
+    font-family: var(--FONT-STACK-HEADING);
+    font-size: 35px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: capitalize;
+    height: auto;
+  }
+  .take_care-block-text{
+    width: 100%;
+    max-width: 382px;
+    color: #222;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    font-family: var(--FONT-STACK-BODY);
+  }
+  .take_care-block-list{
+    display: flex;
+    row-gap: 40px;
+    column-gap: 20px;
+    flex-wrap: wrap;
+  }
+  .take_care_arrow{
+    position: initial;
+    margin: 0;
+    width: 20px;
+    height: 20px;
+  }
+  .take_care_arrow:after{
+    content: none;
+  }
+  .take_care_arrow_box{
+    display: none;
+    gap: 15px;
+    justify-content: right;
+    margin-bottom: 20px;
+  }
+
+  @media(min-width: 650px) {
+    .take_care-block {
+      height: auto;
+    }
+  }
+  @media screen and (max-width: 650px) {
+    .take_care-block {
+      height: 100% !important;
+    }
+    .take_care-title{
+      font-size: 34px;
+      margin-bottom: 30px;
+    }
+    .take_care_arrow_box{
+      display: flex;
+    }
+    .take_care-block{
+      width: 100%;
+    }
+    .take_care-block-list{
+      flex-wrap: nowrap;
+      column-gap: 0;
+    }
+    .take_care-block{
+      flex-direction: column;
+      gap: 15px;
+      padding: 30px 30px 20px 30px;
+      align-items: start;
+    }
+    .take_care-block-title{
+      font-size: 20px;
+    }
+    .take_care-block-text{
+      font-size: 14px;
+      max-width: 261px;
+    }
+
+
+  }
+</style>
+<div class="take_care section-{{ section.id }}">
+  <div class="take_care-wrapper wrapper">
+    {% if section.settings.title != blank %}
+    <div class="take_care-title">
+      {{ section.settings.title  }}
+    </div>
+    {% endif %}
+    <div class="take_care-block-swiper swiper">
+      <div class="take_care_arrow_box">
+        <div class="swiper-button-prev take_care_arrow swiper-button-prev-care">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M10.0001 0C15.5229 0 20 4.47711 20 9.99991C20 15.5227 15.5229 20 10.0001 20C4.47726 20 -4.76837e-05 15.5227 -4.76837e-05 9.99991C0.00618553 4.47964 4.4796 0.00618748 10.0001 0ZM10.0001 18.9999C14.9706 18.9999 19.0001 14.9705 19.0001 9.99991C19.0001 5.02934 14.9706 0.999934 10.0001 0.999934C5.02945 0.999934 1.00008 5.02934 1.00008 9.99991C1.00575 14.9681 5.03189 18.9942 10.0001 18.9999Z" fill="#222222" fill-opacity="0.5"/>
+            <path d="M11.1709 6.12365C11.3789 5.94177 11.6947 5.96305 11.8765 6.1709C12.0582 6.37888 12.0369 6.69472 11.8291 6.87655L8.25927 9.99996L11.8293 13.1236C12.0373 13.3054 12.0583 13.6212 11.8767 13.829C11.6949 14.0371 11.379 14.0583 11.171 13.8765L7.17107 10.3764C7.1174 10.3295 7.07438 10.2716 7.04491 10.2067C7.01544 10.1417 7.00019 10.0712 7.00019 9.99994C7.00019 9.92863 7.01544 9.85815 7.04491 9.79322C7.07438 9.72829 7.1174 9.67041 7.17107 9.62347L11.1709 6.12365Z" fill="#222222" fill-opacity="0.5"/>
+          </svg>
+        </div>
+        <div class="swiper-button-next take_care_arrow swiper-button-next-care">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <path d="M9.99993 0C4.47712 0 0 4.47711 0 9.99991C0 15.5227 4.47712 20 9.99993 20C15.5227 20 20 15.5227 20 9.99991C19.9938 4.47964 15.5204 0.00618748 9.99993 0ZM9.99993 18.9999C5.02936 18.9999 0.999937 14.9705 0.999937 9.99991C0.999937 5.02934 5.02936 0.999934 9.99993 0.999934C14.9706 0.999934 18.9999 5.02934 18.9999 9.99991C18.9943 14.9681 14.9681 18.9942 9.99993 18.9999Z" fill="#222222"/>
+            <path d="M8.82913 6.12365C8.62115 5.94177 8.30531 5.96305 8.12348 6.1709C7.94184 6.37888 7.96307 6.69472 8.17092 6.87655L11.7407 9.99996L8.17073 13.1236C7.9627 13.3054 7.94165 13.6212 8.12329 13.829C8.30512 14.0371 8.62096 14.0583 8.82899 13.8765L12.8289 10.3764C12.8826 10.3295 12.9256 10.2716 12.9551 10.2067C12.9846 10.1417 12.9998 10.0712 12.9998 9.99994C12.9998 9.92863 12.9846 9.85815 12.9551 9.79322C12.9256 9.72829 12.8826 9.67041 12.8289 9.62347L8.82913 6.12365Z" fill="#222222"/>
+          </svg>
+        </div>
+      </div>
+
+
+      <div class="take_care-block-list swiper-wrapper">
+        {% for block in section.blocks %}
+          <div style="background: {{ block.settings.bg_color }}" class="take_care-block swiper-slide">
+            <div class="take_care-block-title">
+              {{ block.settings.title }}
+            </div>
+            <div class="take_care-block-text">
+              {{ block.settings.text }}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    if(window.innerWidth < 650) {
+      let take_care = new Swiper('.take_care-block-swiper', {
+        // Optional parameters
+        slidesPerView: 1,
+        autoHeight: true,
+        // If we need pagination
+        spaceBetween: "20",
+        // Navigation arrows
+        navigation: {
+          nextEl: '.swiper-button-next-care',
+          prevEl: '.swiper-button-prev-care',
+        },
+
+
+      });
+    }
+  })
+
+</script>
+{% schema %}
+{
+  "name": "Take care",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Sea Moss can help you take care of"
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#285234"
+    },
+    {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#F8F8F8"
+    },
+    {
+      "type": "range",
+      "id": "st",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "sb",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 120
+    },
+    {
+      "type": "header",
+      "content": "Space mobile"
+    },
+    {
+      "type": "range",
+      "id": "stm",
+      "label": "Space top",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "sbm",
+      "label": "Space bottom",
+      "unit": "px",
+      "min": 0,
+      "max": 200,
+      "step": 2,
+      "default": 70
+    }
+  ],
+  "blocks": [
+    {
+      "type": "block",
+      "name": "Block",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Acne"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita molestiae provident repellendus sunt suscipit, temporibus.</p>"
+        },
+        {
+          "type": "color",
+          "id": "bg_color",
+          "label": "Background color",
+          "default": "#E7F2DF"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Take care"
+    }
+  ]
+}
+{% endschema %}
