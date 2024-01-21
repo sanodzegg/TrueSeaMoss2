@@ -1,0 +1,52 @@
+<div class="bg-[#A9E8BC] py-4 w-full">
+  <p class="text-center text-[#01050A] leading-[normal] text-base font-semibold">{{ section.settings.announcement }}</p>
+</div>
+
+<div class="page-width pt-10">
+  <h1 class="text-[#042A4D] mb-5 leading-[normal] text-2xl font-bold md:text-[32px] md:mb-6">{{ section.settings.title }}</h1>
+  <div class="flex items-center gap-x-1 mb-5 md:gap-x-2 md:mb-6 hidden">
+      <img class="w-8 h-8 rounded-full object-cover md:w-10 md:h-10" src="https://cdn.shopify.com/s/files/1/0603/0209/8587/files/b81216c8f3433479f1f0a538933840a5.png?v=1705840874" alt="{{ section.settings.author_name }}">
+      <div class="flex flex-col gap-y-2">
+          <p class="text-[#01050A] text-sm font-bold leading-[normal] md:text-base">By {{ section.settings.author_name }}</p>
+          <p class="text-xs font-normal leading-[normal] text-[#4F5255] md:text-sm">Last Updated {{ section.settings.date }}</p>
+      </div>
+  </div>
+  <p class="text-[#4F5255] text-base leading-[normal] pb-5 border-b border-[#C7E3F9] md:text-lg md:pb-6">{{ section.settings.summary }}</p>
+</div>
+
+{% schema %}
+  {
+      "name": "Hero",
+      "tag": "section",
+      "settings": [
+          {
+              "type": "inline_richtext",
+              "id": "announcement",
+              "label": "Annmouncement Text"
+          }, {
+              "type": "text",
+              "id": "title",
+              "label": "Title",
+              "default": "10 Reasons Why This Adjustable Pillow Is Taking Over In 2023"
+          }, {
+              "type": "inline_richtext",
+              "id": "summary",
+              "label": "Summary",
+              "default": "Summary goes here summary will go here and text goes here as well Summary goes here summary will go here and text goes here as well Summary goes here summary will go here and "
+          }, {
+              "type": "image_picker",
+              "id": "author_image",
+              "label": "Author Image"
+          }, {
+              "type": "text",
+              "id": "author_name",
+              "label": "Author Name",
+              "default": "Dany L."
+          }, {
+              "type": "text",
+              "id": "date",
+              "label": "Date"
+          }
+      ]
+  }
+{% endschema %}

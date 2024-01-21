@@ -1,0 +1,476 @@
+{{ 'customer-feedback.css' | asset_url | stylesheet_tag }}
+<script src='{{ 'play-video.js' | asset_url }}' defer></script>
+
+{% liquid
+	assign title = section.settings.title
+	assign subtitle = section.settings.subtitle
+	assign reviews_label = section.settings.reviews_label
+	assign desc = section.settings.desc
+
+	assign button_text = section.settings.button_text
+%}
+
+{% style %}
+	@font-face {
+		   font-family: 'GeneralSans';
+		   font-weight: 400;
+		   font-style: normal;
+		   font-display: swap;
+		   src: url('{{ "GeneralSans-Regular.woff2" | asset_url }}') format('woff2');
+		 }
+
+		 @font-face {
+		   font-family: 'GeneralSans';
+		   font-weight: 500;
+		   font-style: normal;
+		   font-display: swap;
+		   src: url('{{ "GeneralSans-Medium.woff2" | asset_url }}') format('woff2');
+		 }
+			#shopify-section-{{ section.id }}{
+				--padding-top: {{ section.settings.paddingTop_desktop }}px;
+				--padding-bottom: {{ section.settings.paddingBottom_desktop }}px;
+		}
+
+		@media screen and (max-width: 768px) {
+			#shopify-section-{{ section.id }}{
+				--padding-top: {{ section.settings.paddingTop_mobile }}px;
+				--padding-bottom: {{ section.settings.paddingBottom_mobile }}px;
+			}
+		}
+
+		{% if template contains "product" %}
+			{% if product.metafields.custom.show_testimonials_section != true %}
+				.customer-feedback{
+					display: none !important;
+				}
+			{% endif %}
+		{% endif %}
+{% endstyle %}
+
+<div
+	class='customer-feedback'
+	style='
+		padding-top: var(--padding-top);
+		padding-bottom: var(--padding-bottom);
+	'
+>
+	<div class='customer-feedback__container {% if template.suffix == "subscriptions" %} pt-5 lg:pt-20 {% endif %}'>
+		<div class='customer-feedback__section-content'>
+			<div class='customer-feedback__title-wrap'>
+				{% if title != blank %}
+					<h1 class='customer-feedback__title-wrap--title'>{{ title }}</h1>
+				{% endif %}
+
+				{% if subtitle != blank %}
+					<span class='customer-feedback__title-wrap--subtitle'>
+						{{ subtitle }}
+					</span>
+				{% endif %}
+			</div>
+
+			<script>
+				const options = {
+					method: 'GET',
+					headers: { accept: 'application/json', 'Content-Type': 'application/json' }
+				};
+				
+				fetch('https://api.yotpo.com/v1/apps/3NhG13UQDuUl6r31Ov5IEKsACm6Md9TxF4TTruxD/bottom_lines?count=100', options)
+				.then(response => response.json())
+					.then(response => {
+						// Assuming the response contains a property 'reviews_label'
+						// Update this according to the actual structure of your API response
+						const reviews = response.response.bottomlines;
+
+						let reviewScore = 0;
+						let reviewCount = 0;
+
+						reviews.forEach((item)=>{
+							reviewScore += item.product_score;
+							reviewCount += item.total_reviews;
+						})
+
+						reviewScore = (reviewScore / reviews.length).toFixed(1);
+
+						console.log(reviewScore, reviewCount)
+				
+						// Select the element and update its content
+						const reviewsLabelElement = document.getElementById('reviewsLabel');
+						reviewsLabelElement.innerHTML = `
+						{% render 'icon', icon: 'star-20' %}
+						${reviewScore} out of 5 stars from ${reviewCount} reviews
+						`;
+					})
+					.catch(err => console.error(err));				
+			</script>
+
+			<div class='customer-feedback__desc-wrap'>
+				<div class='customer-feedback__desc-wrap--label'>
+					<div class='element-tag label-new' id="reviewsLabel">
+						{% render 'icon', icon: 'star-20' %}
+						{{ reviews_label }}
+					</div>
+			</div>
+			
+
+				{% if desc != blank %}
+					<span class='customer-feedback__desc-wrap--desc'>
+						{{ desc }}
+					</span>
+				{% endif %}
+			</div>
+
+			<div class='customer-feedback__btn desktop'>
+				<div class='cs-button'>
+					{% if button_text != blank %}
+						<a href='/pages/reviews' class='btn-new btn-new--secondary'>{{ button_text }} </a>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+
+		{% comment %} Blocks with reviews {% endcomment %}
+		<div class='customer-feedback__block customer-feedback__block--{{ section.id }}'>
+			{% for block in section.blocks %}
+				<div class='customer-feedback__slide-container'>
+					{% if block.type == 'text' %}
+						<div class='customer-feedback__block--wrapper'>
+							<div class='customer-feedback__block--review'>
+								<div>
+									{% if block.settings.review_rating != blank %}
+										<div class='customer-feedback__block--review_rating'>
+											<div class='cs-button'>
+												<a href='#' class='btn-new btn-new--secondary-small'>
+													{% render 'icon', icon: 'star-20' %}
+													{{- block.settings.review_rating }}
+												</a>
+											</div>
+										</div>
+									{% endif %}
+
+									{% if block.settings.name != blank %}
+										<div class='customer-feedback__block--name'>
+											{{ block.settings.name }}
+										</div>
+									{% endif %}
+
+									{% if block.settings.title != blank %}
+										<div class='customer-feedback__block--title'>
+											{{ block.settings.title }}
+										</div>
+									{% endif %}
+
+									{% if block.settings.description != blank %}
+										<div class='customer-feedback__block--description'>
+											{{ block.settings.description }}
+										</div>
+									{% endif %}
+								</div>
+
+								<div class='customer-feedback__block--product'>
+									{% if block.settings.image != blank %}
+										<div class='customer-feedback__block--image'>
+											{% render 'image', image: block.settings.image %}
+										</div>
+									{% endif %}
+
+									{% if block.settings.reviewed_product != blank %}
+										<div class='customer-feedback__block--reviewed_product'>
+											<span class='customer-feedback__block--reviewed'>Reviewed</span>
+
+											<span class='customer-feedback__block--reviewed-2'>
+												{{- block.settings.reviewed_product -}}
+											</span>
+										</div>
+									{% endif %}
+								</div>
+							</div>
+						</div>
+					{% endif %}
+
+					{% comment %} Blocks with reviews VIDEO{% endcomment %}
+
+					{% if block.type == 'video' %}
+						{%- assign video = block.settings.user_video -%}
+						{% if video != blank %}
+							<div class='customer-feedback__block--wrapper video-block'>
+								{% if block.settings.user_video != blank %}
+									<div class='customer-feedback__block video'>
+										<button class='customer-feedback__block--play'>
+											{% render 'icon', icon: 'play' %}
+										</button>
+
+										{% render 'video' with block.settings.user_video, autoplay: false %}
+									</div>
+								{% endif %}
+
+								<div class='block'>
+									{% if block.settings.user_img != blank %}
+										<div class='customer-feedback__block--image img'>
+											{% render 'image', image: block.settings.user_img %}
+										</div>
+									{% endif %}
+
+									<div class='text-box !items-start'>
+										{% if block.settings.user_name != blank %}
+											<div class='customer-feedback__block--name name'>
+												{{ block.settings.user_name }}
+											</div>
+										{% endif %}
+										{% if block.settings.user_rating != blank %}
+											<div class='customer-feedback__block--review_rating review-rating'>
+												<div class='cs-button'>
+													<a href='#' class='btn-new btn-new--secondary-small'>
+														{% render 'icon', icon: 'star-20' %}
+														{{- block.settings.user_rating }}
+													</a>
+												</div>
+											</div>
+										{% endif %}
+									</div>
+								</div>
+							</div>
+						{% endif %}
+					{% endif %}
+				</div>
+			{% endfor %}
+		</div>
+
+		<div class='customer-feedback__btn mobile'>
+			<div class='cs-button'>
+				{% if button_text != blank %}
+					<a href='/pages/reviews' class='btn-new btn-new--secondary'>{{ button_text }} </a>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function () {
+		$('.customer-feedback__block--{{ section.id }}').slick({
+			arrows: false,
+			slidesToShow: 1,
+			slidesToScroll: 1,
+			variableWidth: false,
+			lazyLoad: 'progressive',
+			infinite: false,
+			swipeToSlide: true,
+			mobileFirst: true,
+			slidesToShow: 1.08,
+			responsive: [
+				{
+					breakpoint: 480,
+					settings: {
+						slidesToShow: 1.5,
+					},
+				},
+				{
+					breakpoint: 650,
+					settings: {
+						slidesToShow: 1.5,
+					},
+				},
+				{
+					breakpoint: 1024,
+					settings: {
+						arrows: true,
+						prevArrow:
+							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						nextArrow:
+							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						slidesToShow: 1.75,
+					},
+				},
+				{
+					breakpoint: 1441,
+					settings: {
+						arrows: true,
+						prevArrow:
+							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						nextArrow:
+							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						slidesToShow: 2.25,
+					},
+				},
+				{
+					breakpoint: 1920,
+					settings: {
+						arrows: true,
+						prevArrow:
+							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						nextArrow:
+							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						slidesToShow: 2.5,
+					},
+				},
+				{
+					breakpoint: 2500,
+					settings: {
+						arrows: true,
+						prevArrow:
+							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						nextArrow:
+							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
+						slidesToShow: 3.25,
+					},
+				},
+			],
+		});
+	});
+</script>
+
+{% schema %}
+{
+	"name": "Customer feedback",
+	"settings": [
+		{
+			"type": "header",
+			"content": "Section settings"
+		},
+		{
+			"type": "range",
+			"id": "paddingTop_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Padding top for mobile",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "paddingBottom_mobile",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Padding bottom for mobile",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "paddingTop_desktop",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Padding top for desktop",
+			"default": 0
+		},
+		{
+			"type": "range",
+			"id": "paddingBottom_desktop",
+			"min": 0,
+			"max": 100,
+			"step": 2,
+			"unit": "px",
+			"label": "Padding bottom for desktop",
+			"default": 0
+		},
+
+		{
+			"type": "text",
+			"id": "title",
+			"label": "Main title",
+			"default": "Title"
+		},
+		{
+			"type": "text",
+			"id": "subtitle",
+			"label": "Subtitle",
+			"default": "Subtitle"
+		},
+		{
+			"type": "text",
+			"id": "reviews_label",
+			"label": "Reviews label",
+			"default": "Reviews label"
+		},
+		{
+			"type": "richtext",
+			"id": "desc",
+			"label": "Description",
+			"default": "<p> Description</p>"
+		},
+		{
+			"type": "header",
+			"content": "Button settings"
+		},
+		{
+			"type": "text",
+			"id": "button_text",
+			"label": "Button text"
+		}
+	],
+
+	"blocks": [
+		{
+			"name": "Reviews",
+			"type": "text",
+			"settings": [
+				{
+					"type": "text",
+					"id": "review_rating",
+					"label": "Reviews rating"
+				},
+				{
+					"type": "text",
+					"id": "name",
+					"label": "Customer name"
+				},
+				{
+					"type": "text",
+					"id": "title",
+					"label": "Name of review"
+				},
+				{
+					"type": "richtext",
+					"id": "description",
+					"label": "Description of review"
+				},
+				{
+					"type": "text",
+					"id": "reviewed_product",
+					"label": "Reviewed product"
+				},
+				{
+					"type": "image_picker",
+					"id": "image",
+					"label": "Product image"
+				}
+			]
+		},
+		{
+			"name": "Video review",
+			"type": "video",
+			"settings": [
+				{
+					"type": "video",
+					"id": "user_video",
+					"label": "Video"
+				},
+				{
+					"type": "text",
+					"id": "user_name",
+					"label": "Customer name on video review"
+				},
+				{
+					"type": "text",
+					"id": "user_rating",
+					"label": "Rating on video review"
+				},
+				{
+					"type": "image_picker",
+					"id": "user_img",
+					"label": "User image"
+				}
+			]
+		}
+	],
+	"presets": [
+		{
+			"name": "Customer feedback"
+		}
+	]
+}
+{% endschema %}

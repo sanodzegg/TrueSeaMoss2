@@ -1,0 +1,53 @@
+<div class="page-width py-5 md:pt-[60px] md:pb-20">
+  <div class="flex flex-col gap-y-6 md:gap-y-10">
+      {% for block in section.blocks %} 
+          <div class="{% if forloop.first %}listicle-first {% endif %}flex flex-col md:flex-row md:gap-x-4">
+              {% if block.settings.title != blank %}<h2 class="text-[#042A4D] font-bold leading-[normal] text-xl mb-3 md:hidden">{{ forloop.index }}. {{ block.settings.title }}</h2>{% endif %}
+              {% if block.settings.image != blank %}<img class="w-full h-full object-cover rounded-[16px] mb-3 object-top md:w-[274px] md:mb-0" src="{{ block.settings.image | img_url: '800x800' }}" alt="decor">{% endif %}
+              <div class="flex flex-col md:gap-y-5 md:w-full">
+                {% if block.settings.title != blank %}<h2 class="hidden text-2xl font-bold text-[#042A4D] leading-[normal] md:block">{{ forloop.index }}. {{ block.settings.title }}</h2>{% endif %}
+                  <p class="text-base leading-[normal] {% if block.settings.title == blank %} text-center {% endif %} text-[#4F5255]">
+                      {{ block.settings.content1 }}
+                  </p>
+                  {% if block.settings.content2.size > 1 %}
+                      <p class="text-base leading-[normal] text-[#4F5255]">
+                          {{ block.settings.content2 }}
+                      </p>
+                  {% endif %}
+              </div>
+          </div>
+      {% endfor %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Content",
+  "tag": "section",
+  "blocks": [
+      {
+          "name": "Content",
+          "type": "content",
+          "settings": [
+              {
+                  "type": "image_picker",
+                  "id": "image",
+                  "label": "Image"
+              }, {
+                  "type": "text",
+                  "id": "title",
+                  "label": "Title"
+              }, {
+                  "type": "inline_richtext",
+                  "id": "content1",
+                  "label": "Content"
+              }, {
+                  "type": "inline_richtext",
+                  "id": "content2",
+                  "label": "Content"
+              }
+          ]
+      }
+  ]
+}
+{% endschema %}

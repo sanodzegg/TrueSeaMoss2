@@ -1,0 +1,179 @@
+<style>
+  .upsell-section {
+    background: url("{{ 'flakes.webp' | asset_url }}"), #A9E8BC;
+  }
+  .upsell-card {
+      background: linear-gradient(180deg, #FFF 0%, #E3F1FC 100%);
+      box-shadow: 0px 8px 16px 0px rgba(3, 32, 58, 0.40);
+  }
+  .primary-btn {
+      background: linear-gradient(180deg, #A6F4B3 0%, #55F26F 100%), linear-gradient(180deg, #FFF 0%, #E6EFF8 100%), #FFF;
+      box-shadow: 0px 4px 16px 0px rgba(133, 245, 151, 0.16);
+  }
+  .availability-popup {
+      position: fixed;
+      bottom: -140px;
+      left: 0;
+      right: 0;
+      background-color: red;
+
+      border-radius: 12px 12px 0px 0px;
+      background: #FFF;
+      box-shadow: 0px -2px 8px 0px rgba(5, 45, 82, 0.24);
+  }
+  .availability-popup.hide {
+      animation: hidePopup .15s ease-in-out forwards;
+  }
+  .availability-popup.show {
+      display: block;
+      animation: showPopup .15s ease-in-out forwards;
+  }
+  .secondary-btn {
+      background: linear-gradient(180deg, #A6F4B3 0%, #55F26F 100%), linear-gradient(180deg, #FFF 0%, #E6EFF8 100%), #FFF;
+      box-shadow: 0px 4px 16px 0px rgba(16, 105, 187, 0.40);
+      color: black;
+  }
+  .secondary-btn svg {
+      fill: #FFF !important;
+  }
+  @keyframes showPopup {
+      0% {
+          bottom: -140px;
+      } 100% {
+          bottom: -32px;
+      }
+  }
+  @keyframes hidePopup {
+      0% {
+          bottom: -32px;
+      } 100% {
+          bottom: -140px;
+      }
+  }
+</style>
+
+<div class="page-width py-8 md:py-16 max-w-[845px]">
+  <div class="p-4 pb-6 rounded-[16px] upsell-card flex flex-col gap-y-7 md:flex-row md:gap-x-4 md:p-5">
+      <div class="relative md:w-1/2">
+          <picture>
+              <source media="(max-width: 770px)" srcset="{{ section.settings.upsell_image | img_url: '650x650' }}">
+              <img class="rounded-[12px] md:h-full md:object-cover md:object-left" src="{{ section.settings.upsell_image | img_url: 'large' }}" alt="{{ section.settings.upsell_product.title }}">
+          </picture>
+          <div class="absolute top-0 -left-6 -rotate-12 py-2 text-sm px-4 text-[#01050A] font-semibold leading-[normal] rounded-[4px] bg-[#F5BA4A] shadow-[0_4px_8px_0_#3a27033d] md:text-base md:font-bold">LIMITED TIME SALE NOW 🔥</div>
+      </div>
+      <div class="flex flex-col gap-y-7 md:w-1/2 md:gap-y-8">
+          <div class="flex flex-col gap-y-5">
+              <div class="flex items-center gap-x-2 justify-center">
+                  <hr class="w-full h-[0.5px] bg-[#4F5255] opacity-30">
+                  <p class="text-xs text-[#4F5255] font-normal leading-[normal] w-fit shrink-0 md:text-sm">Subscribe and get</p>
+                  <hr class="w-full h-[0.5px] bg-[#4F5255] opacity-30">
+              </div>
+              <h2 class="text-[#042A4D] text-center text-[32px] font-black leading-[normal] md:text-[28px]">20 OFF + FREE GIFT!</h2>
+              <p class="text-[#01050A] text-center text-sm font-normal leading-[normal] capitalize">This limited-time deal is in high demand and stock keeps selling out.</p>
+          </div>
+          <div class="flex flex-col gap-y-5">
+              <div>
+                  <a class="flex items-center justify-center gap-x-2.5 w-full py-4 primary-btn cursor-pointer rounded-[80px] mb-4" href="{{ section.settings.upsell_product.url }}">
+                      <p class="text-base text-[#01050A] font-heading font-bold leading-[normal]">CHECK AVAILABILITY</p>
+                      {% render 'custom-icon-redirection' %}
+                  </a>
+                  <p class="text-[#01050A] text-center text-xs font-bold leading-[normal] md:text-sm md:font-normal">DEAL ENDING IN: <span class="text-[#F00] text-xs font-bold leading-[normal]" id="dealEndCountdown"></span></p>
+              </div>
+              <div>
+                  <div class="py-3 px-6 bg-white rounded-[4px] flex items-center justify-center gap-x-2 mb-4 w-fit mx-auto">
+                      <p class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">Sell-Out Risk: <span class="text-[#FFA500]">High</span></p>
+                      <span class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">|</span>
+                      <p class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">Risk FREE</p>
+                  </div>
+                  <p class="text-[#4F5255] text-xs font-normal leading-[normal] text-center md:text-sm">30 day money back guarantee</p>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<div class="availability-popup pt-6 px-4 pb-12 hidden md:hidden">
+  <a class="flex items-center justify-center gap-x-2.5 w-full py-4 secondary-btn cursor-pointer rounded-[80px] mb-4" href="{{ section.settings.upsell_product.url }}">
+      <p class="text-base text-black font-heading font-bold leading-[normal]">CHECK AVAILABILITY</p>
+      {% render 'custom-icon-redirection' %}
+  </a>
+</div>
+
+<script>
+
+  const countdown = () => {
+      const countdownElement = document.getElementById('dealEndCountdown');
+
+      let durationInMilliseconds = 8 * 60 * 60 * 1000 + 10 * 60 * 1000;
+      let endDate = new Date(Date.now() + durationInMilliseconds).getTime();
+
+      if (!localStorage.getItem('endDate')) {
+          localStorage.setItem('endDate', endDate);
+      }
+
+      function updateCountdown() {
+          const now = new Date().getTime();
+          let timeRemaining = localStorage.getItem('endDate') ? Number(localStorage.getItem('endDate')) - now : endDate - now;
+
+          if (timeRemaining <= 3600993) {
+              endDate = new Date(Date.now() + durationInMilliseconds).getTime();
+              localStorage.setItem('endDate', endDate);
+          }
+
+          const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+          countdownElement.innerText = `${hours.toString().length === 1 ? '0' + hours : hours}:${minutes.toString().length === 1 ? '0' + minutes : minutes}:${seconds.toString().length === 1 ? '0' + seconds : seconds}`
+      }
+
+      updateCountdown();
+      const interval = setInterval(updateCountdown, 1000);
+  }
+
+  countdown();
+
+  const upsellObserver = () => {
+      const firstListicle = document.querySelector(".listicle-first");
+      const parentDiv = document.querySelector(".upsell-section");
+      const availabilityPopup = document.querySelector(".availability-popup");
+
+      const handleIntersection = (entries) => {
+          entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                  availabilityPopup.classList.remove("show");
+                  availabilityPopup.classList.add("hide");
+              } else {
+                  availabilityPopup.classList.remove("hide");
+                  availabilityPopup.classList.add("show");
+              }
+          });
+      };
+      const observer = new IntersectionObserver(handleIntersection, { root: null, rootMargin: '0px', threshold: 0 });
+      observer.observe(firstListicle);
+      observer.observe(parentDiv);
+
+      window.addEventListener("scroll", () => availabilityPopup.classList.remove("hidden"));
+  }
+
+  upsellObserver();
+</script>
+
+{% schema %}
+{
+  "name": "Upsell",
+  "tag": "section",
+  "class": "upsell-section",
+  "settings": [
+      {
+          "type": "image_picker",
+          "id": "upsell_image",
+          "label": "Product Image"
+      }, {
+          "type": "product",
+          "id": "upsell_product",
+          "label": "Upsell Product"
+      }
+  ]
+}
+{% endschema %}

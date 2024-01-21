@@ -1,0 +1,27 @@
+<div class="w-full bg-[#F5FAFE] py-10 flex items-center justify-center md:py-14">
+  <div class="flex flex-col items-center gap-y-6">
+      <div class="flex items-center justify-center gap-x-6">
+          <a href="{{ section.settings.policy }}" class="text-sm font-normal text-[#4F5255] underline leading-[normal] md:text-base">Privacy Policy</a>
+          <a href="{{ section.settings.terms }}" class="text-sm font-normal text-[#4F5255] underline leading-[normal] md:text-base">Terms Of Service</a>
+      </div>
+      <p class="text-xs font-normal leading-[normal] text-[#4F5255]">© Cloudpillow 2023</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Footer",
+  "tag": "footer",
+  "settings": [
+      {
+          "type": "url",
+          "id": "policy",
+          "label": "Policy URL"
+      }, {
+          "type": "url",
+          "id": "terms",
+          "label": "Terms URL"
+      }
+  ]
+}
+{% endschema %}
