@@ -16,6 +16,52 @@
                   {% endif %}
               </div>
           </div>
+          {% if forloop.index == 5 %}
+            <div class="p-4 pb-6 rounded-[16px] upsell-card flex flex-col gap-y-7 md:flex-row md:gap-x-4 md:p-5">
+                <div class="relative md:w-1/2">
+                    <picture>
+                        <source media="(max-width: 770px)" srcset="//thetrueseamoss.myshopify.com/cdn/shop/files/Rectangle_7084_650x650.webp?v=1705840872">
+                        <img class="rounded-[12px] md:h-full md:object-cover md:object-left" src="//thetrueseamoss.myshopify.com/cdn/shop/files/Rectangle_7084_large.webp?v=1705840872" alt="">
+                    </picture>
+                    <div class="absolute top-0 -left-6 -rotate-12 py-2 text-sm px-4 text-[#01050A] font-semibold leading-[normal] rounded-[4px] bg-[#F5BA4A] shadow-[0_4px_8px_0_#3a27033d] md:text-base md:font-bold">LIMITED TIME SALE NOW 🔥</div>
+                </div>
+                <div class="flex flex-col gap-y-7 md:w-1/2 md:gap-y-8">
+                    <div class="flex flex-col gap-y-5">
+                        <div class="flex items-center gap-x-2 justify-center">
+                            <hr class="w-full h-[0.5px] bg-[#4F5255] opacity-30">
+                            <p class="text-xs text-[#4F5255] font-normal leading-[normal] w-fit shrink-0 md:text-sm">Subscribe and get</p>
+                            <hr class="w-full h-[0.5px] bg-[#4F5255] opacity-30">
+                        </div>
+                        <h2 class="text-[#042A4D] text-center text-[32px] font-black leading-[normal] md:text-[28px]">20 OFF + FREE GIFT!</h2>
+                        <p class="text-[#01050A] text-center text-sm font-normal leading-[normal] capitalize">This limited-time deal is in high demand and stock keeps selling out.</p>
+                    </div>
+                    <div class="flex flex-col gap-y-5">
+                        <div>
+                            <a class="flex items-center justify-center gap-x-2.5 w-full py-4 primary-btn cursor-pointer rounded-[80px] mb-4" href="">
+                                <p class="text-base text-[#01050A] font-heading font-bold leading-[normal]">CHECK AVAILABILITY</p>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="20" viewBox="0 0 21 20" fill="none">
+            <mask id="mask0_3445_5744" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="21" height="20">
+              <rect x="0.5" width="20" height="20" fill="#D9D9D9"></rect>
+            </mask>
+            <g mask="url(#mask0_3445_5744)">
+              <path d="M13.7685 7.2777L6.54617 14.5001C6.36681 14.6794 6.14579 14.7682 5.88311 14.7666C5.62043 14.7649 5.39942 14.6744 5.22007 14.4951C5.04072 14.3157 4.95105 14.0939 4.95105 13.8295C4.95105 13.5652 5.04072 13.3434 5.22007 13.164L12.4375 5.94661H6.38311C6.11711 5.94661 5.89263 5.85513 5.70965 5.67216C5.52668 5.48918 5.4352 5.2647 5.4352 4.9987C5.4352 4.7327 5.52668 4.50821 5.70965 4.32524C5.89263 4.14227 6.11711 4.05078 6.38311 4.05078H14.7164C14.9825 4.05078 15.207 4.14227 15.3899 4.32524C15.5729 4.50821 15.6644 4.7327 15.6644 4.9987V13.332C15.6644 13.598 15.5729 13.8225 15.3899 14.0055C15.207 14.1885 14.9825 14.2799 14.7164 14.2799C14.4504 14.2799 14.226 14.1885 14.043 14.0055C13.86 13.8225 13.7685 13.598 13.7685 13.332V7.2777Z" fill="#01050A"></path>
+            </g>
+          </svg>
+                            </a>
+                            <p class="text-[#01050A] text-center text-xs font-bold leading-[normal] md:text-sm md:font-normal">DEAL ENDING IN: <span class="text-[#F00] text-xs font-bold leading-[normal]" id="dealEndCountdown">07:53:18</span></p>
+                        </div>
+                        <div>
+                            <div class="py-3 px-6 bg-white rounded-[4px] flex items-center justify-center gap-x-2 mb-4 w-fit mx-auto">
+                                <p class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">Sell-Out Risk: <span class="text-[#FFA500]">High</span></p>
+                                <span class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">|</span>
+                                <p class="text-[#01050A] font-semibold text-xs leading-[normal] md:text-sm md:font-normal">Risk FREE</p>
+                            </div>
+                            <p class="text-[#4F5255] text-xs font-normal leading-[normal] text-center md:text-sm">30 day money back guarantee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          {% endif %}
       {% endfor %}
   </div>
 </div>
