@@ -5,7 +5,7 @@
       "type": "0-listicles-hero",
       "settings": {
         "announcement": "LIMITED TIME DEAL: 20 OFF + FREE GIFT 🔥 🔥",
-        "title": "9 Incredible Ways True Sea Moss Gel Supercharges Your Health Naturally! ",
+        "title": "8 Incredible Ways True Sea Moss Gel Supercharges Your Health Naturally! ",
         "summary": "Dive into the world of Sea Moss, nature's most powerful superfood. Packed with an amazing variety of essential nutrients, this seaweed is a natural phenomenon, offering everything your body needs for peak performance and health. True Sea Moss Gel harnesses this extraordinary potential, making it not just beneficial but also a tasty addition to your daily routine. Here is what you need to know about True Sea Moss Gel:",
         "author_image": "shopify:\/\/shop_images\/b81216c8f3433479f1f0a538933840a5.png",
         "author_name": "Jane L.",
@@ -110,13 +110,6 @@
       "settings": {
       }
     },
-    "upsell": {
-      "type": "0-listicles-upsell",
-      "settings": {
-        "upsell_image": "shopify:\/\/shop_images\/Rectangle_7084.webp",
-        "upsell_product": "new-true-sea-moss-gel-powerful-superfood"
-      }
-    },
     "footer": {
       "type": "0-listicles-footer",
       "settings": {
@@ -128,7 +121,6 @@
   "order": [
     "hero",
     "content",
-    "upsell",
     "footer"
   ]
 }
