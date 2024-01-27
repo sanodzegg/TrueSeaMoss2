@@ -633,6 +633,15 @@ video {
   margin-right: auto;
 }
 
+.my-6 {
+  margin-top: 24px;
+  margin-bottom: 24px;
+}
+
+.mb-2 {
+  margin-bottom: 8px;
+}
+
 .mb-3 {
   margin-bottom: 12px;
 }
@@ -709,6 +718,10 @@ video {
   width: 32px;
 }
 
+.w-\[30px\] {
+  width: 30px;
+}
+
 .w-fit {
   width: -moz-fit-content;
   width: fit-content;
@@ -716,6 +729,18 @@ video {
 
 .w-full {
   width: 100%;
+}
+
+.min-w-\[300px\] {
+  min-width: 300px;
+}
+
+.max-w-\[1240px\] {
+  max-width: 1240px;
+}
+
+.max-w-\[300px\] {
+  max-width: 300px;
 }
 
 .max-w-\[845px\] {
@@ -732,6 +757,10 @@ video {
 
 .grow {
   flex-grow: 1;
+}
+
+.basis-1\/2 {
+  flex-basis: 50%;
 }
 
 .-rotate-12 {
@@ -751,6 +780,16 @@ video {
 
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
 }
 
 .cursor-pointer {
@@ -777,8 +816,32 @@ video {
   align-items: center;
 }
 
+.justify-start {
+  justify-content: flex-start;
+}
+
 .justify-center {
   justify-content: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.gap-4 {
+  gap: 16px;
+}
+
+.gap-5 {
+  gap: 20px;
+}
+
+.gap-8 {
+  gap: 32px;
 }
 
 .gap-x-1 {
@@ -815,6 +878,10 @@ video {
 
 .gap-y-7 {
   row-gap: 28px;
+}
+
+.overflow-x-scroll {
+  overflow-x: scroll;
 }
 
 .truncate {
@@ -865,6 +932,11 @@ video {
   background-color: rgb(79 82 85 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#6ff383\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(111 243 131 / var(--tw-bg-opacity));
+}
+
 .bg-\[\#A9E8BC\] {
   --tw-bg-opacity: 1;
   background-color: rgb(169 232 188 / var(--tw-bg-opacity));
@@ -880,6 +952,11 @@ video {
   background-color: rgb(245 250 254 / var(--tw-bg-opacity));
 }
 
+.bg-\[\#e7ff86\] {
+  --tw-bg-opacity: 1;
+  background-color: rgb(231 255 134 / var(--tw-bg-opacity));
+}
+
 .bg-\[white\] {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
@@ -888,6 +965,10 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
+
+.fill-\[\#fdae06\] {
+  fill: #fdae06;
 }
 
 .object-cover {
@@ -929,6 +1010,11 @@ video {
 .px-6 {
   padding-left: 24px;
   padding-right: 24px;
+}
+
+.px-\[15px\] {
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .py-1 {
@@ -978,10 +1064,6 @@ video {
   padding-bottom: 24px;
 }
 
-.pt-10 {
-  padding-top: 40px;
-}
-
 .pt-5 {
   padding-top: 20px;
 }
@@ -1005,6 +1087,15 @@ video {
 .text-2xl {
   font-size: 24px;
   line-height: 32px;
+}
+
+.text-3xl {
+  font-size: 30px;
+  line-height: 36px;
+}
+
+.text-\[18px\] {
+  font-size: 18px;
 }
 
 .text-\[32px\] {
@@ -1088,17 +1179,35 @@ video {
   color: rgb(255 165 0 / var(--tw-text-opacity));
 }
 
+.text-\[\#ff9a5f\] {
+  --tw-text-opacity: 1;
+  color: rgb(255 154 95 / var(--tw-text-opacity));
+}
+
 .text-black {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
+}
+
+.text-gray-200 {
+  --tw-text-opacity: 1;
+  color: rgb(229 231 235 / var(--tw-text-opacity));
 }
 
 .underline {
   text-decoration-line: underline;
 }
 
+.line-through {
+  text-decoration-line: line-through;
+}
+
 .opacity-30 {
   opacity: 0.3;
+}
+
+.opacity-60 {
+  opacity: 0.6;
 }
 
 .shadow {
@@ -1131,6 +1240,13 @@ video {
 
 .ease-in-out {
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dark\:text-gray-600 {
+    --tw-text-opacity: 1;
+    color: rgb(75 85 99 / var(--tw-text-opacity));
+  }
 }
 
 @media (min-width: 768px) {
@@ -1236,6 +1352,10 @@ video {
     padding-top: 60px;
   }
 
+  .md\:text-\[22px\] {
+    font-size: 22px;
+  }
+
   .md\:text-\[28px\] {
     font-size: 28px;
   }
@@ -1269,8 +1389,51 @@ video {
 }
 
 @media (min-width: 1024px) {
+  .lg\:w-auto {
+    width: auto;
+  }
+
+  .lg\:basis-1\/2 {
+    flex-basis: 50%;
+  }
+
+  .lg\:flex-row {
+    flex-direction: row;
+  }
+
+  .lg\:items-center {
+    align-items: center;
+  }
+
+  .lg\:gap-5 {
+    gap: 20px;
+  }
+
+  .lg\:gap-8 {
+    gap: 32px;
+  }
+
+  .lg\:px-0 {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .lg\:pt-10 {
+    padding-top: 40px;
+  }
+
   .lg\:pt-20 {
     padding-top: 80px;
+  }
+
+  .lg\:text-2xl {
+    font-size: 24px;
+    line-height: 32px;
+  }
+
+  .lg\:text-base {
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 

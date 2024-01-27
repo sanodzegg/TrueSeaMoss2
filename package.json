@@ -161,8 +161,11 @@
   },
 
   "scripts": {
+
     "dev": "shopify theme dev --store=thetrueseamoss.myshopify.com",
+
     "watch": "npx tailwindcss -i ./style.css -o ./assets/custom-styles.css --watch"
+
   },
 
   "author": "",
