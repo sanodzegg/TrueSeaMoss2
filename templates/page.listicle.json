@@ -214,7 +214,7 @@
         "terms": "shopify:\/\/policies\/terms-of-service"
       }
     }
-  },
+  }, 
   "order": [
     "hero",
     "content",
