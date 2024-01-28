@@ -110,6 +110,103 @@
       "settings": {
       }
     },
+    "reviews-slider": {
+      "type": "0-listicles-reviews",
+      "blocks": {
+        "review_AMGcBE": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/image_32.png"
+          }
+        },
+        "review_qYB9KC": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/image_43.png"
+          }
+        },
+        "review_9UHgFm": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/image_40.png"
+          }
+        },
+        "review_KFiAFE": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/image_36.png"
+          }
+        },
+        "review_Wm68zJ": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/Screenshot_20231102-162909_Business_Suite.jpg"
+          }
+        },
+        "review_UKzYVd": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/image_27.png"
+          }
+        },
+        "review_YKVUrK": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/Screenshot_20231116-140730_Business_Suite.jpg"
+          }
+        },
+        "review_wcQpJN": {
+          "type": "review",
+          "settings": {
+            "name": "",
+            "desc": "",
+            "video_or_img": "image",
+            "video-url-id": "",
+            "image": "shopify:\/\/shop_images\/Screenshot_20231103-233413_Business_Suite.jpg"
+          }
+        }
+      },
+      "block_order": [
+        "review_AMGcBE",
+        "review_qYB9KC",
+        "review_9UHgFm",
+        "review_KFiAFE",
+        "review_Wm68zJ",
+        "review_UKzYVd",
+        "review_YKVUrK",
+        "review_wcQpJN"
+      ],
+      "settings": {
+      }
+    },
     "footer": {
       "type": "0-listicles-footer",
       "settings": {
@@ -121,6 +218,7 @@
   "order": [
     "hero",
     "content",
+    "reviews-slider",
     "footer"
   ]
 }

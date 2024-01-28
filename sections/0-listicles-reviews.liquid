@@ -1,476 +1,179 @@
-{{ 'customer-feedback.css' | asset_url | stylesheet_tag }}
-<script src='{{ 'play-video.js' | asset_url }}' defer></script>
+	<!-- Required Core Stylesheet -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/css/glide.core.min.css">
 
-{% liquid
-	assign title = section.settings.title
-	assign subtitle = section.settings.subtitle
-	assign reviews_label = section.settings.reviews_label
-	assign desc = section.settings.desc
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Glide.js/3.2.0/glide.min.js"></script>
 
-	assign button_text = section.settings.button_text
-%}
+<script src="https://player.vimeo.com/api/player.js"></script>
 
-{% style %}
-	@font-face {
-		   font-family: 'GeneralSans';
-		   font-weight: 400;
-		   font-style: normal;
-		   font-display: swap;
-		   src: url('{{ "GeneralSans-Regular.woff2" | asset_url }}') format('woff2');
-		 }
-
-		 @font-face {
-		   font-family: 'GeneralSans';
-		   font-weight: 500;
-		   font-style: normal;
-		   font-display: swap;
-		   src: url('{{ "GeneralSans-Medium.woff2" | asset_url }}') format('woff2');
-		 }
-			#shopify-section-{{ section.id }}{
-				--padding-top: {{ section.settings.paddingTop_desktop }}px;
-				--padding-bottom: {{ section.settings.paddingBottom_desktop }}px;
-		}
-
-		@media screen and (max-width: 768px) {
-			#shopify-section-{{ section.id }}{
-				--padding-top: {{ section.settings.paddingTop_mobile }}px;
-				--padding-bottom: {{ section.settings.paddingBottom_mobile }}px;
-			}
-		}
-
-		{% if template contains "product" %}
-			{% if product.metafields.custom.show_testimonials_section != true %}
-				.customer-feedback{
-					display: none !important;
-				}
-			{% endif %}
-		{% endif %}
-{% endstyle %}
-
-<div
-	class='customer-feedback'
-	style='
-		padding-top: var(--padding-top);
-		padding-bottom: var(--padding-bottom);
-	'
->
-	<div class='customer-feedback__container {% if template.suffix == "subscriptions" %} pt-5 lg:pt-20 {% endif %}'>
-		<div class='customer-feedback__section-content'>
-			<div class='customer-feedback__title-wrap'>
-				{% if title != blank %}
-					<h1 class='customer-feedback__title-wrap--title'>{{ title }}</h1>
-				{% endif %}
-
-				{% if subtitle != blank %}
-					<span class='customer-feedback__title-wrap--subtitle'>
-						{{ subtitle }}
-					</span>
-				{% endif %}
-			</div>
-
-			<script>
-				const options = {
-					method: 'GET',
-					headers: { accept: 'application/json', 'Content-Type': 'application/json' }
-				};
-				
-				fetch('https://api.yotpo.com/v1/apps/3NhG13UQDuUl6r31Ov5IEKsACm6Md9TxF4TTruxD/bottom_lines?count=100', options)
-				.then(response => response.json())
-					.then(response => {
-						// Assuming the response contains a property 'reviews_label'
-						// Update this according to the actual structure of your API response
-						const reviews = response.response.bottomlines;
-
-						let reviewScore = 0;
-						let reviewCount = 0;
-
-						reviews.forEach((item)=>{
-							reviewScore += item.product_score;
-							reviewCount += item.total_reviews;
-						})
-
-						reviewScore = (reviewScore / reviews.length).toFixed(1);
-
-						console.log(reviewScore, reviewCount)
-				
-						// Select the element and update its content
-						const reviewsLabelElement = document.getElementById('reviewsLabel');
-						reviewsLabelElement.innerHTML = `
-						{% render 'icon', icon: 'star-20' %}
-						${reviewScore} out of 5 stars from ${reviewCount} reviews
-						`;
-					})
-					.catch(err => console.error(err));				
-			</script>
-
-			<div class='customer-feedback__desc-wrap'>
-				<div class='customer-feedback__desc-wrap--label'>
-					<div class='element-tag label-new' id="reviewsLabel">
-						{% render 'icon', icon: 'star-20' %}
-						{{ reviews_label }}
-					</div>
-			</div>
-			
-
-				{% if desc != blank %}
-					<span class='customer-feedback__desc-wrap--desc'>
-						{{ desc }}
-					</span>
-				{% endif %}
-			</div>
-
-			<div class='customer-feedback__btn desktop'>
-				<div class='cs-button'>
-					{% if button_text != blank %}
-						<a href='/pages/reviews' class='btn-new btn-new--secondary'>{{ button_text }} </a>
-					{% endif %}
-				</div>
-			</div>
+<div class=" max-w-[1440px] mx-auto px-[15px] lg:px-[8%] py-4">
+	<div class=" text-left md:text-center ">
+		<div class="mx-auto flex justify-center items-center gap-4 mb-2">
+			<svg width="152" height="24" viewBox="0 0 152 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M22.4237 9.13125C22.3298 8.83592 22.1489 8.57585 21.9046 8.38513C21.6604 8.19441 21.3642 8.08195 21.0549 8.0625L15.4862 7.67813L13.4237 2.475C13.3111 2.1885 13.115 1.94241 12.861 1.76858C12.6069 1.59475 12.3065 1.50118 11.9987 1.5C11.6909 1.50118 11.3905 1.59475 11.1364 1.76858C10.8823 1.94241 10.6863 2.1885 10.5737 2.475L8.47369 7.70625L2.94244 8.0625C2.63354 8.08321 2.33796 8.19614 2.09394 8.38668C1.84992 8.57722 1.66869 8.83659 1.57369 9.13125C1.47614 9.43043 1.47044 9.75197 1.55733 10.0544C1.64422 10.3569 1.81971 10.6263 2.06119 10.8281L6.31744 14.4281L5.05182 19.4062C4.96425 19.743 4.98001 20.0983 5.09704 20.426C5.21408 20.7537 5.42697 21.0386 5.70807 21.2438C5.98091 21.4396 6.30597 21.5495 6.64166 21.5596C6.97736 21.5696 7.3084 21.4792 7.59244 21.3L11.9893 18.5156H12.0081L16.7424 21.5062C16.9853 21.6641 17.2684 21.7487 17.5581 21.75C17.7945 21.7481 18.0275 21.6921 18.2389 21.5861C18.4503 21.4802 18.6346 21.3272 18.7777 21.1389C18.9207 20.9505 19.0187 20.7319 19.0641 20.4998C19.1094 20.2677 19.101 20.0283 19.0393 19.8L17.6987 14.3531L21.9362 10.8281C22.1777 10.6263 22.3532 10.3569 22.4401 10.0544C22.5269 9.75197 22.5212 9.43043 22.4237 9.13125Z" fill="#F7CD34"/>
+				<path d="M54.4237 9.13125C54.3298 8.83592 54.1489 8.57585 53.9046 8.38513C53.6604 8.19441 53.3642 8.08195 53.0549 8.0625L47.4862 7.67813L45.4237 2.475C45.3111 2.1885 45.115 1.94241 44.861 1.76858C44.6069 1.59475 44.3065 1.50118 43.9987 1.5C43.6909 1.50118 43.3905 1.59475 43.1364 1.76858C42.8823 1.94241 42.6863 2.1885 42.5737 2.475L40.4737 7.70625L34.9424 8.0625C34.6335 8.08321 34.338 8.19614 34.0939 8.38668C33.8499 8.57722 33.6687 8.83659 33.5737 9.13125C33.4761 9.43043 33.4704 9.75197 33.5573 10.0544C33.6442 10.3569 33.8197 10.6263 34.0612 10.8281L38.3174 14.4281L37.0518 19.4062C36.9643 19.743 36.98 20.0983 37.097 20.426C37.2141 20.7537 37.427 21.0386 37.7081 21.2438C37.9809 21.4396 38.306 21.5495 38.6417 21.5596C38.9774 21.5696 39.3084 21.4792 39.5924 21.3L43.9893 18.5156H44.0081L48.7424 21.5062C48.9853 21.6641 49.2684 21.7487 49.5581 21.75C49.7945 21.7481 50.0275 21.6921 50.2389 21.5861C50.4503 21.4802 50.6346 21.3272 50.7777 21.1389C50.9207 20.9505 51.0187 20.7319 51.0641 20.4998C51.1094 20.2677 51.101 20.0283 51.0393 19.8L49.6987 14.3531L53.9362 10.8281C54.1777 10.6263 54.3532 10.3569 54.4401 10.0544C54.5269 9.75197 54.5212 9.43043 54.4237 9.13125Z" fill="#F7CD34"/>
+				<path d="M86.4237 9.13125C86.3298 8.83592 86.1489 8.57585 85.9046 8.38513C85.6604 8.19441 85.3642 8.08195 85.0549 8.0625L79.4862 7.67813L77.4237 2.475C77.3111 2.1885 77.115 1.94241 76.861 1.76858C76.6069 1.59475 76.3065 1.50118 75.9987 1.5C75.6909 1.50118 75.3905 1.59475 75.1364 1.76858C74.8823 1.94241 74.6863 2.1885 74.5737 2.475L72.4737 7.70625L66.9424 8.0625C66.6335 8.08321 66.338 8.19614 66.0939 8.38668C65.8499 8.57722 65.6687 8.83659 65.5737 9.13125C65.4761 9.43043 65.4704 9.75197 65.5573 10.0544C65.6442 10.3569 65.8197 10.6263 66.0612 10.8281L70.3174 14.4281L69.0518 19.4062C68.9643 19.743 68.98 20.0983 69.097 20.426C69.2141 20.7537 69.427 21.0386 69.7081 21.2438C69.9809 21.4396 70.306 21.5495 70.6417 21.5596C70.9774 21.5696 71.3084 21.4792 71.5924 21.3L75.9893 18.5156H76.0081L80.7424 21.5062C80.9853 21.6641 81.2684 21.7487 81.5581 21.75C81.7945 21.7481 82.0275 21.6921 82.2389 21.5861C82.4503 21.4802 82.6346 21.3272 82.7777 21.1389C82.9207 20.9505 83.0187 20.7319 83.0641 20.4998C83.1094 20.2677 83.101 20.0283 83.0393 19.8L81.6987 14.3531L85.9362 10.8281C86.1777 10.6263 86.3532 10.3569 86.4401 10.0544C86.5269 9.75197 86.5212 9.43043 86.4237 9.13125Z" fill="#F7CD34"/>
+				<path d="M118.424 9.13125C118.33 8.83592 118.149 8.57585 117.905 8.38513C117.66 8.19441 117.364 8.08195 117.055 8.0625L111.486 7.67813L109.424 2.475C109.311 2.1885 109.115 1.94241 108.861 1.76858C108.607 1.59475 108.307 1.50118 107.999 1.5C107.691 1.50118 107.39 1.59475 107.136 1.76858C106.882 1.94241 106.686 2.1885 106.574 2.475L104.474 7.70625L98.9424 8.0625C98.6335 8.08321 98.338 8.19614 98.0939 8.38668C97.8499 8.57722 97.6687 8.83659 97.5737 9.13125C97.4761 9.43043 97.4704 9.75197 97.5573 10.0544C97.6442 10.3569 97.8197 10.6263 98.0612 10.8281L102.317 14.4281L101.052 19.4062C100.964 19.743 100.98 20.0983 101.097 20.426C101.214 20.7537 101.427 21.0386 101.708 21.2438C101.981 21.4396 102.306 21.5495 102.642 21.5596C102.977 21.5696 103.308 21.4792 103.592 21.3L107.989 18.5156H108.008L112.742 21.5062C112.985 21.6641 113.268 21.7487 113.558 21.75C113.795 21.7481 114.027 21.6921 114.239 21.5861C114.45 21.4802 114.635 21.3272 114.778 21.1389C114.921 20.9505 115.019 20.7319 115.064 20.4998C115.109 20.2677 115.101 20.0283 115.039 19.8L113.699 14.3531L117.936 10.8281C118.178 10.6263 118.353 10.3569 118.44 10.0544C118.527 9.75197 118.521 9.43043 118.424 9.13125Z" fill="#F7CD34"/>
+				<path d="M150.424 9.13125C150.33 8.83592 150.149 8.57585 149.905 8.38513C149.66 8.19441 149.364 8.08195 149.055 8.0625L143.486 7.67813L141.424 2.475C141.311 2.1885 141.115 1.94241 140.861 1.76858C140.607 1.59475 140.307 1.50118 139.999 1.5C139.691 1.50118 139.39 1.59475 139.136 1.76858C138.882 1.94241 138.686 2.1885 138.574 2.475L136.474 7.70625L130.942 8.0625C130.634 8.08321 130.338 8.19614 130.094 8.38668C129.85 8.57722 129.669 8.83659 129.574 9.13125C129.476 9.43043 129.47 9.75197 129.557 10.0544C129.644 10.3569 129.82 10.6263 130.061 10.8281L134.317 14.4281L133.052 19.4062C132.964 19.743 132.98 20.0983 133.097 20.426C133.214 20.7537 133.427 21.0386 133.708 21.2438C133.981 21.4396 134.306 21.5495 134.642 21.5596C134.977 21.5696 135.308 21.4792 135.592 21.3L139.989 18.5156H140.008L144.742 21.5062C144.985 21.6641 145.268 21.7487 145.558 21.75C145.795 21.7481 146.027 21.6921 146.239 21.5861C146.45 21.4802 146.635 21.3272 146.778 21.1389C146.921 20.9505 147.019 20.7319 147.064 20.4998C147.109 20.2677 147.101 20.0283 147.039 19.8L145.699 14.3531L149.936 10.8281C150.178 10.6263 150.353 10.3569 150.44 10.0544C150.527 9.75197 150.521 9.43043 150.424 9.13125Z" fill="#F7CD34"/>
+			</svg>
+			<p>35,719 Five Star Reviews!</p>
 		</div>
-
-		{% comment %} Blocks with reviews {% endcomment %}
-		<div class='customer-feedback__block customer-feedback__block--{{ section.id }}'>
-			{% for block in section.blocks %}
-				<div class='customer-feedback__slide-container'>
-					{% if block.type == 'text' %}
-						<div class='customer-feedback__block--wrapper'>
-							<div class='customer-feedback__block--review'>
-								<div>
-									{% if block.settings.review_rating != blank %}
-										<div class='customer-feedback__block--review_rating'>
-											<div class='cs-button'>
-												<a href='#' class='btn-new btn-new--secondary-small'>
-													{% render 'icon', icon: 'star-20' %}
-													{{- block.settings.review_rating }}
-												</a>
-											</div>
-										</div>
-									{% endif %}
-
-									{% if block.settings.name != blank %}
-										<div class='customer-feedback__block--name'>
-											{{ block.settings.name }}
-										</div>
-									{% endif %}
-
-									{% if block.settings.title != blank %}
-										<div class='customer-feedback__block--title'>
-											{{ block.settings.title }}
-										</div>
-									{% endif %}
-
-									{% if block.settings.description != blank %}
-										<div class='customer-feedback__block--description'>
-											{{ block.settings.description }}
-										</div>
-									{% endif %}
-								</div>
-
-								<div class='customer-feedback__block--product'>
-									{% if block.settings.image != blank %}
-										<div class='customer-feedback__block--image'>
-											{% render 'image', image: block.settings.image %}
-										</div>
-									{% endif %}
-
-									{% if block.settings.reviewed_product != blank %}
-										<div class='customer-feedback__block--reviewed_product'>
-											<span class='customer-feedback__block--reviewed'>Reviewed</span>
-
-											<span class='customer-feedback__block--reviewed-2'>
-												{{- block.settings.reviewed_product -}}
-											</span>
-										</div>
-									{% endif %}
-								</div>
-							</div>
-						</div>
-					{% endif %}
-
-					{% comment %} Blocks with reviews VIDEO{% endcomment %}
-
-					{% if block.type == 'video' %}
-						{%- assign video = block.settings.user_video -%}
-						{% if video != blank %}
-							<div class='customer-feedback__block--wrapper video-block'>
-								{% if block.settings.user_video != blank %}
-									<div class='customer-feedback__block video'>
-										<button class='customer-feedback__block--play'>
-											{% render 'icon', icon: 'play' %}
-										</button>
-
-										{% render 'video' with block.settings.user_video, autoplay: false %}
-									</div>
-								{% endif %}
-
-								<div class='block'>
-									{% if block.settings.user_img != blank %}
-										<div class='customer-feedback__block--image img'>
-											{% render 'image', image: block.settings.user_img %}
-										</div>
-									{% endif %}
-
-									<div class='text-box !items-start'>
-										{% if block.settings.user_name != blank %}
-											<div class='customer-feedback__block--name name'>
-												{{ block.settings.user_name }}
-											</div>
-										{% endif %}
-										{% if block.settings.user_rating != blank %}
-											<div class='customer-feedback__block--review_rating review-rating'>
-												<div class='cs-button'>
-													<a href='#' class='btn-new btn-new--secondary-small'>
-														{% render 'icon', icon: 'star-20' %}
-														{{- block.settings.user_rating }}
-													</a>
-												</div>
-											</div>
-										{% endif %}
-									</div>
-								</div>
-							</div>
-						{% endif %}
-					{% endif %}
-				</div>
-			{% endfor %}
-		</div>
-
-		<div class='customer-feedback__btn mobile'>
-			<div class='cs-button'>
-				{% if button_text != blank %}
-					<a href='/pages/reviews' class='btn-new btn-new--secondary'>{{ button_text }} </a>
-				{% endif %}
-			</div>
-		</div>
+		<h2 class="mb-4 text-[24px] text-center font-medium text-[#051122] md:mb-2.5 md:text-[36px] leading-[1.1]">
+			Beyond More Words: Just Discover <br class="hidden lg:block"> Real Sea Moss Users Experience
+		</h2>
+		{% comment %} <p class="mb-6 max-w-[600px] text-center mx-auto text-xl font-normal leading-[32px] text-[#555E69] md:mb-8">
+			6 locations to serve you better. Test and choose your mattress in-store at Mattress King.
+		</p> {% endcomment %}
 	</div>
+
+    <div class="glide mt-8">
+        <div class="glide__track" data-glide-el="track">  
+          <ul class="glide__slides">
+            
+            {%for review in section.blocks %}
+                <div class="glide__slide text-center bg-white rounded-xl">
+                    
+                    {%if review.settings.video_or_img == "image"%}
+                        <div>
+                            <img class="object-contain mx-auto mb-4 w-full" src="{{ review.settings.image | img_url: "master" }}" />
+                        </div>
+                    {%endif%}
+
+                    {%if review.settings.video_or_img == "video"%}
+                        <div class="video-open" data-url={{review.settings.video-url-id}}>
+                            <img class="aspect-square object-cover max-w-xs mx-auto mb-4 w-full" src={{review.settings.image}} />
+                        </div>
+                    {%endif%}
+
+                    <div class="flex items-center justify-center gap-3 mt-4">                    
+                        <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="11" fill="#4D8DCA"/>
+                        <path d="M6 10.8182L9.33333 14L16 7" stroke="white" stroke-width="2" stroke-linejoin="round"/> 
+                        </svg>
+                        <p class="text-[#797879] text-xs">Verified Customer</p>
+                    </div>
+                  </div>
+            {%endfor%}
+
+          </ul>
+        </div>
+        <div class="glide__arrows absolute top-[20%] left-[50%] w-[110%] flex justify-between -translate-x-1/2 -translate-y-1/2" data-glide-el="controls">
+            <button class="glide__arrow glide__arrow--left left-4" data-glide-dir="<">
+               <div class="h-9 w-9  bg-[#FFFFFF] rounded-full flex justify-center items-center my-auto hover:bg-[#e6e6e6] duration-300 ease-in-out">
+                    <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path class="stroke-black" d="M9.5 1L1.5 9L9.5 17" stroke-width="1.5" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+            </button>
+            <button class="glide__arrow glide__arrow--right right-4" data-glide-dir=">">
+              <div class="h-9 w-9  bg-[#FFFFFF] rounded-full flex justify-center items-center my-auto hover:bg-[#e6e6e6] duration-300 ease-in-out">
+                <svg width="11" height="18" viewBox="0 0 11 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path class="stroke-black" d="M1.5 17L9.5 9L1.5 0.999999" stroke-width="1.5" stroke-linejoin="round"/>
+                </svg>                    
+              </div>
+            </button>
+        </div>
+    </div>
 </div>
 
-<script>
-	$(document).ready(function () {
-		$('.customer-feedback__block--{{ section.id }}').slick({
-			arrows: false,
-			slidesToShow: 1,
-			slidesToScroll: 1,
-			variableWidth: false,
-			lazyLoad: 'progressive',
-			infinite: false,
-			swipeToSlide: true,
-			mobileFirst: true,
-			slidesToShow: 1.08,
-			responsive: [
-				{
-					breakpoint: 480,
-					settings: {
-						slidesToShow: 1.5,
-					},
-				},
-				{
-					breakpoint: 650,
-					settings: {
-						slidesToShow: 1.5,
-					},
-				},
-				{
-					breakpoint: 1024,
-					settings: {
-						arrows: true,
-						prevArrow:
-							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						nextArrow:
-							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						slidesToShow: 1.75,
-					},
-				},
-				{
-					breakpoint: 1441,
-					settings: {
-						arrows: true,
-						prevArrow:
-							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						nextArrow:
-							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						slidesToShow: 2.25,
-					},
-				},
-				{
-					breakpoint: 1920,
-					settings: {
-						arrows: true,
-						prevArrow:
-							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						nextArrow:
-							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						slidesToShow: 2.5,
-					},
-				},
-				{
-					breakpoint: 2500,
-					settings: {
-						arrows: true,
-						prevArrow:
-							"<button type='button' class='slick-prev pull-left btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M5.3335 15.9999H28.0002M5.3335 15.9999L12.0002 9.33325M5.3335 15.9999L12.0002 22.6666' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						nextArrow:
-							"<button type='button' class='slick-next pull-right btn-new btn-new--arrow'><svg xmlns='http://www.w3.org/2000/svg' width='32'height='32' viewBox='0 0 32 32' fill='none'> <path d='M26.6667 15.9999H4M26.6667 15.9999L20 22.6666M26.6667 15.9999L20 9.33325' stroke='#1C1C1C' stroke-width='1.2' stroke-linecap='round' stroke-linejoin='round'/> </svg></button>",
-						slidesToShow: 3.25,
-					},
-				},
-			],
-		});
+<div class="modal" style="display: none">
+    <div class="bg-[rgba(1,1,1,0.6)] fixed w-full h-full left-0 top-0 z-[9999]" class="modal-bg" onClick="closeVideo()"></div>
+        <div
+            class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[90vw] md:max-w-[500px] bg-white z-[9999999999] p-[18px] md:px-8 md:py-4 rounded-[10px] modal-content">
+            <div class="modal-close-button" onClick="closeVideo()" style="z-index: 999;"></div>
+
+        </div>
+    </div>
+</div>
+
+<script defer>
+	window.addEventListener('load', function() {
+    var glideMulti = new Glide('.glide', {
+    type: 'carousel',
+    autoplay: 3500,
+    perView: 3,
+    breakpoints: {
+        700: {
+			perView: 1
+		}
+	},
+    gap: 0
+    }).mount();
+
+    document.querySelectorAll('.video-open').forEach((item)=>{
+        item.addEventListener('click', (e)=>{
+            e.preventDefault();
+            document.querySelector('.modal').style.display = 'block';
+            document.querySelector('.modal-content').insertAdjacentHTML('beforeend', `
+                <iframe width="500" height="500" src="https://player.vimeo.com/video/${item.dataset.url}?h=fbec6a3d9c&amp;badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen style="min-height: 70vh; position:relative;top:0;left:0;width:100%;height:100%;"></iframe>
+            `);
+        });
+    })
+
+    function closeVideo(){
+        document.querySelector('.modal').style.display = 'none';
+        document.querySelector('.modal-content iframe').remove();
+    }
 	});
 </script>
 
+<!-- prettier-ignore -->
 {% schema %}
 {
-	"name": "Customer feedback",
-	"settings": [
-		{
-			"type": "header",
-			"content": "Section settings"
-		},
-		{
-			"type": "range",
-			"id": "paddingTop_mobile",
-			"min": 0,
-			"max": 100,
-			"step": 2,
-			"unit": "px",
-			"label": "Padding top for mobile",
-			"default": 0
-		},
-		{
-			"type": "range",
-			"id": "paddingBottom_mobile",
-			"min": 0,
-			"max": 100,
-			"step": 2,
-			"unit": "px",
-			"label": "Padding bottom for mobile",
-			"default": 0
-		},
-		{
-			"type": "range",
-			"id": "paddingTop_desktop",
-			"min": 0,
-			"max": 100,
-			"step": 2,
-			"unit": "px",
-			"label": "Padding top for desktop",
-			"default": 0
-		},
-		{
-			"type": "range",
-			"id": "paddingBottom_desktop",
-			"min": 0,
-			"max": 100,
-			"step": 2,
-			"unit": "px",
-			"label": "Padding bottom for desktop",
-			"default": 0
-		},
-
-		{
-			"type": "text",
-			"id": "title",
-			"label": "Main title",
-			"default": "Title"
-		},
-		{
-			"type": "text",
-			"id": "subtitle",
-			"label": "Subtitle",
-			"default": "Subtitle"
-		},
-		{
-			"type": "text",
-			"id": "reviews_label",
-			"label": "Reviews label",
-			"default": "Reviews label"
-		},
-		{
-			"type": "richtext",
-			"id": "desc",
-			"label": "Description",
-			"default": "<p> Description</p>"
-		},
-		{
-			"type": "header",
-			"content": "Button settings"
-		},
-		{
-			"type": "text",
-			"id": "button_text",
-			"label": "Button text"
-		}
-	],
-
-	"blocks": [
-		{
-			"name": "Reviews",
-			"type": "text",
-			"settings": [
-				{
-					"type": "text",
-					"id": "review_rating",
-					"label": "Reviews rating"
-				},
-				{
-					"type": "text",
-					"id": "name",
-					"label": "Customer name"
-				},
-				{
-					"type": "text",
-					"id": "title",
-					"label": "Name of review"
-				},
-				{
-					"type": "richtext",
-					"id": "description",
-					"label": "Description of review"
-				},
-				{
-					"type": "text",
-					"id": "reviewed_product",
-					"label": "Reviewed product"
-				},
-				{
-					"type": "image_picker",
-					"id": "image",
-					"label": "Product image"
-				}
-			]
-		},
-		{
-			"name": "Video review",
-			"type": "video",
-			"settings": [
-				{
-					"type": "video",
-					"id": "user_video",
-					"label": "Video"
-				},
-				{
-					"type": "text",
-					"id": "user_name",
-					"label": "Customer name on video review"
-				},
-				{
-					"type": "text",
-					"id": "user_rating",
-					"label": "Rating on video review"
-				},
-				{
-					"type": "image_picker",
-					"id": "user_img",
-					"label": "User image"
-				}
-			]
-		}
-	],
-	"presets": [
-		{
-			"name": "Customer feedback"
-		}
-	]
-}
+    "name": {
+      "en": "Custom Reviews Slider"
+    },
+    "class": "custom-reviews-slider",
+    "tag": "section",
+    "settings": [],
+    "blocks": [
+      {
+        "name": "Review",
+        "type": "review",
+        "settings": [
+          {
+            "type": "text",
+            "id": "name",
+            "label": "Name"
+          },
+          {
+            "type": "text",
+            "id": "desc",
+            "label": "Description"
+          },
+          {
+            "type": "radio",
+            "id": "video_or_img",
+            "label": "Video or img",
+            "options": [
+              {
+                "value": "video",
+                "label": "Video"
+              },
+              {
+                "value": "image",
+                "label": "Image"
+              }
+            ],
+            "default": "image"
+          },
+          {
+            "type": "text",
+            "id": "video-url-id",
+            "label": "Video id"
+          },
+          {
+            "type": "image_picker",
+            "id": "image",
+            "label": "Image" 
+          }
+        ]
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Reviews Slider",
+        "category": "Custom"
+      }
+    ]
+  }
 {% endschema %}
