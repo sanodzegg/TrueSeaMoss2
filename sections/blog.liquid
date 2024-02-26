@@ -1,5 +1,14 @@
 <!-- Custom code -->
-
+<style>
+                        .article__preview-image {
+                           display: block; /* Убедитесь, что div отображается как блок */
+                           width: 100%; /* Задаёт ширину div */
+                           height: auto; /* Задаёт автоматическую высоту для сохранения пропорций */
+                           background-size: contain; /* Убедитесь, что фон содержит всё изображение */
+                           background-repeat: no-repeat; /* Предотвращает повторение изображения */
+                           background-position: center; /* Центрирует изображение в контейнере */
+                        }
+</style>
 {%- comment -%} /sections/blog-template.liquid {%- endcomment -%}
 {%- liquid
   assign enable_infinity_scroll = settings.enable_infinity_scroll
@@ -176,16 +185,30 @@
                 {%- if article.image -%}
                   <a href="{{ article.url }}" class="blog-post__item__image-link">
                     <div class="post-item_badge ">
-                      {% assign reading_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 250 | ceil | plus: 20 %}
+                      {% assign random_addition = "now" | date: "%N" | modulo: 4 | plus: 4 %}
+                      {% assign reading_time = article.content | strip_html | split: ' ' | size | times: 1.0 | divided_by: 50 | ceil | plus: random_addition %}
+                      <script>
+                           console.log("Content:", "{{ article.content | escape }}");
+                           console.log("Reading time:", {{ reading_time }});
+                      </script>
                       {%- assign name_blog = blog.title -%}
-                      <span>{{name_blog}} {{ 'blogs.article.time_read' | t: time: reading_time }} </span>
+                     {%- comment -%} <span>{{name_blog}} {{ 'blogs.article.time_read' | t: time: reading_time }} </span> {%- endcomment -%}
+                 
+                      <span> {{ 'blogs.article.time_read' | t: time: reading_time }} </span>
+                      
                     </div>
+                    
+                  
+
                     <div
                       class="article__preview-image lazyload"
                       data-bgset="{% render 'bgset', image: article.image %}"
                       data-sizes="auto"
                       data-parent-fit="cover">
                     </div>
+                    <script>                    
+                      console.log("Image size:", {{ image.width }});
+                    </script>
                     <noscript>
                       <div class="article__preview-image" style="background-image:url('{{ article.image | img_url: '2048x' }};')"></div>
                     </noscript>
@@ -338,6 +361,7 @@
           "id": "article",
           "label": "Статья"
         },
+        
         {
           "type": "image_picker",
           "id": "block_image",

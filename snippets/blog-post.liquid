@@ -11,25 +11,34 @@
 -%}
 
 {%- capture article_image -%}
-  {%- if article.image -%}
+  {%- if article.metafields.custom.foto -%}
     <a href="{{ article.url }}" title="{{ article.title }}" aria-label="{{ article.title }}"
       class="post__image lazyload"
-      {% if article.image %}
-      data-bgset="{% render 'bgset', image: article.image %}"
-      data-sizes="auto"
-      data-parent-fit="cover"
-      {% endif %}>
+      style="background-image:url('{{ article.metafields.custom.foto | img_url: '2048x' }}');">
     </a>
-    <noscript>
-      <a class="post__image" style="background-image:url('{{ article.image | img_url: '2048x' }}');"></a>
-    </noscript>
+  {%- else -%}
+    {%- if article.image -%}
+      <a href="{{ article.url }}" title="{{ article.title }}" aria-label="{{ article.title }}"
+        class="post__image lazyload"
+        {% if article.image %}
+        data-bgset="{% render 'bgset', image: article.image %}"
+        data-sizes="auto"
+        data-parent-fit="cover"
+        {% endif %}>
+      </a>
+      <noscript>
+        <a class="post__image" style="background-image:url('{{ article.image | img_url: '2048x' }}');"></a>
+      </noscript>
+    {%- endif -%}
   {%- endif -%}
 {%- endcapture -%}
 
 {%- capture article_image_onboarding -%}
-  <div class="post__image placeholder-svg--overlayed">
-    {{- 'image' | placeholder_svg_tag: 'placeholder-svg-filled' -}}
-  </div>
+  {%- unless article.metafields.custom.foto -%}
+    <div class="post__image placeholder-svg--overlayed">
+      {{- 'image' | placeholder_svg_tag: 'placeholder-svg-filled' -}}
+    </div>
+  {%- endunless -%}
 {%- endcapture -%}
 
 {%- capture article_tags -%}

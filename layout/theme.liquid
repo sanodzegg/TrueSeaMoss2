@@ -8,7 +8,7 @@
     <meta name="google-site-verification" content="P0RCi1QbSu5nevq8sML19gxW0qSqF9xMEiKXxvTr9hM" />
   
 
-
+  <meta name="msvalidate.01" content="B578E2AC1158A7A21B182586D0BEEB32" />
   <meta name="facebook-domain-verification" content="3kzz2l0g3f78yaf4v4me2056rq404q" />
   <link rel="canonical" href="{{ canonical_url }}" />
   {%- render 'css-variables' -%}
@@ -333,7 +333,37 @@
     }
     </script>
                                             {% comment %} END CAST SCRIPT Valery{% endcomment %}
-                                            
+
+                                              {% comment %} pixel smsbump{% endcomment %}
+<script src="https://d18eg7dreypte5.cloudfront.net/browse-abandonment/v2/generic.js" async></script>
+
+<script>
+      window.wtba = window.wtba || [];
+     window.wtba.push({
+       "type": "config",
+       "options": {
+          "platform": 2, //shopify
+           "store": "thetrueseamoss.myshopify.com" // ваш постоянный домен Shopify
+        }
+     });
+      // Добавляем событие просмотра страницы
+       window.wtba.push({
+          type: "pageview"
+       });
+   
+   document.addEventListener('DOMContentLoaded', function() {
+     if (window.location.pathname === '/cart') {
+      window.wtba = window.wtba || [];
+      window.wtba.push({
+         type: "event",
+        "event": "product_added_to_cart",
+         page: "cart"
+      });
+     }
+   });
+</script>
+
+                                              {% comment %} END pixel smsbump{% endcomment %}
 </head>
 
 {%- capture body_class -%}

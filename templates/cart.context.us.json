@@ -1,8 +1,1 @@
-{
-  "parent": "cart.json",
-  "context": {
-    "market": "us"
-  },
-  "sections": {
-  }
-}
+{"parent":"cart.json","context":{"market":"us"},"sections":{}}

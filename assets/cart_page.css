@@ -507,6 +507,7 @@ p.cart__item__price {
     display: none;
 }
 .cart__total__discount_price {
+    display: none !important;
     color: #FFF;
     text-align: right;
     font-size: 20px;
@@ -517,6 +518,9 @@ p.cart__item__price {
     border-radius: 10px;
     background: #D02E2E;
     padding: 10px 15px;
+}
+.cart__total__discount_price.hide {
+    display: none;
 }
 
 .cart__total {

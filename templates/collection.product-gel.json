@@ -1,17 +1,1 @@
-{
-  "sections": {
-    "main": {
-      "type": "collection",
-      "settings": {
-        "show_breadcrumbs": true,
-        "enable_sorting": true,
-        "enable_filters": true,
-        "filter_mode": "default",
-        "bg_color": ""
-      }
-    }
-  },
-  "order": [
-    "main"
-  ]
-}
+{"sections":{"main":{"type":"collection","settings":{"show_breadcrumbs":true,"enable_sorting":true,"enable_filters":true,"filter_mode":"default","bg_color":""}}},"order":["main"]}

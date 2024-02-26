@@ -216,34 +216,15 @@ checkDocument();
 
 
                                 </p>
-                            {%- endif -%}
-
-                            {%- liquid
-                                assign total_discount = 0
-                                for line_item in cart.items
-                                    assign discount = 0
-                                    if line_item.selling_plan_allocation != blank and line_item.selling_plan_allocation.price < line_item.selling_plan_allocation.compare_at_price
-                                                                            
-                                        assign discount = discount | plus: line_item.variant.compare_at_price | minus: line_item.selling_plan_allocation.price | times:  line_item.quantity
-                                        assign total_discount = total_discount | plus: discount
-                                    elsif  line_item.final_price < line_item.variant.compare_at_price
-                                        assign discount = discount | plus: line_item.variant.compare_at_price | minus: line_item.final_price | times: line_item.quantity
-                                        assign total_discount = total_discount | plus: discount                                 
-                                    endif
-                                endfor
-                            -%}
+                            {%- endif -%} 
                             
-
                             <div class="total_prices pc">
-                                {% if total_discount > 0 %}
+        
                                     <div data-cart-total-saving class="cart__total__discount">
-                                        <div class="cart__total__discount_price">
+                                        <div class="cart__total__discount_price hide">
                                             Saving {{ total_discount | money }}
-                                        </div>
-
+                                        </div>   
                                     </div>
-                                {% endif %}
-
                                 <div class="cart__total{% if original_subtotal < subtotal or cart_discount_size <= 0 %} hidden{% endif %}"
                                      data-cart-original-total>
                                     <span>{{ 'cart.general.subtotal_items' | t }} </span>
@@ -276,7 +257,7 @@ checkDocument();
                                 <div class="cart__total">
                                     <span>{{- 'cart.general.subtotal' | t -}}</span>
 
-                                    <span data-cart-total class="cart__total__money">
+                                    <span data-cart-total="{{subtotal | strip_html }}" class="cart__total__money">
               {%- if subtotal == 0 -%}
                   {{ 'products.product.free' | t }}
               {%- else -%}
@@ -321,12 +302,12 @@ checkDocument();
                                         </div>
                                     </div>
                                 {%- endif -%}
-                                        <script>
+                                        <!-- <script>
                                         window.addEventListener("load", function (event) {
                                             let textarea = document.querySelector('.cart__widget__content #note')
-                                            textarea.value = textarea.dataset.lineprop
+                                            textarea.value = textarea?.dataset.lineprop
                                         })
-                                        </script>
+                                        </script> -->
                                 {%- if settings.enable_gift_notes -%}
                                     <div class="cart__widget" data-cart-widget>
                                         <button

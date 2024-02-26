@@ -75,7 +75,25 @@
   assign free_title = free_product.title | downcase | remove: 'sea moss'  | append: '</b> as a Gift' | prepend: '+ <b>'
 
 
+
 -%}
+ {% assign free_product_handle = product.metafields.custom.free_product_on_product_page.value %}
+ {% assign free_product = all_products[free_product_handle] %}
+ {% assign sellingPlanIdFree = 0 %}
+
+ {% if free_product %}
+      {% if free_product.selling_plan_groups.size > 0 %}
+          {% assign first_selling_plan_group = free_product.selling_plan_groups.first %}
+           {% for plan in first_selling_plan_group.selling_plans %}
+           
+            {%- comment -%}<p >{{ free_product.id }}</p>{%- endcomment -%}
+            {%- comment -%}  <p >{{ plan.id }}</p>{%- endcomment -%} 
+              {% assign sellingPlanIdFree = plan.id %}
+            {% endfor %}
+      {% endif %}
+{% endif %}
+{%- comment -%}  <p >{{ sellingPlanIdFree }}</p>{%- endcomment -%} 
+
 
 <div class="product-single__wrapper-custom product-single__wrapper{% if image_size %} product__wrapper--{{ image_size }}{% endif %}" data-section-id="{{ unique }}" data-product>
   {%- comment -%} Product media {%- endcomment -%}
@@ -232,9 +250,10 @@
           
         {% endfor %}
     <!-- Custom code -->
-    
+  
     </div>
- 
+
+   
   {%- else -%}
     {%- comment -%} Onboarding product media {%- endcomment -%}
     <div class="featured-product__gallery" id="ProductPhoto--{{ unique }}"{% if animations_enabled %} data-aos="fade" data-aos-anchor="{{ animation_anchor }}"{% endif %}>
@@ -255,33 +274,33 @@
       {%- for block in section.blocks -%}
         {%- case block.type -%} 
         {%- when "benefit_icon" -%}
-          <div class="product__block benefit-wrapper">
-            {% for i in (1..8) %}
-              {%- capture icon_key -%}icon_{{i}}{%- endcapture -%}
-              {%- capture heading_key -%}heading_{{i}}{%- endcapture -%}
-              {%- capture subheading_key -%}sub_heading_{{i}}{%- endcapture -%}
+        <div class="product__block benefit-wrapper">
+          {% for i in (1..8) %}
+            {%- capture icon_key -%}icon_{{i}}{%- endcapture -%}
+            {%- capture heading_key -%}heading_{{i}}{%- endcapture -%}
+            {%- capture subheading_key -%}sub_heading_{{i}}{%- endcapture -%}
 
-              {%- liquid
-                assign icon = block.settings[icon_key]
-                assign heading = block.settings[heading_key]
-                assign subheading = block.settings[subheading_key]
-                assign is_show = false
-                if icon != blank and heading != blank and subheading != blank
-                assign is_show = true 
-                endif
-              -%}
-              {% if is_show %}
-                <div class="benefit-product">
-                  <div class="benefit-product__img">
-                    <img src="{{icon | img_url: 'master'}}" alt="{{icon.alt}}" loading="lazy">
-                  </div>
-                  <h3 class="benefit-product__title">{{- heading -}}</h3>
-                  <p class="benefit-product__subheading">{{- subheading -}}</p>
+            {%- liquid
+              assign icon = block.settings[icon_key]
+              assign heading = block.settings[heading_key]
+              assign subheading = block.settings[subheading_key]
+              assign is_show = false
+              if icon != blank and heading != blank and subheading != blank
+              assign is_show = true 
+              endif
+            -%}
+            {% if is_show %}
+              <div class="benefit-product">
+                <div class="benefit-product__img">
+                  <img src="{{icon | img_url: 'master'}}" alt="{{icon.alt}}" loading="lazy">
                 </div>
-              {% endif %}
-              
-            {% endfor %}
-          </div>
+                <h3 class="benefit-product__title">{{- heading -}}</h3>
+                <p class="benefit-product__subheading">{{- subheading -}}</p>
+              </div>
+            {% endif %}
+            
+          {% endfor %}
+        </div>
         {%- when "badge_mobile" -%}
           <div class="product__block product-single_badge badge product-single_badge-mobile">
               <div class="badge-wrapper">
@@ -304,26 +323,30 @@
                   {% endfor %}
               </div>
           </div>     
+             
           {% when "button_price" %}
           {%- assign show_payment_button = block.settings.show_payment_button -%}
           {%- assign hide_price= block.settings.hide_price -%}
           <div class="product__block product__block-button_price">
+         
             <div  class="product__block product__price-and-badge {% if hide_price %}product__price-and-badge_hide{% endif %} ">
               {% if current_variant.compare_at_price %}
               {%- assign enable_script = true -%}
-              {% if template.suffix contains "gel" or template.suffix contains "bundle"  %}
+              
                 <div class="product__price-save">
                   <div class="product__price-save_badge">
                     {%- assign save_profit = product.compare_at_price | minus: product.price  -%}
                     <span>You save {{save_profit | money}}</span>
+                    
                   </div>
                   <div class="product__price" data-price-wrapper>
+                    
                     {%- unless product == blank -%}
                       <span data-price="{{current_variant.price}}" data-product-price class="product__price--regular{% if current_variant.compare_at_price > current_variant.price %} product__price--sale{% endif %}">
                         {%- if current_variant.price == 0 -%}
                           {{ 'products.product.free' | t }}
                         {%- else -%}
-                          {{ current_variant.price | money }}
+                          {{ current_variant.price | divided_by: 2 | money }}
                         {%- endif -%}
                       </span>
                     {%- else -%}
@@ -374,7 +397,7 @@
                         </span>
                       </span>
                     {%- endif -%}
-    
+                    
                     <span style="display: none !important;" data-price-off class="product__price--off hidden">
                       <span data-price-off-type>{{ 'products.product.sale' | t }}</span>
                       <em>•</em>
@@ -384,7 +407,6 @@
                   </div>
                 </div> 
               {% endif %}
-              {% endif %}
               {%- if block.settings.show_rating or settings.show_rating and section_type == 'quickview' -%}
                 {%- unless product != blank -%}
                   {%- render 'rating', show_rating_count: block.settings.show_rating_count, single_star: true, reviews: product.metafields.reviews -%}
@@ -393,13 +415,14 @@
                 {%- endunless -%}
               {%- endif -%}
             </div>
+            
             {%- form 'product', product, data-productid: product.id, class: 'product__form', data-product-form: '', id: product_form_id -%}
             <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ current_variant.id }}" data-product-select>
             <div class="product__submit__holder{% if show_payment_button %} product__submit__holder--spb{% endif %}" data-product-id="{{ product.id }}">
               <div class="product__submit__buttons">
                 <div class="product__submit__item">
                   <button
-                    type="submit"
+                    type="submit"     
                     name="add"
                     id="AddToCart--{{ unique }}"
                     class="btn btn--submit product__submit__add"
@@ -419,7 +442,7 @@
                     <div class="loader loader--line"><div class="loader-indeterminate"></div></div>
                   </button>
                 </div>
-          
+               
                 {%- if show_payment_button -%}
                   <div class="product__submit__item">
                     {{ form | payment_button }}
@@ -509,14 +532,15 @@
 
               <h1 class="product__title">
                 {%- if template.name == 'product' and section_type != 'featured' -%}
-                  {{- product_title -}}
+                  {{- product_title -}} 
+                {%- elsif section_type == 'featured' and block.settings.disabled_link == true   -%}
+                  {{- product_title -}} 
                 {%- else -%}
                   <a href="{{ product_url }}" title="{{ product_title }}">{{ product_title }}</a>
                 {%- endif -%}
-                {% if is_free and template.suffix contains "bundle" %} <span class="product__title-free">{{free_title}}</span> {% endif %}
               </h1>              
             </div>
-
+   
             {% if block.settings.show_price  %}
               {%- assign show_price = "" -%}
             {%- else -%}
@@ -525,6 +549,7 @@
 
             <div  class="{{show_price}} product__block product__price-and-badge">
               <div class="product__price" data-price-wrapper>
+          
                 {%- unless product == blank -%}
                   <span data-product-price class="product__price--regular{% if current_variant.compare_at_price > current_variant.price %} product__price--sale{% endif %}">
                     {%- if current_variant.price == 0 -%}
@@ -582,12 +607,15 @@
                   </span>
                 {%- endif -%}
 
+              {% unless section_type == 'featured' %}
+                 
                 <span data-price-off class="product__price--off hidden">
                   <span data-price-off-type>{{ 'products.product.sale' | t }}</span>
                   <em>•</em>
                   {{ 'products.product.save' | t }}
                   <span data-price-off-amount></span>
                 </span>
+              {% endunless %}
               </div>
 
               {%- if block.settings.show_rating or settings.show_rating and section_type == 'quickview' -%}
@@ -616,9 +644,7 @@
               {%- for block in section.blocks -%}
                 {%- case block.type -%}  
                   {%- when 'taste' -%}
-                  {% if template.suffix contains "gel" or template.suffix contains "bundle"  %}
-                  {% render 'option-taste' block: block.settings %}
-                    {% endif %}
+                    {% render 'option-taste' block: block.settings %}
                 {%- endcase -%}
               {% endfor %}
             {%- endcapture -%}
@@ -627,17 +653,12 @@
               {%- for block in section.blocks -%}
                 {%- case block.type -%}  
                   {%- when 'content_recharge' -%}
-                  {% if template.suffix contains "gel" or template.suffix contains "bundle"  %}
-                    {% if block.settings.title_sec != blank %}
-                      <div class="recharge-title">{{block.settings.title_sec}}</div>
-                    {% endif %}
+                    <div class="recharge-title">{{block.settings.title_sec}}</div>
                     {%- comment -%}<h4 class="recharge-title">{{block.settings.title_sec}}</h4>{%- endcomment -%}
-                    {% endif %}
                 {%- endcase -%}
               {% endfor %}
             {%- endcapture -%}
 
-            {% if template.suffix contains "gel" or template.suffix contains "bundle"   %}
             {%- capture only_price -%}
               {%- for block in section.blocks -%}
                 {%- case block.type -%}  
@@ -648,7 +669,11 @@
                           {%- if current_variant.price == 0 -%}
                             {{ 'products.product.free' | t }}
                           {%- else -%}
-                            {{ current_variant.price | money }}
+                             {% if current_variant.price == 4750 %}
+                                {{ current_variant.price | times: 0.80 | money }}
+                             {% else %}
+                               {{ current_variant.price | money }}
+                             {% endif %}
                           {%- endif -%}
                         </span>
                       {%- else -%}
@@ -704,15 +729,15 @@
                         <span data-price-off-type>{{ 'products.product.sale' | t }}</span>
                         <em>•</em>
                         {{ 'products.product.save' | t }}
+                          
                         <span data-price-off-amount></span>
                       </span>
                     </div>
                 {%- endcase -%}
               {% endfor %}
             {%- endcapture -%}
-          {% endif %}
 
-
+            
           {%- when 'form' -%}
             {%- liquid
               assign show_quantity = block.settings.show_quantity
@@ -729,7 +754,7 @@
               <div class="product__block product__form__wrapper{{ hide_labels_class }}" {{ block.shopify_attributes }} data-form-wrapper>
                 {%- comment -%} Product Form Partial {%- endcomment -%}
                 <!-- /partials/product-form.liquid -->
- 
+
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign unique = unique | default: ''
@@ -888,6 +913,7 @@
 {%- form 'product', product, data-productid: product.id, class: 'product__form', data-product-form: '', id: product_form_id -%}
   {% comment %} The input with name="id" data-productid="{{ product.id }}" submits to cart {% endcomment %}
   <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ current_variant.id }}" data-product-select>
+   <input type="hidden" id="selling-plan-input-save" name="selling_plan-save" value="1234">
   {%- unless show_quantity -%}
     {% if block.settings.not_add_product == true %}
       {%- assign number_value = 0 -%}
@@ -910,7 +936,7 @@
 
   {%- assign quantity_position_bottom = true -%}
   {%- capture quantity_selector -%}
-    <div class="selector-wrapper selector-wrapper--qty">
+    <div class="selector-wrapper selector-wrapper--qty" style="display:none;">
       <div class="select__fieldset">
         <span class="select__label" id="{{ unique }}-select-quantity-label">{{ 'products.product.quantity' | t }}</span>
 
@@ -940,7 +966,7 @@
               {%- render 'icon-toggle-minus' -%}
             </button>
 
-            <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
+            <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" data-currency="{{cart.currency.symbol}}" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
 
             <button type="button" class="quantity__btn quantity__btn--increase" data-quantity-plus data-quantity-button tabindex="0" title="{{- 'general.accessibility.increase' | t }} - {{ product.title | strip_html -}}">
               <span class="visually-hidden">{{ 'general.accessibility.increase' | t }}</span>
@@ -1153,6 +1179,21 @@
 
                 {%- endfor -%}
               </fieldset>
+                <script>
+                     //document.addEventListener("DOMContentLoaded", function() {
+                     // Находим все радиокнопки в группе
+                    // const radioButtons = document.querySelectorAll('.radio__fieldset.radio__fieldset-quantity .radio__input');
+                    // console.log('ok');
+     
+                    // Проверяем, есть ли в группе хотя бы две кнопки
+                  // if (radioButtons.length >= 2) {
+                       // Снимаем выбор с первой радиокнопки, если она выбрана
+                    //    radioButtons[0].checked = false;
+                       // Активируем вторую радиокнопку
+                    //   radioButtons[1].checked = true;
+                 //  }
+             //   });
+              </script>
             {%- else -%}
               {%- assign selects_counter = selects_counter | plus: 1 -%}
               <div class="select__fieldset">
@@ -1370,7 +1411,7 @@
   {{- form_fields -}}
 
   {{- size_chart_modal -}}
-
+ 
   <noscript>
     <select name="id" data-productid="{{ product.id }}" class="product__form__select" aria-label="{{ product.options_with_values | map: 'name' | uniq | join: ', ' }}">
       {%- for variant in product.variants -%}
@@ -1397,8 +1438,110 @@
     {%- render 'inventory-countdown', current_variant: current_variant -%}
   {%- endif -%}
 
+{% if section_type == 'featured' %}
+  <div class="featured-subscribtion-form">
+    <div class="featured-subscribtion-tabs">
+      <div onclick="selectTab(this,'subscribe')" class="featured-subscribtion-tab-el featured-subscribtion-tab-active">
+        {{ 'products.product.subscribe' | t }}
+      </div>
+      <div onclick="selectTab(this,'purchase')" class="featured-subscribtion-tab-el">
+        {{ 'products.product.one_time_pur' | t }}
+      </div>
+    </div>
+    {% render 'recharge-featured-product' block: block.settings, product_current:product, enable_script:enable_script_recharge %} 
+  </div>
+
+
+  <style>
+    .featured-price-wrapper .product__price-save{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .featured-price-wrapper .product__price-save_badge{
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 19px;
+      letter-spacing: 0;
+      color: #D02E44;
+      opacity: 0;
+    }
+    .featured-price-wrapper{
+      margin-top: 20px;
+    }
+    .featured-price-wrapper .product__price{
+      flex-flow: row-reverse;
+      align-items: center;
+    }
+    .featured-price-wrapper .product__price--compare{
+      font-size: 12px;
+      font-weight: 400;
+      line-height: 14px;
+      letter-spacing: 0;
+      text-align: left;
+      color: #585858;
+      margin: 0;
+    }
+    .featured-price-wrapper .product__price--regular{
+      margin-left: 20px;
+      font-size: 25px;
+      font-weight: 400;
+      line-height: 30px;
+      letter-spacing: 0;
+      text-align: left;
+      color: #222222;
+    }
+    .featured-subscribtion-tabs{
+      border-radius: 10px 10px 0 0;
+      border: 1px solid #e1e1e1;
+    }
+    .featured-subscribtion-form .recharge-content{
+      margin-bottom: unset;
+    }
+    .featured-subscribtion-tabs{
+      display: flex;
+      overflow: hidden;
+    }
+  
+    .featured-subscribtion-tab-el{
+      padding: 21px 10px;
+      width: 50%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: white;
+      cursor: pointer;
+    }
+
+    .featured-subscribtion-tab-el::before{
+      content: "";
+      background-image: url(//trueseamoss.com/cdn/shop/t/75/assets/icon-circle.svg?v=9816544…) !important;
+      background-size: cover;
+      background-repeat: no-repeat;
+      box-sizing: border-box;
+      width: 17px;
+      height: 17px;
+      display: inline-block;
+      margin-right: 10px;
+      border-radius: 50%;
+    }
+    .featured-subscribtion-tab-active::before{
+      background-image: url(//trueseamoss.com/cdn/shop/t/75/assets/icon-circle-active.svg?v=4438808…) !important;
+    
+    }
+    .featured-subscribtion-tab-active{
+      background-color: #28523433;
+    }
+    .product__price-and-badge .product__price{
+      display: none;
+    }
+  </style>
+{% endif %}
+
   <div class="{% if block.settings.add_to_cart == false %}hide-btn{% endif %} here_btn product__submit__holder{% if show_payment_button %} product__submit__holder--spb{% endif %}" data-product-id="{{ product.id }}">
     <div class="product__submit__buttons">
+      
       <div class="product__submit__item">
         <input type="hidden" class="bundle-input">
         <button
@@ -1408,7 +1551,6 @@
           class="btn btn--submit product__submit__add"
           data-add-to-cart
           data-focus-element
-          data-prevent-default="true"
           {% unless current_variant.available %}disabled="disabled"{% endunless %}>
           <span data-add-to-cart-text>
             {%- if current_variant.available and product.tags contains '_preorder' -%}
@@ -1516,7 +1658,7 @@
         {%- render 'icon-toggle-minus' -%}
       </button>
 
-      <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
+      <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" data-currency="{{cart.currency.symbol}}" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
 
       <button type="button" class="quantity__btn quantity__btn--increase" data-quantity-plus data-quantity-button tabindex="0" title="{{- 'general.accessibility.increase' | t }} - {{ product.title | strip_html -}}">
         <span class="visually-hidden">{{ 'general.accessibility.increase' | t }}</span>
@@ -1527,6 +1669,8 @@
 </div>
 {%- endcapture -%}
 
+
+                
 <div class="product__form product__form--onboarding">
   <div class="product__selectors">
     <div class="{{ selector_wrapper_class }}" data-option-position="1">
@@ -1538,7 +1682,7 @@
 
           {%- if enable_color_swatches -%}
             {%- render 'product-swatch--onboarding' -%}
-
+           
             {%- unless enable_variant_boxes -%}
               {%- assign quantity_position_bottom = false -%}
             {%- endunless -%}
@@ -1659,7 +1803,7 @@
       {%- endunless -%}
     {%- endif -%}
   </div>
-
+  
   {%- if show_quantity and quantity_position_bottom -%}
     <div class="selector-wrapper selector-wrapper--qty">
       {{ quantity_selector }}
@@ -1677,8 +1821,8 @@
           data-add-to-cart
           data-focus-element>
           <span data-add-to-cart-text>{{ 'products.product.add_to_cart' | t }}</span>
-           
         </button>
+              
       </div>
       {% if show_payment_button %}
         <div class="product__submit__item">
@@ -1689,7 +1833,7 @@
       {% endif %}
     </div>
   </div>
-</div>
+</div>  
               </div>
             {%- endunless -%}
 
@@ -1831,9 +1975,7 @@
             </div>
           
           {%- when 'content_recharge' -%}
-            {% if template.suffix contains "gel" or template.suffix contains "bundle"  %}
             {% render 'recharge' block: block.settings, product_free:free_product, is_free:is_free, product_current:product, enable_script:enable_script_recharge %}
-            {% endif %}
 
           {%- when 'inventory_countdown' -%}
             <div class="product__block">
@@ -1880,6 +2022,7 @@
 
       <div class="product__block product__price-and-badge">
   <div class="product__price" data-price-wrapper>
+     
     {%- unless product == blank -%}
       <span data-product-price class="product__price--regular{% if current_variant.compare_at_price > current_variant.price %} product__price--sale{% endif %}">
         {%- if current_variant.price == 0 -%}
@@ -2113,6 +2256,7 @@
   {%- endcapture -%}
 {%- endif -%}
 
+
 {%- form 'product', product, data-productid: product.id, class: 'product__form', data-product-form: '', id: product_form_id -%}
   {% comment %} The input with name="id" data-productid="{{ product.id }}" submits to cart {% endcomment %}
   <input type="hidden" name="id" data-productid="{{ product.id }}" value="{{ current_variant.id }}" data-product-select>
@@ -2164,7 +2308,7 @@
               {%- render 'icon-toggle-minus' -%}
             </button>
 
-            <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
+            <input id="product-quantity-buttons-{{ section.id }}" data-popout-input type="number" data-currency="{{cart.currency.symbol}}" class="quantity__selector quantity__input" value="1" min="1" aria-label="quantity" autocomplete="off" name="quantity" data-quantity-field title="{{- 'products.product.quantity' | t }} - {{ product.title | strip_html -}}" pattern="[0-9]*" />
 
             <button type="button" class="quantity__btn quantity__btn--increase" data-quantity-plus data-quantity-button tabindex="0" title="{{- 'general.accessibility.increase' | t }} - {{ product.title | strip_html -}}">
               <span class="visually-hidden">{{ 'general.accessibility.increase' | t }}</span>
@@ -2376,6 +2520,7 @@
   {%- if product.selling_plan_groups.size > 0 -%}
     {%- if enable_subscriptions_selectors -%}
       {%- render 'subscription-form', product: product -%}
+      
     {%- endif -%}
     {%- comment -%} Delete the following line to block the theme from updating subscription prices {%- endcomment -%}
     <span data-subscription-watch-price></span>
@@ -2412,10 +2557,12 @@
 
           <div class="loader loader--line"><div class="loader-indeterminate"></div></div>
         </button>
+      
       </div>
-
+  
       {%- if show_payment_button -%}
         <div class="product__submit__item">
+           
           {{ form | payment_button }}
         </div>
       {%- endif -%}
@@ -2424,6 +2571,7 @@
     <div data-cart-errors-container class="product__form__errors"></div>
   </div>
 {%- endform -%}
+
 
         {%- if settings.show_newsletter -%}
           {%- render 'notification-form', sold_out: sold_out, product_title: product.title, product_id: product.id -%}
@@ -2437,79 +2585,12 @@
   <script type="application/json" id="ProductJson-{{ unique }}" data-product-json>{{ product | json }}</script>
   <script type="application/json" id="ModelJson-{{ unique }}">{{ product.media | where: 'media_type', 'model' | json }}</script>
 </div>
-{%- unless  template.suffix contains "gel" or template.suffix contains "bundle"  -%}
-{% if enable_script  %}
-  <script>
-    function convertPriceToCents(priceString) {
-      const numericString = priceString.replace(/[^\d.]/g, '');
-      const price = parseFloat(numericString);
-      const cents = Math.round(price * 100);
-      return cents;
-    }
-    
-    function changeSaveHandle() {
-      setTimeout(() => {
-        const jsonProduct = JSON.parse(document.querySelector("[data-product-json]").innerHTML);
-        const deliveryPrice = document.querySelector(".delivery-hand_price");
-        const idCurrentVariant = document.querySelector("[data-product-select]").value;
-        const objVariant = jsonProduct.variants.filter(el => +el.id === +idCurrentVariant);
-        const symbol = "{{ cart.currency.symbol }}";
-        const price = symbol + (objVariant[0].price / 100) ;
-        const valueDis = document.querySelector(".radio__price")?.dataset.discountValue;
 
-        const profitPriceNew = (Number(objVariant[0].price ) * (Number(valueDis) / 100) / 100).toFixed(1);
-        const discountPrice = ((Number(objVariant[0].price ) / 100) - profitPriceNew).toFixed(1);
-        
-        const fildsSpan = document.querySelector(".delivery-purchase-triger")?.children;
-      
 
-        function replaceDigits(element, newDigit) {
-          let regex = /\d+(\.\d+)?/g;
-          element.innerHTML = element.innerHTML.replace(regex, newDigit);
-        }
-        // if (fildsSpan.length === 2) {
-          
-        //   replaceDigits(fildsSpan[0], discountPrice);
-        //   replaceDigits(fildsSpan[1], profitPriceNew);
-        // }
 
-        // deliveryPrice.innerHTML = price;
-
-        const badgeSave = document.querySelector(".product__price-save_badge");
-        const priceOrigin = document.querySelector(".product__price-and-badge [data-product-price]")?.innerHTML;
-        const priceCompare = document.querySelector(".product__price-and-badge [data-compare-price]")?.innerHTML;
-      
-        if (!priceOrigin || !priceCompare) return;
-      
-        const numberPriceOrigin = convertPriceToCents(priceOrigin);
-        const numberPriceCompare = convertPriceToCents(priceCompare);
-      
-        if (numberPriceCompare <= numberPriceOrigin) return;
-      
-        const priceSave = (numberPriceCompare - numberPriceOrigin) / 100;
-        if(badgeSave) {
-          badgeSave.innerHTML = `You save ${symbol}${priceSave}`;
-        }
-        
-      }, 200);
-    }
-    
-    function addChangeListeners() {
-      const inputSelectors = document.querySelectorAll(".selector-wrapper.selector-wrapper--boxes .radio__button input");
-      if (inputSelectors.length !== 0) {
-        inputSelectors.forEach(el => {
-          el.addEventListener("change", changeSaveHandle);
-        });
-      }
-    }
-    
-    changeSaveHandle();
-    addChangeListeners();
-  </script>
-{% endif %}
-{%- endunless -%}
+{% if  section_type != 'featured'  %}
 <script>
-document.querySelector(".product__form");
+// Trigger for sending a product form. The Real form  is hidden.
 const mainBtnForm = document.querySelector(".product__form__wrapper form button.btn--submit");
 const subBtnForm = document.querySelector(".product__block-button_price button.btn--submit");
 
@@ -2521,9 +2602,6 @@ if (subBtnForm) {
   })
 }
 </script>
-
-
-
 <script>
 document.addEventListener("DOMContentLoaded", function() {
   let freeProductId = false
@@ -2574,5 +2652,6 @@ document.addEventListener("DOMContentLoaded", function() {
         return [lastElement,selectVariant]
     }
   }
-})
+})    
 </script>
+{% endif %}

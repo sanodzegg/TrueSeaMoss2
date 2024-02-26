@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Reset the form on page load
     resetForm();
 
     let howAvalibleTaste = 0;
@@ -6,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let notActiveElement = false;
     let isVisibleRecharge = false
 
+    // Selecting DOM elements
     const mainContainer = document.querySelector(".option-taste_container");
     const containerFields = document.querySelector(".filds-line");
     const optionTaste = document.querySelectorAll(".option-taste_item");
@@ -23,12 +25,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const contentRecharge = document.querySelector(".recharge-content");
     const productWrapper = document.querySelector(".product-single__wrapper");
     
+
+    // Function to handle 'Add to Cart' button click
     const handleAddToCartClick = () => {
       if (buttonAddToCart.disabled === false) {
         buttonAddToCart.click();
       }
     };
-    
+
+    // Function to handle scroll button click
     const handleScrollButtonClick = () => {
       const scrollToElement = document.querySelector(`#${stickyBtnScroll.dataset.scroll}`);
       if (scrollToElement) {
@@ -37,14 +42,18 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     };
     
+    // Function to handle window scroll
     const handleWindowScroll = () => {
       const currentPos = window.pageYOffset;
       const stopPoint = contentRecharge?.offsetTop - (contentRecharge?.scrollHeight * 2);
-    
+
+      // Toggle classes based on scroll position
       stickyBtnAdd?.classList.toggle("is-show", currentPos < stopPoint && !buttonAddToCart.disabled);
       stickyBtnScroll?.classList.toggle("is-show", currentPos > productWrapper.clientHeight);
     };
     
+
+      // Add event listeners for scroll and click events
     if (stickyBtnAdd) {
       stickyBtnAdd.addEventListener("click", handleAddToCartClick);
     }
@@ -53,24 +62,26 @@ document.addEventListener("DOMContentLoaded", function () {
       stickyBtnScroll.addEventListener("click", handleScrollButtonClick);
     }
     
+    // Add scroll event listener for smaller screens
     if (window.innerWidth < 768) {
       window.addEventListener("scroll", handleWindowScroll);
     }
     
-
+    // Disable click events on wrapperQuantity elements to prevent propagation
     wrapperQuantity.forEach(el => {
         el.addEventListener("click", function (event) {
             event.stopPropagation();
         })
     })
 
-
+    // Add click events for buttonQuantity elements
     buttonQuantity.forEach((el) => {
         el.addEventListener("click", function (event) {
             event.stopPropagation();
             const currentTaste = event.target.closest(".option-taste_item");
             const typeButton = event.target.dataset.name;
             const input = event.target.closest(".option-taste_quantity").querySelector(".option-taste_input");
+            // Handle button clicks (plus or minus)
             if (typeButton === "plus" && input.value < howAvalibleTaste && !disabledButtonPlusQuantity()) {
                 input.value++;
                 // } else if (typeButton === "minus" && input.value > 1) {
@@ -79,6 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
             } else if (typeButton === "minus") {
                 input.value > 1 ? input.value-- : handlerLabelTaste(event);
             }
+            // Update UI and check conditions
             let nowActiveElement = checkActiveElem();
             let maxActiveElement = howAvalibleTaste;
             disabledTaste(nowActiveElement, maxActiveElement);
@@ -87,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
             createlineProperties();
         });
     });
-
+    // Add change events for radioPacks elements
     radioPacks.forEach((el) => {
         el.addEventListener("change", function (event) {
             notActiveElement = true
@@ -108,10 +120,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     })
 
+    // Add click events for labelsTaste elements
     labelsTaste.forEach((el) => {
         el.addEventListener("click", handlerLabelTaste)
     })
 
+    // Function to handle label click for taste selection
     function handlerLabelTaste(event) {
         notActiveElement = true;
         const currentTaste = event.target.closest(".option-taste_item");
@@ -131,6 +145,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (flag === "false") {
             input.value = 1;
         }
+        // Update UI and check conditions
+
         let nowActiveElement = checkActiveElem();
         let maxActiveElement = howAvalibleTaste;
         disabledTaste(nowActiveElement, maxActiveElement);
@@ -141,6 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
         showStickyAdd();
     }
 
+    // Function to disable taste options based on the selected quantity
     function disabledTaste(current, max) {
         if (max <= current) {
             labelsTaste.forEach(el => {
@@ -157,6 +174,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Function to reset taste selection elements
     function resetElement() {
         labelsTaste.forEach((el, index) => {
             el.closest(".option-taste_item").classList.remove("_active-item");
@@ -164,10 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
             el.closest(".option-taste_item").setAttribute("data-active", "false");
             el.closest(".option-taste_item").querySelector(".option-taste_input").value = 1;
         });
-        // labelsTaste[0].closest(".option-taste_item").classList.add("_active-item");
-        // labelsTaste[0].closest(".option-taste_item").setAttribute("data-active", "true");
     }
 
+    // Function to check the total quantity of selected tastes
     function checkActiveElem() {
         activeElem = 0
         labelsTaste.forEach(el => {
@@ -178,11 +195,13 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         return activeElem;
     }
+    // Function to remove non-numeric symbols from a string
     function removeSymbols(string) {
         let cleanedString = string.replace(/[^0-9]+/g, '');
         return cleanedString;
     }
 
+    // Function to create hidden input fields for selected tastes
     function createlineProperties() {
         const line = [];
         const activeTaste = Array.from(optionTaste).filter((el) => el.classList.contains("_active-item"));
@@ -207,6 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
+    // Function to check if the plus button should be disabled
     function disabledButtonPlusQuantity() {
         let quntityPlus = 0
         labelsTaste.forEach(el => {
@@ -222,29 +242,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    // Function to update text information based on selected tastes
     function changeTextInfo() {
-
-        // arrayValues;
-        // maxValue ;
         if (textInfo.length !== 2) return;
         if (howAvalibleTaste == 0) {
             textMain.classList.toggle("_showText", false);
             return;
         }
-        // const positionArray = arrayValues.indexOf(howAvalibleTaste.toString());
-
         textInfo[0].innerHTML = howAvalibleTaste + (howAvalibleTaste === 1 ? " taste" : " tastes");
         textInfo[1].innerHTML = howAvalibleTaste + (howAvalibleTaste === 1 ? " pack" : " packs");
         textMain.classList.toggle("_showText", checkActiveElem() !== howAvalibleTaste);
-        // if ( arrayValues[positionArray + 1]) {
-        //     textInfoNext[0].innerHTML = arrayValues[positionArray + 1];
-        //     textInfoNext[1].innerHTML = arrayValues[positionArray + 1];    
-        // }
-        // textMainNext.classList.toggle("_showText", checkActiveElem() === howAvalibleTaste && arrayValues[positionArray + 1] != undefined );
-
 
     }
 
+    // Function to disable 'Add to Cart' button based on conditions
     function disabledAddToCart() {
         if (howAvalibleTaste === checkActiveElem() && howAvalibleTaste !== 0) {
             buttonAddToCart.removeAttribute("disabled");
@@ -257,12 +268,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+     // Function to show or hide the sticky 'Add' button
     function showStickyAdd() {
         if (!isVisibleRecharge) {
             stickyBtnAdd.classList.toggle("is-show", howAvalibleTaste === checkActiveElem());
         }
     }
 
+    // Function to scroll to the main container
     function scrollTo(event) {
         const y = mainContainer.getBoundingClientRect().top + window.pageYOffset - 150;
         window.scrollTo({ top: y, behavior: "smooth" });
@@ -272,6 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 1500);
     }
 
+    // Function to check the first selected element on page load
     function checkFirstElement() {
         document.querySelectorAll("[data-option-position='1'] .radio__input").forEach(el => {
             if (el.checked) {
@@ -286,10 +300,12 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     }
 
+     // Function to set the disabled state of the main container
     function setDisabledContainer() {
         mainContainer.classList.toggle("disabled", !notActiveElement)
     }
 
+    // Function to set the maximum height for label spans
     function setMaxHeight() {
         let arrayHight = [...labelsTaste].map(el => {
             return Number(getComputedStyle(el.querySelector("span")).height.replace("px", ""));
@@ -303,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function init() {
+        // Initialize the form and set initial values
         setMaxHeight()
         checkFirstElement();
         checkActiveElem();
@@ -311,9 +328,11 @@ document.addEventListener("DOMContentLoaded", function () {
         disabledAddToCart();
         setDisabledContainer()
     }
+     // Call the initialization function
     init()
 
 
+    // Function to reset the form on page reload
     function resetForm() {
         window.addEventListener("pageshow", function (event) {
             var historyTraversal = event.persisted ||

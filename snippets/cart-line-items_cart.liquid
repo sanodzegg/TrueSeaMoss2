@@ -226,7 +226,7 @@
 
             </div>
             <div class="cart__price_v">
-                <p class="cart__item__price 123 {{line_item.quantity}}">
+                <p class="cart__item__price">
                     {%- assign discounted = false -%}
                     {%- assign sale = false -%}
                     {% assign product_final-price = line_item.final_price | times: line_item.quantity %}
@@ -243,32 +243,54 @@
                     {%- endif -%}
 
                     {%- if sale or discounted -%}
-                        <ins>
+                        
                             {% if line_item.product.price == 0 %}
                                 {{ 'products.product.free' | t }}
                             {%- else -%}
                                 {{- product_final-price | money -}}
                             {%- endif -%}
-                        </ins>
+                        
                     {%- else -%}
                         {% if line_item.product.price == 0 %}
+                        <span data-discount-cart="0">
                             {{ 'products.product.free' | t }}
+                        </span>
                         {%- else -%}
-                            {{- product_final-price | money -}}
+                            <span data-discount-cart="{{product_final-price | strip_html }}">{{- product_final-price | money -}}</span>
                         {%- endif -%}
+                        
                     {%- endif -%}
 
                     {%- if sale and discounted == false and is_change == false -%}
-                        <del>{{- product_compare_at_price | money -}}</del>
-                    {%- endif -%}
+                        <del 1 data-discount-cart="{{product_compare_at_price | strip_html }}">{{- product_compare_at_price | money -}}</del>
+                    {%- elsif sale and discounted == false and is_change == true -%}
+                        {% if line_item.selling_plan_allocation.compare_at_price != blank %}
+                        {% liquid 
+                            assign price_compare_variant = line_item.variant.compare_at_price 
+                            if cart_quantity_sub >= 5
+                            assign correct_koeff = 5 | times: 1.0
+                            else
+                            assign correct_koeff = cart_quantity_sub | times: 1.0
+                            endif
+                            assign part_of_prie = price_compare_variant | divided_by: correct_koeff | times: line_item.quantity        
+                        %}
+                        <del 2 data-discount-cart="{{ part_of_prie | strip_html }}">{{- part_of_prie | money -}}</del>
+                        {%- else -%}
+                        {% liquid 
+                            assign price_compare_variant = line_item.variant.compare_at_price 
+                            if cart_quantity >= 5
+                            assign correct_koeff = 5 | times: 1.0
+                            else
+                            assign correct_koeff = cart_quantity | times: 1.0
+                            endif
+                            assign part_of_prie = price_compare_variant | divided_by: correct_koeff | times: line_item.quantity        
+                        %}
+                        <del 3  data-discount-cart="{{ part_of_prie  | strip_html }}">{{- part_of_prie | money -}}</del>
+                        {% endif %}
+                    {%- elsif discounted -%}
+                        <del 4 data-discount-cart="{{line_item.original_price  | times: line_item.quantity | strip_html }}">{{- line_item.original_price  | times: line_item.quantity  | money -}}</del>
+                    {% endif %}
 
-                    {%- if sale and discounted == false and is_change == true -%}
-                        <del>{{- line_item.selling_plan_allocation.compare_at_price | money -}}</del>
-                    {%- endif -%}
-
-                    {%- if discounted -%}
-                        <del>{{- line_item.original_price  | times: line_item.quantity  | money -}}</del>
-                    {%- endif -%}
 
                     {%- if line_item.unit_price -%}
                         {%- capture unit_price_separator -%}

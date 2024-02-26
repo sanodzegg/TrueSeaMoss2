@@ -220,7 +220,7 @@
 
                 <button type="submit" name="checkout" class="cart__checkout btn">
                   {{- 'cart.general.checkout' | t -}}
-                  <span class="cart__total__money" data-cart-total>
+                  <span class="cart__total__money" data-cart-total="{{subtotal | strip_html }}">
                     {%- if subtotal == 0 -%}
                       {{ 'products.product.free' | t }}
                     {%- else -%}

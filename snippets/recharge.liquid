@@ -1,5 +1,12 @@
 
 {{ "recharge.css" | asset_url | stylesheet_tag }}
+{% if block.one_time == true %}
+<style>
+.rc-template__button-group .rc-button-group__options[data-v-f1bb5b6a] {
+  display: none !important;
+}
+</style>
+{% endif %}
 <style>
   .discount-label::before {
     content: "";

@@ -1611,6 +1611,7 @@ PaloAlto.CartDrawer = (function() {
   CartDrawer.prototype = $.extend({}, CartDrawer.prototype, {
     init() {
       // DOM Elements
+
       this.cartToggleButtons = document.querySelectorAll(selectors.cartDrawerToggle);
       this.cartDrawer = document.querySelector(selectors.cartDrawer);
       this.bundleInput = document.querySelector(selectors.bundleinput);
@@ -1693,9 +1694,7 @@ PaloAlto.CartDrawer = (function() {
         })
 
       });
-      document.addEventListener('cart:test', (event) => { 
-        console.log(this.createUpdateForm());
-      });
+      this.calculateSave()
     },
 
     /**
@@ -1969,9 +1968,36 @@ PaloAlto.CartDrawer = (function() {
           this.updateItemsQuantity();
         })
         .catch((error) => console.log(error));
-
     },
 
+    calculateSave() {
+      if (!document.querySelector("[data-cart-total]")) return;
+      const allComparePriceCart = document.querySelectorAll("[data-discount-cart]");
+      ("cart__total__discount_price") 
+      const totalCartPrice = this.extractNumbers(document.querySelector("[data-cart-total]").textContent)
+      const sumComparePriceCart = Number([...allComparePriceCart].reduce((accum, elem) => accum + Number(elem.getAttribute("data-discount-cart")), 0));  
+    
+      const saveValue = Number(sumComparePriceCart / 100).toFixed(2) - totalCartPrice;
+      if (totalCartPrice) {
+        this.changePriceHtml(saveValue.toFixed(2),".cart__total__discount_price")
+      }
+    },
+
+    extractNumbers(inputString) {
+      let numbers = inputString.match(/\d+(\.\d+)?/g);
+      if (numbers) {
+          return parseFloat(numbers[0]);
+      } else {
+          return null;
+      }
+    },
+    changePriceHtml(newDigit, element) {
+      let container = document.querySelector(element);
+      if (!container) return;
+      container.classList.toggle("hide", newDigit <= 0)
+      let regex = /\d+(\.\d+)?/g;
+      container.innerHTML = container.innerHTML.replace(regex, newDigit);
+    },
     /**
      * Add item(s) to the cart and show the added item(s)
      *
@@ -2173,8 +2199,12 @@ PaloAlto.CartDrawer = (function() {
           } else {
             window.location = theme.routes.cart_url;
           }
+
         })
         .catch((error) => console.log(error))
+        .finally( () => {
+          console.log(3);
+        })
     },
 
     /**
@@ -2279,12 +2309,10 @@ PaloAlto.CartDrawer = (function() {
               .finally( () => {
                 this.disabledCheckout(this.buttonHolder,false);
                 this.disabledCheckout(this.buttonSticky,false);
+                this.calculateSave()
               })
         })
         .catch((error) => console.log(error))
-        .finally(()=> {
-        })
-        
     },
 
     /**
@@ -2650,7 +2678,9 @@ PaloAlto.CartDrawer = (function() {
           })
           .catch((e) => {
 
-          });
+          }).finally( () => {
+            this.calculateSave();
+          })
       const cartDiscountsHolder = document.querySelector(selectors.cartDiscountsHolder);
 
       if (data.original_total_price > data.total_price && data.cart_level_discount_applications.length > 0) {

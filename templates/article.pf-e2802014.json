@@ -1,12 +1,1 @@
-{
-  "sections": {
-    "pf-e2802014": {
-      "type": "pf-e2802014",
-      "settings": {
-      }
-    }
-  },
-  "order": [
-    "pf-e2802014"
-  ]
-}
+{"sections":{"pf-e2802014":{"type":"pf-e2802014","settings":{}}},"order":["pf-e2802014"]}

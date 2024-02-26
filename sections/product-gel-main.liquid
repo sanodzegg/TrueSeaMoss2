@@ -12,10 +12,7 @@
     assign wrapper_class = wrapper_class | append: ' wrapper--' | append: wrapper
   endif
 -%}
-
-{% if section.settings.new_style %}
 {{ 'new-base-product.css' | asset_url | stylesheet_tag: preload: true }}
-{% endif %}
 
 {%- if bg_color != 'rgba(0,0,0,0)' and bg_color != '' -%}
   {%- style -%}
@@ -90,12 +87,6 @@
   "class": "shopify-section--product",
   "settings": [
     {
-      "type": "checkbox",
-      "id": "new_style",
-      "label": "New Style",
-      "default": false
-    },
-    {
       "type": "header",
       "content": "Layout"
     },
@@ -166,34 +157,270 @@
       "limit": 1,
       "settings": [
         {
-          "type": "textarea",
-          "id": "remove_spacing_text",
-          "label": "Removing word-spacing for product title",
-          "info": "Enter the name of the product separated by commas to remove indentation between words"
+          "type": "text",
+          "id": "heading_option",
+          "label": "Heading option",
+          "default": "1. Select Quantity"
         },
         {
-          "type": "checkbox",
-          "id": "enable_toggle_btn",
-          "label": "Turn on the show more button",
-          "default": false
+          "type": "header",
+          "content": "Settings for quantity option"
+        },
+        {
+          "type": "paragraph",
+          "content": "The first quantity option"
+        },
+        {
+          "type": "number",
+          "id": "value_quantity_1",
+          "label": "Value for quantity ",
+          "default": 1
         },
         {
           "type": "text",
-          "id": "more_btn",
-          "label": "Text for the more button",
-          "default": "See more flavors"
+          "id": "name_quantity_1",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_quantity_1",
+          "label": "Image quantity"
         },
         {
           "type": "text",
-          "id": "less_btn",
-          "label": "Text for the less button",
-          "default": "Hide flavors"
+          "id": "ex_name_quantity_1",
+          "label": "Extra name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "extra_image_quantity_1",
+          "label": "Extra image quantity"
         },
         {
           "type": "text",
-          "id": "text_delivery",
-          "label": "Text for the budge delivery",
-          "default": "Add 2 jars to get a monthly supply"
+          "id": "text_badge_1",
+          "label": "Text for badge"
+        },
+        {
+          "type": "color",
+          "id": "bg_color_1",
+          "label": "Background color",
+          "default": "#ff914f"
+        },
+        {
+          "type": "color",
+          "id": "text_color_1",
+          "label": "Text color",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "ex_text_badge_1",
+          "label": "Extra text for badge"
+        },
+        {
+          "type": "color",
+          "id": "ex_bg_color_1",
+          "label": "Extra background color",
+          "default": "#A3DB7C"
+        },
+        {
+          "type": "color",
+          "id": "ex_text_color_1",
+          "label": "Extra text color",
+          "default": "#000"
+        },
+        {
+          "type": "paragraph",
+          "content": "The second quantity option"
+        },
+        {
+          "type": "number",
+          "id": "value_quantity_2",
+          "label": "Value for quantity ",
+          "default": 2
+        },
+        {
+          "type": "text",
+          "id": "name_quantity_2",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_quantity_2",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "ex_name_quantity_2",
+          "label": "Extra name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "extra_image_quantity_2",
+          "label": "Extra image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_badge_2",
+          "label": "Text for badge"
+        },
+        {
+          "type": "color",
+          "id": "bg_color_2",
+          "label": "Background color",
+          "default": "#ff914f"
+        },
+        {
+          "type": "color",
+          "id": "text_color_2",
+          "label": "Text color",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "ex_text_badge_2",
+          "label": "Extra text for badge"
+        },
+        {
+          "type": "color",
+          "id": "ex_bg_color_2",
+          "label": "Extra background color",
+          "default": "#A3DB7C"
+        },
+        {
+          "type": "color",
+          "id": "ex_text_color_2",
+          "label": "Extra text color",
+          "default": "#000"
+        },
+        {
+          "type": "paragraph",
+          "content": "The third quantity option"
+        },
+        {
+          "type": "number",
+          "id": "value_quantity_3",
+          "label": "Value for quantity ",
+          "default": 3
+        },
+        {
+          "type": "text",
+          "id": "name_quantity_3",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_quantity_3",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "ex_name_quantity_3",
+          "label": "Extra name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "extra_image_quantity_3",
+          "label": "Extra image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_badge_3",
+          "label": "Text for badge"
+        },
+        {
+          "type": "color",
+          "id": "bg_color_3",
+          "label": "Background color",
+          "default": "#ff914f"
+        },
+        {
+          "type": "color",
+          "id": "text_color_3",
+          "label": "Text color",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "ex_text_badge_3",
+          "label": "Extra text for badge"
+        },
+        {
+          "type": "color",
+          "id": "ex_bg_color_3",
+          "label": "Extra background color",
+          "default": "#A3DB7C"
+        },
+        {
+          "type": "color",
+          "id": "ex_text_color_3",
+          "label": "Extra text color",
+          "default": "#000"
+        },
+        {
+          "type": "paragraph",
+          "content": "The fourth quantity option"
+        },
+        {
+          "type": "number",
+          "id": "value_quantity_4",
+          "label": "Value for quantity ",
+          "default": 5
+        },
+        {
+          "type": "text",
+          "id": "name_quantity_4",
+          "label": "Name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_quantity_4",
+          "label": "Image quantity"
+        },
+        {
+          "type": "text",
+          "id": "ex_name_quantity_4",
+          "label": "Extra name quantity"
+        },
+        {
+          "type": "image_picker",
+          "id": "extra_image_quantity_4",
+          "label": "Extra image quantity"
+        },
+        {
+          "type": "text",
+          "id": "text_badge_4",
+          "label": "Text for badge"
+        },
+        {
+          "type": "color",
+          "id": "bg_color_4",
+          "label": "Background color",
+          "default": "#ff914f"
+        },
+        {
+          "type": "color",
+          "id": "text_color_4",
+          "label": "Text color",
+          "default": "#fff"
+        },
+        {
+          "type": "text",
+          "id": "ex_text_badge_4",
+          "label": "Extra text for badge"
+        },
+        {
+          "type": "color",
+          "id": "ex_bg_color_4",
+          "label": "Extra background color",
+          "default": "#A3DB7C"
+        },
+        {
+          "type": "color",
+          "id": "ex_text_color_4",
+          "label": "Extra text color",
+          "default": "#000"
         },
         {
           "type": "text",
@@ -202,38 +429,11 @@
           "default": "1. Select Taste and Quantity:"
         },
         {
-          "type": "text",
+          "type": "html",
           "id": "little_badge",
-          "label": "The badge next to the text"
-        },
-        {
-          "type": "text",
-          "id": "text_above",
-          "label": "Text above product option"
-        },
-        {
-          "type": "text",
-          "id": "heading_badge",
-          "label": "Heading for badge",
-          "default": "Product Fact - 2 jars per 1 month"
-        },
-        {
-          "type": "color",
-          "id": "color_text",
-          "label": "Color text for the badge",
-          "default": "#222"
-        },
-        {
-          "type": "color",
-          "id": "background_badge",
-          "label": "Background color for the badge",
-          "default": "#D2C3E9"
-        },
-        {
-          "type": "text",
-          "id": "heading_extra",
-          "label": "Heading for section with extra product",
-          "default": "Choose add-ons to your healthy journey"
+          "label": "The badge next to the text",
+          "default": "* Select <span>1 taste</span> to get <span> 1 pack.</span>",
+          "info": "It is important. This text must have <span></span> tags for js to work correctly. Example *You need to select <span>1</span> more tastes to get <span>3</span> packs"
         }
       ]
     },
@@ -245,6 +445,12 @@
         {
           "type": "header",
           "content": "Settings for subscriptions selectors"
+        },
+        {
+          "type": "checkbox",
+          "id": "one_time",
+          "label": "Disabled the option for one-time purchase",
+          "default": true
         },
         {
           "type": "checkbox",
@@ -357,6 +563,12 @@
           "id": "free_title",
           "label": "Title",
           "default": "Subscription includes"
+        },
+        {
+          "type": "text",
+          "id": "free_title2",
+          "label": "Title2",
+          "default": "AS A GIFT"
         },
         {
           "type": "text",

@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Selecting DOM elements
   const idProduct = document.querySelector(".recharge-content").getAttribute("data-id-product");
   const valueDiscount = document.querySelector(".selling_plan-price .radio__price").getAttribute("data-discount-value");
   const inputForm = document.querySelector("form.product__form [data-product-select]");
@@ -6,12 +7,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const freeInput = document.querySelector(".free-input");
   const labelBadge = document.querySelectorAll(".label-badge");
 
+  // Fetch cart items asynchronously
   const fetchCartItem = async () => {
     const res = await fetch("/cart.js");
     const cartItems = await res.json();
     return cartItems.items;
   };
 
+    // Get cart items and update the free input data-quantity attribute
   const getCartItems = async () => {
     if (!freeInput) return;
     const mainId = idProduct;
@@ -23,16 +26,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.addEventListener('cart:free', getCartItems);
 
+   // Check for the presence of the recharge widget at intervals
   const findWidget = setInterval(checkWidget, 10);
+  // Function to check for the presence of the recharge widget
   function checkWidget() {
     if (document.querySelector(".rc-widget")) {
       clearInterval(findWidget)
+
+      // Selecting DOM elements
       const subscriptionRadio = document.querySelector(".subscription-radio input");
       const onetimeRadio = document.querySelector(".onetime-radio input");
       const contentSubscription = document.querySelector(".recharge-product-widget__delivery-subscribe");
       const contentOnetime = document.querySelector(".recharge-product-widget__delivery-purchase");
       const buttonSellingPlan = document.querySelector(".subscription-radio");
 
+      // Add event listeners for radio button changes
       subscriptionRadio.addEventListener("change", function () {
         changePrice();
         toggleContent(contentSubscription, contentOnetime, idProduct);
@@ -42,6 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleContent(contentOnetime, contentSubscription, '');
       })
 
+      // Function to toggle the display of content based on radio button selection
       function toggleContent(showContent, hideContent, value) {
         showContent.style.display = "flex";
         hideContent.style.display = "none";
@@ -50,10 +59,14 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
 
+      // Add change event listener to the input form to trigger price changes
       inputForm.addEventListener("change", changePrice);
+
+      // Function to handle price changes
       function changePrice() {
         if (!buttonSellingPlan) return;
         setTimeout(() => {
+          // Selectors for various elements related to price changes
           const selectors = {
             widgetCompare: ".selling_plan-price_origin",
             widgetOrigin: ".radio__price .first-discount",
@@ -68,24 +81,26 @@ document.addEventListener("DOMContentLoaded", function () {
             discount: "#discount_price",
             save: "#save_price"
           }
+          // Check if the discount radio button is active
           const activeDiscount = buttonSellingPlan.classList.contains("rc-radio--active");
+          // Retrieve information about the currently selected variant
           const currentIdVariant = Number(inputForm.value);
           const currentObjVariant = jsonPrice.filter(el => Number(el.id) === currentIdVariant)[0];
           const { priceRegular, priceCompare, variantName } = currentObjVariant;
+          // Calculate prices with and without discount
           const priceDiscount = (priceRegular - (priceRegular * (Number(valueDiscount) / 100))).toFixed(0);
           const priceDiscountCompare = (priceCompare - (priceCompare * (Number(valueDiscount) / 100))).toFixed(0);
 
-          // Price without discount
+          // Calculate corrected prices
           const correctPriceRegular = getCorrectPrice(priceRegular);
           const correctPriceCompare = getCorrectPrice(priceCompare);
           const correctPriceSave = (correctPriceCompare - correctPriceRegular).toFixed(2);
-          // Price with discount
           const correctPriceDiscount = getCorrectPrice(priceDiscount);
           const correctPriceDiscountCompare = getCorrectPrice(priceDiscountCompare);
           const correctPriceDiscountSave = (correctPriceDiscountCompare - correctPriceDiscount).toFixed(2);
-          // Price save
           const correctSavePice = (correctPriceCompare - correctPriceDiscount).toFixed(2);
 
+          // Update the HTML elements with the new prices based on the radio button selection
           if (activeDiscount) {
             changePriceHtml(correctPriceCompare, selectors.widgetCompare);
             changePriceHtml(correctPriceDiscount, selectors.widgetOrigin);
@@ -96,12 +111,15 @@ document.addEventListener("DOMContentLoaded", function () {
             changePriceHtml(correctPriceDiscount, selectors.badgeRegular);
             changePriceHtml(correctSavePice, selectors.badgeSave);
 
+            // Hide or show prices based on conditions
             hidePrice(correctPriceCompare,correctPriceDiscount,selectors.badgeCompare,selectors.badgeSaveContainer,variantName)
 
+            // Update badge prices
             changePriceBadge(true)
             // disabledFreeProduct(variantName,true)
 
           } else {
+            // Update HTML elements with regular prices
             changePriceHtml(correctPriceCompare, selectors.onlyCompare);
             changePriceHtml(correctPriceRegular, selectors.onlyRegular)
 
@@ -115,7 +133,9 @@ document.addEventListener("DOMContentLoaded", function () {
             changePriceHtml(correctPriceDiscount, selectors.discount);
             changePriceHtml(correctSavePice, selectors.save);
 
+            // Hide or show prices based on conditions
             hidePrice(correctPriceCompare,correctPriceRegular,selectors.badgeCompare,selectors.badgeSaveContainer,variantName)
+            // Update badge prices
             changePriceBadge(false)
             // disabledFreeProduct(variantName,false)
           }
@@ -123,10 +143,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }, 0);
 
       }
+      // Initial call to changePrice function
       changePrice();
     }
   }
 
+   // Function to hide or show prices based on conditions
   function hidePrice(priceCompare, priceOrigin, elementCompare, elementBadge, nameVariant) {
       const flag = priceCompare !== priceOrigin;
       document.querySelector(elementCompare).style.opacity = flag ? "1" : "0";
@@ -137,9 +159,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   }
 
+  // Function to get the correct price format
   function getCorrectPrice(str) {
     return (Number(str) / 100).toFixed(2);
   }
+
+  // Function to update HTML elements with new price
   function changePriceHtml(newDigit, element) {
     let container = document.querySelector(element);
     if (!container) return;
@@ -147,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
     container.innerHTML = container.innerHTML.replace(regex, newDigit);
   }
 
+  // Function to update badge prices
   function changePriceBadge(flag) {
     if (labelBadge.length === 0) return;
     labelBadge.forEach( (label) => {
@@ -159,6 +185,8 @@ document.addEventListener("DOMContentLoaded", function () {
     })
   }
 
+
+   // Function to disable the free product based on conditions
   function disabledFreeProduct(nameVariant,flag) {
     let isFreeProduct;
     let isIncludes = String(nameVariant).includes("1 pack");
